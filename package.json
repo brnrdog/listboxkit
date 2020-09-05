@@ -1,0 +1,25 @@
+{
+  "name": "use-dropdown-select",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "bsb -make-world",
+    "clean": "bsb -clean-world",
+    "start": "bsb -make-world -w"
+  },
+  "keywords": [
+    "rescript",
+    "react",
+    "select",
+    "dropdown"
+  ],
+  "author": "Bernardo Gurgel <brnrdog@hey.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "reason-react": "^0.9.1"
+  },
+  "devDependencies": {
+    "bs-platform": "*"
+  }
+}
