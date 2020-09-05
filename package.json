@@ -6,6 +6,7 @@
     "clean": "bsb -clean-world",
     "start": "bsb -make-world -w"
   },
+  "main": "src/DropdownSelect.bs.js",
   "keywords": [
     "rescript",
     "react",
