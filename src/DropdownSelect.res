@@ -72,6 +72,11 @@ module Toggle = {
   }
 }
 
+module Option = {
+  let ariaSelected = (~index, ~selectedIndex) => index == selectedIndex
+  let onClick = (~index, ~selectIndex, event) => selectIndex(index)
+}
+
 let useDropdownSelect = (~labelId=?, ~options) => {
   let size = Belt.Array.length(options)
   let (menuOpen, setMenuOpen) = React.useState(() => false)
@@ -87,6 +92,7 @@ let useDropdownSelect = (~labelId=?, ~options) => {
   let highlightPrev = () => setHighlightedIndex(index => {
       index == 0 ? Belt.Array.length(options) - 1 : index - 1
     })
+  let selectIndex = index => setSelectedIndex(_ => index)
   let selectHighlighted = () => setSelectedIndex(_ => highlightedIndex)
   let highlightFirst = _ => setHighlightedIndex(_ => 0)
   let highlightLast = _ => setHighlightedIndex(_ => size - 1)
@@ -118,10 +124,8 @@ let useDropdownSelect = (~labelId=?, ~options) => {
 
   let getOptionProps = index => {
     role: "option",
-    ariaSelected: index == selectedIndex,
-    onClick: _event => {
-      setSelectedIndex(_ => index)
-    },
+    ariaSelected: Option.ariaSelected(~index, ~selectedIndex),
+    onClick: Option.onClick(~index, ~selectIndex),
   }
 
   {

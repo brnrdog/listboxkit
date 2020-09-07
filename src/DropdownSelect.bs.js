@@ -3,6 +3,7 @@
 
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
+var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
 
 function useDropdownSelect(labelId, options) {
   var size = options.length;
@@ -138,8 +139,8 @@ function useDropdownSelect(labelId, options) {
   var getOptionProps = function (index) {
     return {
             role: "option",
-            ariaSelected: index === selectedIndex,
-            onClick: (function (_event) {
+            ariaSelected: Caml_obj.caml_equal(index, selectedIndex),
+            onClick: (function (param) {
                 return Curry._1(setSelectedIndex, (function (param) {
                               return index;
                             }));
