@@ -3,10 +3,10 @@
 
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
-var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
+var OptionProps = require("./OptionProps.bs.js");
+var ToggleProps = require("./ToggleProps.bs.js");
 
 function useDropdownSelect(labelId, options) {
-  var size = options.length;
   var match = React.useState(function () {
         return false;
       });
@@ -22,6 +22,25 @@ function useDropdownSelect(labelId, options) {
       });
   var setSelectedIndex = match$2[1];
   var selectedIndex = match$2[0];
+  var size = options.length;
+  var highlightNext = function (param) {
+    return Curry._1(setHighlightedIndex, (function (param) {
+                  if ((size - param | 0) === 1) {
+                    return 0;
+                  } else {
+                    return param + 1 | 0;
+                  }
+                }));
+  };
+  var highlightPrev = function (param) {
+    return Curry._1(setHighlightedIndex, (function (param) {
+                  if (param === 0) {
+                    return size - 1 | 0;
+                  } else {
+                    return param - 1 | 0;
+                  }
+                }));
+  };
   var showMenu = function (param) {
     return Curry._1(setMenuOpen, (function (param) {
                   return true;
@@ -32,22 +51,9 @@ function useDropdownSelect(labelId, options) {
                   return false;
                 }));
   };
-  var highlightNext = function (param) {
-    return Curry._1(setHighlightedIndex, (function (index) {
-                  if ((size - index | 0) === 1) {
-                    return 0;
-                  } else {
-                    return index + 1 | 0;
-                  }
-                }));
-  };
-  var highlightPrev = function (param) {
-    return Curry._1(setHighlightedIndex, (function (index) {
-                  if (index === 0) {
-                    return options.length - 1 | 0;
-                  } else {
-                    return index - 1 | 0;
-                  }
+  var selectIndex = function (index) {
+    return Curry._1(setSelectedIndex, (function (param) {
+                  return index;
                 }));
   };
   var selectHighlighted = function (param) {
@@ -75,59 +81,13 @@ function useDropdownSelect(labelId, options) {
             ariaLabelledby: labelId,
             tabIndex: 0,
             onClick: (function (param) {
-                param.preventDefault();
-                return Curry._1(showMenu, undefined);
+                return ToggleProps.onClick(showMenu, param);
               }),
             onKeyDown: (function (param) {
-                param.preventDefault();
-                var key = param.key;
-                switch (key) {
-                  case "ArrowDown" :
-                      if (menuOpen) {
-                        return Curry._1(highlightNext, undefined);
-                      } else {
-                        return Curry._1(showMenu, undefined);
-                      }
-                  case "ArrowUp" :
-                      if (menuOpen) {
-                        return Curry._1(highlightPrev, undefined);
-                      } else {
-                        return Curry._1(showMenu, undefined);
-                      }
-                  case "End" :
-                      if (menuOpen) {
-                        return Curry._1(highlightLast, undefined);
-                      } else {
-                        return ;
-                      }
-                  case " " :
-                  case "Enter" :
-                      break;
-                  case "Escape" :
-                      if (menuOpen) {
-                        return Curry._1(hideMenu, undefined);
-                      } else {
-                        return ;
-                      }
-                  case "Home" :
-                      if (menuOpen) {
-                        return Curry._1(highlightFirst, undefined);
-                      } else {
-                        return ;
-                      }
-                  default:
-                    return ;
-                }
-                if (menuOpen) {
-                  Curry._1(selectHighlighted, undefined);
-                  return Curry._1(hideMenu, undefined);
-                } else {
-                  return Curry._1(showMenu, undefined);
-                }
+                return ToggleProps.onKeyDown(hideMenu, showMenu, menuOpen, highlightNext, highlightPrev, highlightFirst, highlightLast, selectHighlighted, param);
               }),
             onBlur: (function (param) {
-                param.preventDefault();
-                return Curry._1(hideMenu, undefined);
+                return ToggleProps.onBlur(hideMenu, param);
               })
           };
   };
@@ -139,11 +99,9 @@ function useDropdownSelect(labelId, options) {
   var getOptionProps = function (index) {
     return {
             role: "option",
-            ariaSelected: Caml_obj.caml_equal(index, selectedIndex),
+            ariaSelected: OptionProps.ariaSelected(index, selectedIndex),
             onClick: (function (param) {
-                return Curry._1(setSelectedIndex, (function (param) {
-                              return index;
-                            }));
+                return OptionProps.onClick(index, selectIndex, param);
               })
           };
   };
