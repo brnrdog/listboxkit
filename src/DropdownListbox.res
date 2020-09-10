@@ -94,11 +94,8 @@ let nextIndex = (~size, index) => size - index == 1 ? 0 : index + 1
 let prevIndex = (~size, index) => index == 0 ? size - 1 : index - 1 
 
 let useDropdownListbox = (~labelId=?, ~options=[], ()) => {
-  Js.log("hey 1")
   let (menuVisible, setMenuVisible)           = React.useState(() => false)
-  Js.log("hey 2")
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
-  Js.log("hey 3")
   let (selectedIndex, setSelectedIndex)       = React.useState(() => -1)
 
   let size = Array.length(options)
