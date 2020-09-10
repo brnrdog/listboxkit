@@ -5,23 +5,28 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
 
-function useDropdownListbox(labelId, options) {
+function useDropdownListbox(labelId, optionsOpt, param) {
+  var options = optionsOpt !== undefined ? optionsOpt : [];
+  console.log("hey 1");
   var match = React.useState(function () {
         return false;
       });
   var setMenuVisible = match[1];
   var menuVisible = match[0];
+  console.log("hey 2");
   var match$1 = React.useState(function () {
         return -1;
       });
   var setHighlightedIndex = match$1[1];
   var highlightedIndex = match$1[0];
+  console.log("hey 3");
   var match$2 = React.useState(function () {
         return -1;
       });
   var setSelectedIndex = match$2[1];
   var selectedIndex = match$2[0];
   var size = options.length;
+  var labelId$1 = "id";
   var highlightNext = function (param) {
     return Curry._1(setHighlightedIndex, (function (param) {
                   if ((size - param | 0) === 1) {
@@ -67,12 +72,12 @@ function useDropdownListbox(labelId, options) {
   };
   var getLabelProps = function (param) {
     return {
-            id: labelId
+            id: labelId$1
           };
   };
   var getToggleProps = function (param) {
     return {
-            ariaLabelledby: labelId,
+            ariaLabelledby: labelId$1,
             tabIndex: 0,
             onClick: (function (param) {
                 param.preventDefault();
@@ -132,7 +137,7 @@ function useDropdownListbox(labelId, options) {
   };
   var getMenuProps = function (param) {
     return {
-            ariaLabelledby: labelId
+            ariaLabelledby: labelId$1
           };
   };
   var getOptionProps = function (index) {
