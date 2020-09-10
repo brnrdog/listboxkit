@@ -1,4 +1,4 @@
-open Belt;
+open Belt
 
 type inputProps = {
   ariaLabelledby: string
@@ -26,10 +26,10 @@ type optionProps = {
   onClick: ReactEvent.Mouse.t => unit,
 }
 
-type selectConfiguration = {
+type dropdownListbox = {
   selectedIndex   : int,
   highlightedIndex: int,
-  menuOpen        : bool,
+  menuVisible     : bool,
   getToggleProps  : unit => toggleProps,
   getLabelProps   : unit => labelProps,
   getMenuProps    : unit => menuProps,
@@ -38,11 +38,63 @@ type selectConfiguration = {
   hideMenu        : unit => unit,
 }
 
+module ToggleProps = {
+  let onKeyDown = (
+    ~hideMenu,
+    ~showMenu,
+    ~menuVisible,
+    ~highlightNext,
+    ~highlightPrev,
+    ~highlightFirst,
+    ~highlightLast,
+    ~selectHighlighted,
+    event,
+  ) => {
+    ReactEvent.Keyboard.preventDefault(event)
+    let key = ReactEvent.Keyboard.key(event)
+
+    let selectCurrent = () => {
+      selectHighlighted()
+      hideMenu()
+    }
+
+    switch (key, menuVisible) {
+    | ("ArrowDown", false) 
+    | ("ArrowUp",   false) 
+    | ("Enter",     false) 
+    | (" ",         false) => showMenu()
+    | ("ArrowDown", true)  => highlightNext()
+    | ("ArrowUp",   true)  => highlightPrev()
+    | ("Enter",     true) 
+    | (" ",         true)  => selectCurrent()
+    | ("Home",      true)  => highlightFirst()
+    | ("End",       true)  => highlightLast()
+    | ("Escape",    true)  => hideMenu()
+    | _ => ()
+    }
+  }
+
+  let onClick = (~showMenu, event) => {
+    ReactEvent.Mouse.preventDefault(event)
+    showMenu()
+  }
+
+  let onBlur = (~hideMenu, event) => {
+    ReactEvent.Focus.preventDefault(event)
+    hideMenu()
+  }
+}
+
+module OptionProps = {
+  let ariaSelected = (~index, ~selectedIndex) => index == selectedIndex
+  let onClick = (~index, ~selectIndex, _event) => selectIndex(index)
+}
+
 let nextIndex = (~size, index) => size - index == 1 ? 0 : index + 1
 let prevIndex = (~size, index) => index == 0 ? size - 1 : index - 1 
 
-let useDropdownSelect = (~labelId=?, ~options) => {
-  let (menuOpen, setMenuOpen)                 = React.useState(() => false)
+let useDropdownListbox = (~labelId=?, ~options) => {
+  let (menuVisible, setMenuVisible)           = React.useState(() => false)
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
   let (selectedIndex, setSelectedIndex)       = React.useState(() => -1)
 
@@ -51,8 +103,8 @@ let useDropdownSelect = (~labelId=?, ~options) => {
 
   let highlightNext     = ()    => setHighlightedIndex(nextIndex(~size))
   let highlightPrev     = ()    => setHighlightedIndex(prevIndex(~size))
-  let showMenu          = ()    => setMenuOpen(_ => true)
-  let hideMenu          = ()    => setMenuOpen(_ => false)
+  let showMenu          = ()    => setMenuVisible(_ => true)
+  let hideMenu          = ()    => setMenuVisible(_ => false)
   let selectIndex       = index => setSelectedIndex(_ => index)
   let selectHighlighted = ()    => setSelectedIndex(_ => highlightedIndex)
   let highlightFirst    = _     => setHighlightedIndex(_ => 0)
@@ -68,7 +120,7 @@ let useDropdownSelect = (~labelId=?, ~options) => {
     onKeyDown: ToggleProps.onKeyDown(
       ~hideMenu,
       ~showMenu,
-      ~menuOpen,
+      ~menuVisible,
       ~highlightNext,
       ~highlightPrev,
       ~highlightFirst,
@@ -92,7 +144,7 @@ let useDropdownSelect = (~labelId=?, ~options) => {
   {
     selectedIndex: selectedIndex,
     highlightedIndex: highlightedIndex,
-    menuOpen: menuOpen,
+    menuVisible: menuVisible,
     getToggleProps: getToggleProps,
     getLabelProps: getLabelProps,
     getMenuProps: getMenuProps,
