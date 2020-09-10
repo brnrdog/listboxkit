@@ -1,6 +1,6 @@
 # @brnrdog/use-listbox
 
-This libary is a simple react hook for building custom select-like components.
+React hooks written in ReScript for building accessible listbox components.
 
 ## Installation
 
@@ -9,6 +9,12 @@ npm install --save @brnrdog/list-box
 ```
 
 ## Usage
+
+### Usage in ReScript React applications:
+
+Soon.
+
+### Usage in TypeScript/JavaScript applications:
 
 Soon.
 
