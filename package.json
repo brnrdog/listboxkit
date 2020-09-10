@@ -1,24 +1,31 @@
 {
-  "name": "use-dropdown-select",
+  "name": "@brnrdog/listbox",
   "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/brnrdog/use-listbox"
+  },
   "scripts": {
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "start": "bsb -make-world -w"
   },
-  "main": "src/DropdownSelect.bs.js",
+  "main": "src/Listbox.bs.js",
   "keywords": [
     "rescript",
     "react",
+    "listbox",
     "select",
     "dropdown"
   ],
   "author": "Bernardo Gurgel <brnrdog@hey.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.1"
+  },
   "devDependencies": {
-    "bs-platform": "*",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "bs-platform": "^7.1.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "reason-react": "^0.9.1"
   }
 }
