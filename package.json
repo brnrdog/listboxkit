@@ -1,8 +1,9 @@
 {
   "name": "@brnrdog/listbox",
   "version": "0.0.2",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "repository": {
-    "url": "https://github.com/brnrdog/use-listbox"
+    "url": "https://github.com/brnrdog/listbox"
   },
   "scripts": {
     "build": "bsb -make-world",

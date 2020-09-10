@@ -1,4 +1,4 @@
-# @brnrdog/use-listbox
+# @brnrdog/listbox
 
 React hooks written in ReScript for building accessible listbox components.
 
