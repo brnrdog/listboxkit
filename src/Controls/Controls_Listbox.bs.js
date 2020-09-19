@@ -30,6 +30,16 @@ function useControls(size) {
         return -1;
       });
   var setSelectedIndex = match$1[1];
+  var highlightFirst = function (param) {
+    return Curry._1(setHighlightedIndex, (function (param) {
+                  return 0;
+                }));
+  };
+  var highlightLast = function (param) {
+    return Curry._1(setHighlightedIndex, (function (param) {
+                  return size - 1 | 0;
+                }));
+  };
   var highlightNext = function (param) {
     return Curry._1(setHighlightedIndex, (function (param) {
                   return nextIndex(size, param);
@@ -45,14 +55,9 @@ function useControls(size) {
                   return highlightedIndex;
                 }));
   };
-  var highlightFirst = function (param) {
-    return Curry._1(setHighlightedIndex, (function (param) {
-                  return 0;
-                }));
-  };
-  var highlightLast = function (param) {
-    return Curry._1(setHighlightedIndex, (function (param) {
-                  return size - 1 | 0;
+  var selectIndex = function (index) {
+    return Curry._1(setSelectedIndex, (function (param) {
+                  return index;
                 }));
   };
   return {
@@ -62,6 +67,7 @@ function useControls(size) {
           highlightLast: highlightLast,
           highlightNext: highlightNext,
           highlightPrev: highlightPrev,
+          selectIndex: selectIndex,
           selectHighlighted: selectHighlighted
         };
 }
