@@ -4,20 +4,28 @@
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 
-function nextIndex(size, index) {
-  if ((size - index | 0) === 1) {
-    return 0;
-  } else {
-    return index + 1 | 0;
-  }
+function nextIndex(size, selectedIndex, _index) {
+  while(true) {
+    var index = _index;
+    var next = (size - index | 0) === 1 ? 0 : index + 1 | 0;
+    if (next !== selectedIndex) {
+      return next;
+    }
+    _index = next;
+    continue ;
+  };
 }
 
-function prevIndex(size, index) {
-  if (index === 0) {
-    return size - 1 | 0;
-  } else {
-    return index - 1 | 0;
-  }
+function prevIndex(size, selectedIndex, _index) {
+  while(true) {
+    var index = _index;
+    var prev = index === 0 ? size - 1 | 0 : index - 1 | 0;
+    if (prev !== selectedIndex) {
+      return prev;
+    }
+    _index = prev;
+    continue ;
+  };
 }
 
 function useControls(size) {
@@ -30,6 +38,7 @@ function useControls(size) {
         return -1;
       });
   var setSelectedIndex = match$1[1];
+  var selectedIndex = match$1[0];
   var highlightFirst = function (param) {
     return Curry._1(setHighlightedIndex, (function (param) {
                   return 0;
@@ -42,12 +51,12 @@ function useControls(size) {
   };
   var highlightNext = function (param) {
     return Curry._1(setHighlightedIndex, (function (param) {
-                  return nextIndex(size, param);
+                  return nextIndex(size, selectedIndex, param);
                 }));
   };
   var highlightPrev = function (param) {
     return Curry._1(setHighlightedIndex, (function (param) {
-                  return prevIndex(size, param);
+                  return prevIndex(size, selectedIndex, param);
                 }));
   };
   var selectHighlighted = function (param) {
@@ -62,7 +71,7 @@ function useControls(size) {
   };
   return {
           highlightedIndex: highlightedIndex,
-          selectedIndex: match$1[0],
+          selectedIndex: selectedIndex,
           highlightFirst: highlightFirst,
           highlightLast: highlightLast,
           highlightNext: highlightNext,

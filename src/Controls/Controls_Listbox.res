@@ -9,8 +9,15 @@ type controls = {
   selectHighlighted: unit => unit,
 }
 
-let nextIndex = (~size, index) => size - index == 1 ? 0 : index + 1
-let prevIndex = (~size, index) => index == 0 ? size - 1 : index - 1
+let rec nextIndex = (~size, ~selectedIndex, index) => {
+  let next = size - index == 1 ? 0 : index + 1;
+  next == selectedIndex ? nextIndex(~size, ~selectedIndex, next) : next
+}
+
+let rec prevIndex = (~size, ~selectedIndex, index) => {
+  let prev = index == 0 ? size - 1 : index - 1
+  prev == selectedIndex ? prevIndex(~size, ~selectedIndex, prev) : prev
+}
 
 let useControls = (~size) => {
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
@@ -18,8 +25,8 @@ let useControls = (~size) => {
 
   let highlightFirst    = _ => setHighlightedIndex(_ => 0)
   let highlightLast     = _ => setHighlightedIndex(_ => size - 1)
-  let highlightNext     = () => setHighlightedIndex(nextIndex(~size))
-  let highlightPrev     = () => setHighlightedIndex(prevIndex(~size))
+  let highlightNext     = () => setHighlightedIndex(nextIndex(~size, ~selectedIndex))
+  let highlightPrev     = () => setHighlightedIndex(prevIndex(~size, ~selectedIndex))
   let selectHighlighted = () => setSelectedIndex(_ => highlightedIndex)
   let selectIndex       = index => setSelectedIndex(_ => index)
 
