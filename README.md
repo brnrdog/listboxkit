@@ -10,80 +10,23 @@ npm install --save @brnrdog/list-box
 
 ## Usage
 
-### Usage in ReScript React applications:
+The`useListbox` hook provides primitives to build custom listbox components.
 
-```res
+### Usage in a Javascript/Typescript project:
 
-let options: array<colorOption> = [
-  {value: "#ff0000", text: "Red"},
-  {value: "#00ff00", text: "Green"},
-  {value: "#0000ff", text: "Blue"},
-]
+```ts
+const options = [
+  { text: "Red", value: "#FF0000" },
+  { text: "Green", value: "#00FF00" },
+  { text: "Blue", value: "#0000FF" },
+];
 
-@react.component
-let make = (~value=?) => {
-  let {
-    menuVisible,
-    highlightedIndex,
-    selectedIndex,
-    getOptionProps,
-    getToggleProps,
-    getLabelProps,
-    getMenuProps,
-    showMenu,
-    hideMenu,
-  }: DropdownListbox.dropdownListbox = Listbox.useDropdownListbox(
-    ~labelId="color"
-    ~options,
-    ()
-  )
-
-  let labelProps = getLabelProps()
-  let toggleProps = getToggleProps()
-
-  let displayValue = option => option.value == Option.getUnsafe(value) 
-    |> Array.getBy(options) 
-    |> (selectedOption) => {
-      switch selectedOption {
-      | Some(option) => option.text
-      | None => placeholder
-      }
-    }
-  )
-
-  <div>
-    <label id=labelProps.id>
-      {React.string("Select a color:")}
-    </label>
-    <div 
-      onClick=toggleProps.onClick 
-      onKeyDown=toggleProps.onKeyDown 
-      onBlur=toggleProps.onBlur
-    >
-      {React.string(displayValue)}
-    </div>
-    {switch menuVisible {
-    | true => {
-      <ul>
-        options->Belt.Array.mapWithIndex((index, option) => {
-        let highlighted = index == highlightedIndex
-        let optionProps = getOptionProps(index)
-
-        <li
-          key=string_of_int(index)
-          ariaSelected=optionProps.ariaSelected
-          onClick=optionProps.onClick
-        />
-      })->React.array}
-      </ul>
-    }
-    | false => React.null
-    }}
-  </div>
-}
+const { highlightedIndex, selectedIndex, getOptionProps } = useListbox(options);
 ```
 
-### Usage in TypeScript/JavaScript applications:
+[Click here](https://github.com/brnrdog/listbox/tree/master/examples/typescript/src/App.tsx) for a typescript example.
+
+### Usage in a Reason/ReScript Project:
 
 Soon.
 
