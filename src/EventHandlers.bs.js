@@ -3,7 +3,7 @@
 
 var Curry = require("bs-platform/lib/js/curry.js");
 
-function onKeyDown(hideMenu, showMenu, menuVisible, highlightNext, highlightPrev, highlightFirst, highlightLast, selectHighlighted, $$event) {
+function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, showMenu, $$event) {
   $$event.preventDefault();
   var key = $$event.key;
   switch (key) {

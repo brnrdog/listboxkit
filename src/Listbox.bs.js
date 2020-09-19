@@ -7,7 +7,12 @@ var Controls_Listbox = require("./Controls/Controls_Listbox.bs.js");
 function useListbox(options) {
   var size = options.length;
   var match = Controls_Listbox.useControls(size);
+  var selectHighlighted = match.selectHighlighted;
   var selectIndex = match.selectIndex;
+  var highlightPrev = match.highlightPrev;
+  var highlightNext = match.highlightNext;
+  var highlightLast = match.highlightLast;
+  var highlightFirst = match.highlightFirst;
   var selectedIndex = match.selectedIndex;
   var highlightedIndex = match.highlightedIndex;
   var getOptionProps = function (index) {
@@ -16,6 +21,13 @@ function useListbox(options) {
             role: "option",
             onClick: (function (param) {
                 return EventHandlers.onClick(index, selectIndex, param);
+              }),
+            onKeyDown: (function (param) {
+                return EventHandlers.onKeyDown(true, (function (param) {
+                              
+                            }), highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, (function (param) {
+                              
+                            }), param);
               })
           };
   };

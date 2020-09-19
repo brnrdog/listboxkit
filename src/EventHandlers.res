@@ -1,12 +1,12 @@
 let onKeyDown = (
-  ~hideMenu,
-  ~showMenu,
   ~menuVisible,
-  ~highlightNext,
-  ~highlightPrev,
+  ~hideMenu,
   ~highlightFirst,
   ~highlightLast,
+  ~highlightNext,
+  ~highlightPrev,
   ~selectHighlighted,
+  ~showMenu,
   event,
 ) => {
   ReactEvent.Keyboard.preventDefault(event)
