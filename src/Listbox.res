@@ -1,6 +1,7 @@
 type optionProps = {
   ariaSelected: bool,
   role        : string,
+  tabIndex    : int,
   onClick     : ReactEvent.Mouse.t => unit,
   onKeyDown   : ReactEvent.Keyboard.t => unit,
 }
@@ -27,6 +28,7 @@ let useListbox = (~options) => {
   let getOptionProps = index => {
     ariaSelected: selectedIndex == highlightedIndex,
     role: "option",
+    tabIndex: 0,
     onClick: EventHandlers.onClick(~index, ~selectIndex),
     onKeyDown: EventHandlers.onKeyDown(
       ~menuVisible = true,
