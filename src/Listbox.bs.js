@@ -19,6 +19,7 @@ function useListbox(options) {
     return {
             ariaSelected: selectedIndex === highlightedIndex,
             role: "option",
+            tabIndex: 0,
             onClick: (function (param) {
                 return EventHandlers.onClick(index, selectIndex, param);
               }),
