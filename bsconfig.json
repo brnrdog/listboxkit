@@ -1,17 +1,27 @@
 {
   "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
   "name": "@brnrdog/listbox",
-  "version": "0.0.1",
+  "version": "0.1.2",
   "sources": {
     "dir": "src",
     "subdirs": true
+  },
+  "reason": {
+    "react-jsx": 3
   },
   "package-specs": {
     "module": "commonjs",
     "in-source": true
   },
   "suffix": ".bs.js",
-  "bs-dependencies": ["reason-react"],
+  "bs-dependencies": [
+    "@glennsl/bs-jest",
+    "bs-dom-testing-library",
+    "bs-jest-dom",
+    "bs-react-testing-library",
+    "bs-webapi",
+    "reason-react"
+  ],
   "warnings": {
     "error": "+101"
   }
