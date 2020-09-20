@@ -19,6 +19,12 @@ let rec prevIndex = (~size, ~selectedIndex, index) => {
   prev == selectedIndex ? prevIndex(~size, ~selectedIndex, prev) : prev
 }
 
+let selectIndex = (~setHighlightedIndex, ~setSelectedIndex, index) => {
+  let updateState = _ => index
+  updateState |> setHighlightedIndex
+  updateState |> setSelectedIndex
+}
+
 let useControls = (~size) => {
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
   let (selectedIndex, setSelectedIndex)       = React.useState(() => -1)
@@ -28,8 +34,8 @@ let useControls = (~size) => {
   let highlightNext     = () => setHighlightedIndex(nextIndex(~size, ~selectedIndex))
   let highlightPrev     = () => setHighlightedIndex(prevIndex(~size, ~selectedIndex))
   let selectHighlighted = () => setSelectedIndex(_ => highlightedIndex)
-  let selectIndex       = index => setSelectedIndex(_ => index)
-
+  let selectIndex       = selectIndex(~setSelectedIndex, ~setHighlightedIndex)
+    
   {
     highlightedIndex,
     selectedIndex,

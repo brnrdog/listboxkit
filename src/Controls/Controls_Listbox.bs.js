@@ -28,6 +28,14 @@ function prevIndex(size, selectedIndex, _index) {
   };
 }
 
+function selectIndex(setHighlightedIndex, setSelectedIndex, index) {
+  var updateState = function (param) {
+    return index;
+  };
+  Curry._1(setHighlightedIndex, updateState);
+  return Curry._1(setSelectedIndex, updateState);
+}
+
 function useControls(size) {
   var match = React.useState(function () {
         return -1;
@@ -64,10 +72,8 @@ function useControls(size) {
                   return highlightedIndex;
                 }));
   };
-  var selectIndex = function (index) {
-    return Curry._1(setSelectedIndex, (function (param) {
-                  return index;
-                }));
+  var selectIndex$1 = function (param) {
+    return selectIndex(setHighlightedIndex, setSelectedIndex, param);
   };
   return {
           highlightedIndex: highlightedIndex,
@@ -76,12 +82,13 @@ function useControls(size) {
           highlightLast: highlightLast,
           highlightNext: highlightNext,
           highlightPrev: highlightPrev,
-          selectIndex: selectIndex,
+          selectIndex: selectIndex$1,
           selectHighlighted: selectHighlighted
         };
 }
 
 exports.nextIndex = nextIndex;
 exports.prevIndex = prevIndex;
+exports.selectIndex = selectIndex;
 exports.useControls = useControls;
 /* react Not a pure module */
