@@ -14,10 +14,9 @@ function useListbox(options) {
   var highlightLast = match.highlightLast;
   var highlightFirst = match.highlightFirst;
   var selectedIndex = match.selectedIndex;
-  var highlightedIndex = match.highlightedIndex;
   var getOptionProps = function (index) {
     return {
-            ariaSelected: selectedIndex === highlightedIndex,
+            ariaSelected: selectedIndex === index,
             role: "option",
             tabIndex: 0,
             onClick: (function (param) {
@@ -33,7 +32,7 @@ function useListbox(options) {
           };
   };
   return {
-          highlightedIndex: highlightedIndex,
+          highlightedIndex: match.highlightedIndex,
           selectedIndex: selectedIndex,
           getOptionProps: getOptionProps
         };

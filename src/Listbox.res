@@ -26,7 +26,7 @@ let useListbox = (~options) => {
   }: Controls.Listbox.controls = Controls.Listbox.useControls(~size)
 
   let getOptionProps = index => {
-    ariaSelected: selectedIndex == highlightedIndex,
+    ariaSelected: selectedIndex == index,
     role: "option",
     tabIndex: 0,
     onClick: EventHandlers.onClick(~index, ~selectIndex),
