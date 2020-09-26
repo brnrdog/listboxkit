@@ -42,3 +42,8 @@ h1 {
   background: #ccc;
   color: #333;
 }
+
+.listbox-option.highlighted.active {
+  background: #3a5fcc;
+  color: white;
+}

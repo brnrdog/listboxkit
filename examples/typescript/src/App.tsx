@@ -13,7 +13,6 @@ const options = [
 function App() {
   const {
     highlightedIndex,
-    selectedIndex,
     getOptionProps,
   } = useListbox(options);
 
@@ -23,20 +22,20 @@ function App() {
 
       <ul className="listbox">
         {options.map((o, index) => {
-          const selected = index === selectedIndex
+          const optionProps = getOptionProps(index)
           const highlighted = index === highlightedIndex
 
           const className = [
             "listbox-option",
-            selected ? "active" : null,
-            !selected && highlighted ? "highlighted" : null,
+            optionProps["aria-selected"] ? "active" : null,
+            highlighted ? "highlighted" : null,
           ].filter(Boolean).join(" ")
 
           return (
             <li
               className={className}
               key={index}
-              {...getOptionProps(index)}
+              {...optionProps}
             >
               {o.text}
             </li>
