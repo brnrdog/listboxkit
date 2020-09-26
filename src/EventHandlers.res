@@ -18,13 +18,17 @@ let onKeyDown = (
   }
 
   switch (key, menuVisible) {
-  | ("ArrowDown", false) | ("ArrowUp", false) | ("Enter", false) | (" ", false) => showMenu()
-  | ("ArrowDown", true) => highlightNext()
-  | ("ArrowUp", true) => highlightPrev()
-  | ("Enter", true) | (" ", true) => selectCurrent()
-  | ("Home", true) => highlightFirst()
-  | ("End", true) => highlightLast()
-  | ("Escape", true) => hideMenu()
+  | ("ArrowDown", false)
+  | ("ArrowUp"  , false)
+  | ("Enter"    , false)
+  | (" "        , false) => showMenu()
+  | ("ArrowDown", true)  => highlightNext()
+  | ("ArrowUp"  , true)  => highlightPrev()
+  | ("Enter"    , true)
+  | (" "        , true)  => selectCurrent()
+  | ("Home"     , true)  => highlightFirst()
+  | ("End"      , true)  => highlightLast()
+  | ("Escape"   , true)  => hideMenu()
   | _ => ()
   }
 }

@@ -11,9 +11,10 @@ module ListboxComponent = {
 
   @react.component
   let make = () => {
-    let {highlightedIndex, selectedIndex, getOptionProps}: Listbox.listbox = Listbox.useListbox(
-      ~options,
-    )
+    let {
+      highlightedIndex, 
+      getOptionProps
+    }: Listbox.listbox = Listbox.useListbox(~options)
 
     <ul> 
       {
@@ -26,9 +27,10 @@ module ListboxComponent = {
             role,
             tabIndex
           }: Listbox.optionProps = getOptionProps(index)
-          
+          let highlighted =  highlightedIndex == index
+
           <li key=option onClick onKeyDown role ariaSelected tabIndex>
-            {(highlightedIndex == index ? `* ${option}` : option) |> React.string}
+            {(highlighted ? `* ${option}` : option) |> React.string}
           </li>
         }) 
         |> React.array
@@ -39,37 +41,43 @@ module ListboxComponent = {
 
 let component = <ListboxComponent />
 
+module FireEvent = {
+  include ReactTestingLibrary.FireEvent
+
+  let pressDown  = FireEvent.keyDown(~eventInit={ "key": "ArrowDown" })
+  let pressUp    = FireEvent.keyDown(~eventInit={ "key": "ArrowUp" })
+  let pressEnter = FireEvent.keyDown(~eventInit={"key": "Enter"})
+  let pressSpace = FireEvent.keyDown(~eventInit={"key": " "})
+}
+
 let getOption = (name) => getByRole(
   ~matcher=#Str("option"),
   ~options=DomTestingLibrary.ByRoleQuery.makeOptions(~name, ()),
 )
 
 test("renders the option role for 'Red' ", () => {
-  component 
-  |> render 
+  render(component)
   |> getOption("Red") 
   |> expect 
   |> toBeInTheDocument
 })
 
 test("renders the option role for 'Green'", () => {
-  component 
-  |> render 
+  render(component) 
   |> getOption("Green") 
   |> expect 
   |> toBeInTheDocument
 })
 
 test("renders the option role for 'Blue'", () => {
-  component 
-  |> render 
+  render(component )
   |> getOption("Blue") 
   |> expect 
   |> toBeInTheDocument
 })
 
 test("sets option aria-selected to true when clicked", () => {
-  let component = component |> render
+  let component = render(component)
   
   component 
   |> getOption("Red") 
@@ -82,35 +90,85 @@ test("sets option aria-selected to true when clicked", () => {
 })
 
 test("highlights next option when pressing arrow down ", () => {
-  let component = component |> render
+  let component = render(component)
 
-  component 
+  component
   |> getOption("Red") 
   |> FireEvent.click
-  
+
   component 
   |> getOption("* Red") 
-  |> FireEvent.keyDown(~eventInit={"key": "ArrowDown", "code": "ArrowDown"})
-
+  |> FireEvent.pressDown
+  
   component 
   |> getOption("* Green") 
-  |> expect 
-  |> toBeInTheDocument
-})
-
-test("highlights prev option when pressing arrow up ", () => {
-  let component = component |> render
-
-  component 
-  |> getOption("Red") 
-  |> FireEvent.click
-  
-  component 
-  |> getOption("* Red") 
-  |> FireEvent.keyDown(~eventInit={"key": "ArrowUp", "code": "ArrowUp"})
+  |> FireEvent.pressDown
 
   component 
   |> getOption("* Blue") 
-  |> expect 
+  |> FireEvent.pressDown
+  
+  component
+  |> getOption("* Red")
+  |> expect
   |> toBeInTheDocument
 })
+
+test("highlights prev option when pressing arrow up", () => {
+  let component = render(component)
+
+  component 
+  |> getOption("Red")
+  |> FireEvent.click
+  
+  component 
+  |> getOption("* Red") 
+  |> FireEvent.pressUp
+
+  component 
+  |> getOption("* Blue") 
+  |> FireEvent.pressUp
+
+  component 
+  |> getOption("* Green") 
+  |> FireEvent.pressUp
+
+  component 
+  |> getOption("* Red") 
+  |> expect
+  |> toBeInTheDocument
+})
+
+test("selecting and unselecting", () => {
+  let component = render(component)
+
+  component
+  |> getOption("Red")
+  |> FireEvent.click
+
+  component 
+  |> getOption("* Red") 
+  |> expect 
+  |> toHaveAttribute("aria-selected", ~value="true")
+  |> _ => ()
+
+  component
+  |> getOption("* Red")
+  |> FireEvent.pressEnter
+
+  component 
+  |> getOption("* Red") 
+  |> expect 
+  |> toHaveAttribute("aria-selected", ~value="false")
+  |> _ => ()
+
+  component
+  |> getOption("* Red")
+  |> FireEvent.pressEnter
+
+ component 
+  |> getOption("* Red") 
+  |> expect 
+  |> toHaveAttribute("aria-selected", ~value="true") 
+})
+

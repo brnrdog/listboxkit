@@ -1,13 +1,13 @@
 type optionProps = {
   role: string;
-  ariaSelected: Boolean;
+  'aria-selected': boolean;
   onClick(event: any): void;
 };
 
 type listbox = {
   highlightedIndex: number;
-  selectedIndex: number;
-  getOptionProps(index: int): optionProps;
+  selectedIndexes: Array<number>;
+  getOptionProps(index: number): optionProps;
 }
 
 export function useListbox<A>(options: Array<A>): listbox;

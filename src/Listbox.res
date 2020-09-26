@@ -1,5 +1,5 @@
 type optionProps = {
-  ariaSelected: bool,
+  @bs.as("aria-selected") ariaSelected: bool,
   role        : string,
   tabIndex    : int,
   onClick     : ReactEvent.Mouse.t => unit,
@@ -7,16 +7,18 @@ type optionProps = {
 }
 
 type listbox = {
-  highlightedIndex: int,
-  selectedIndex   : int,
-  getOptionProps  : int => optionProps,
+  highlightedIndex : int,
+  selectedIndexes  : array<int>,
+  getOptionProps   : int => optionProps,
 }
+
+let noop = () => ()
 
 let useListbox = (~options) => {
   let size = Belt.Array.length(options)
   let {
     highlightedIndex,
-    selectedIndex,
+    selectedIndexes,
     selectIndex,
     highlightNext,
     highlightPrev,
@@ -26,25 +28,25 @@ let useListbox = (~options) => {
   }: Controls.Listbox.controls = Controls.Listbox.useControls(~size)
 
   let getOptionProps = index => {
-    ariaSelected: selectedIndex == index,
+    ariaSelected: Belt.Array.some(selectedIndexes, i => i == index),
     role: "option",
     tabIndex: 0,
     onClick: EventHandlers.onClick(~index, ~selectIndex),
     onKeyDown: EventHandlers.onKeyDown(
       ~menuVisible = true,
-      ~hideMenu = () => (),
+      ~hideMenu = noop,
       ~highlightFirst, 
       ~highlightLast, 
       ~highlightNext, 
       ~highlightPrev,
-      ~selectHighlighted
+      ~selectHighlighted,
       ~showMenu = () => (),
     )
   }
 
   {
-    selectedIndex,
     highlightedIndex,
+    selectedIndexes,
     getOptionProps,
   }
 }
