@@ -47,8 +47,9 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "<rootDir>/src/**/*.{bs.js}",
-      "!<rootDir>/src/**/__tests__/**/*.{js,ts}"
+      "<rootDir>/src/**/*.bs.js",
+      "!<rootDir>/src/Controls/Controls_DropdownListbox.bs.js",
+      "!<rootDir>/src/__tests__/**/*.bs.js"
     ],
     "coverageReporters": [
       "json",
