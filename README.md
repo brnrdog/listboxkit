@@ -1,5 +1,8 @@
 # Listbox
 
+[![npm](https://img.shields.io/npm/v/@brnrdog/listbox)](https://img.shields.io/npm/v/@brnrdog/listboxx)
+[![codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox)](https://codecov.io/gh/brnrdog/listbox)
+
 React hooks written in ReScript for building accessible listbox components.
 
 ## Installation
