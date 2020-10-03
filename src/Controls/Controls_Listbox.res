@@ -28,14 +28,11 @@ let selectIndex = (
 
   setHighlightedIndex(_ => index)
   setSelectedIndexes(selectedIndexes => {
-    let isSelected = some(selectedIndexes, equals(index))
-
-    switch(isSelected) {
-    | true  => keep(selectedIndexes, diff(index))
-    | false => concat(selectedIndexes, [index])
-    }
+    index |> equals |> some(selectedIndexes)
+    ? keep(selectedIndexes, diff(index)) 
+    : concat(selectedIndexes, [index])
   })
-
+  
   ()
 }
 

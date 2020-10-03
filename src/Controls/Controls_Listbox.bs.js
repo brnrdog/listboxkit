@@ -46,10 +46,9 @@ function selectIndex(setHighlightedIndex, setSelectedIndexes, index) {
           return index;
         }));
   Curry._1(setSelectedIndexes, (function (selectedIndexes) {
-          var isSelected = Belt_Array.some(selectedIndexes, (function (param) {
-                  return Caml_obj.caml_equal(index, param);
-                }));
-          if (isSelected) {
+          if (Belt_Array.some(selectedIndexes, (function (param) {
+                    return Caml_obj.caml_equal(index, param);
+                  }))) {
             return Belt_Array.keep(selectedIndexes, (function (param) {
                           return Caml_obj.caml_notequal(index, param);
                         }));

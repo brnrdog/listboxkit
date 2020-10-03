@@ -25,7 +25,7 @@ let useListbox = (~options) => {
     highlightFirst,
     highlightLast,
     selectHighlighted,
-  }: Controls.Listbox.controls = Controls.Listbox.useControls(~size)
+  } = Controls.Listbox.useControls(~size)
 
   let getOptionProps = index => {
     ariaSelected: Belt.Array.some(selectedIndexes, i => i == index),
