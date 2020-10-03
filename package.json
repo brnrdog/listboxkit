@@ -4,9 +4,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "repository": {
-    "url": "https://github.com/brnrdog/listbox"
-  },
+  "repository": "git://github.com/brnrdog/listbox.git",
   "types": "./src/Listbox.d.ts",
   "scripts": {
     "test": "jest",
