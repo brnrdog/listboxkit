@@ -58,6 +58,18 @@ var pressSpace = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
       key: " "
     });
 
+var pressEnd = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
+      key: "End"
+    });
+
+var pressHome = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
+      key: "Home"
+    });
+
+var pressEsc = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
+      key: "Esc"
+    });
+
 var FireEvent_abort = ReactTestingLibrary.FireEvent.abort;
 
 var FireEvent_animationEnd = ReactTestingLibrary.FireEvent.animationEnd;
@@ -273,7 +285,10 @@ var FireEvent = {
   pressDown: pressDown,
   pressUp: pressUp,
   pressEnter: pressEnter,
-  pressSpace: pressSpace
+  pressSpace: pressSpace,
+  pressEnd: pressEnd,
+  pressHome: pressHome,
+  pressEsc: pressEsc
 };
 
 function getOption(name) {
@@ -301,8 +316,21 @@ Jest.test("renders the option role for 'Blue'", (function (param) {
         return JestDom.toBeInTheDocument(expect(getOption("Blue")(ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component))));
       }));
 
+Jest.test("highlights last option when pressing End", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
+        Curry._1(pressEnd, getOption("Red")(component$1));
+        return JestDom.toBeInTheDocument(expect(getOption("* Blue")(component$1)));
+      }));
+
+Jest.test("highlights first option when pressing Home", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
+        Curry._1(pressHome, getOption("Blue")(component$1));
+        return JestDom.toBeInTheDocument(expect(getOption("* Red")(component$1)));
+      }));
+
 Jest.test("sets option aria-selected to true when clicked", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
+        Curry._1(pressEsc, getOption("Red")(component$1));
         Curry._2(click, undefined, getOption("Red")(component$1));
         return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
       }));
@@ -331,7 +359,7 @@ Jest.test("selecting and unselecting", (function (param) {
         JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
         Curry._1(pressEnter, getOption("* Red")(component$1));
         JestDom.toHaveAttribute("aria-selected", "false")(expect(getOption("* Red")(component$1)));
-        Curry._1(pressEnter, getOption("* Red")(component$1));
+        Curry._1(pressSpace, getOption("* Red")(component$1));
         return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
       }));
 

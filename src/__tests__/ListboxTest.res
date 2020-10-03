@@ -46,8 +46,11 @@ module FireEvent = {
 
   let pressDown  = FireEvent.keyDown(~eventInit={ "key": "ArrowDown" })
   let pressUp    = FireEvent.keyDown(~eventInit={ "key": "ArrowUp" })
-  let pressEnter = FireEvent.keyDown(~eventInit={"key": "Enter"})
-  let pressSpace = FireEvent.keyDown(~eventInit={"key": " "})
+  let pressEnter = FireEvent.keyDown(~eventInit={"key": "Enter" })
+  let pressSpace = FireEvent.keyDown(~eventInit={"key": " " })
+  let pressEnd   = FireEvent.keyDown(~eventInit={"key": "End" })
+  let pressHome  = FireEvent.keyDown(~eventInit={"key": "Home" })
+  let pressEsc   = FireEvent.keyDown(~eventInit={"key": "Esc" })
 }
 
 let getOption = (name) => getByRole(
@@ -76,8 +79,39 @@ test("renders the option role for 'Blue'", () => {
   |> toBeInTheDocument
 })
 
+test("highlights last option when pressing End", () => {
+  let component = render(component)
+
+  component
+  |> getOption("Red")
+  |> FireEvent.pressEnd
+  
+  component
+  |> getOption("* Blue")
+  |> expect
+  |> toBeInTheDocument
+})
+
+test("highlights first option when pressing Home", () => {
+  let component = render(component)
+
+  component
+  |> getOption("Blue")
+  |> FireEvent.pressHome
+  
+  component
+  |> getOption("* Red")
+  |> expect
+  |> toBeInTheDocument
+})
+
 test("sets option aria-selected to true when clicked", () => {
   let component = render(component)
+
+  // Nothing should happen when pressing esc.
+  component 
+  |> getOption("Red")
+  |> FireEvent.pressEsc
   
   component 
   |> getOption("Red") 
@@ -164,7 +198,7 @@ test("selecting and unselecting", () => {
 
   component
   |> getOption("* Red")
-  |> FireEvent.pressEnter
+  |> FireEvent.pressSpace
 
  component 
   |> getOption("* Red") 
