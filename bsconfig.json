@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
   "name": "@brnrdog/listbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "sources": {
     "dir": "src",
     "subdirs": true
