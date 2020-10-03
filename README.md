@@ -1,7 +1,8 @@
 # Listbox
 
-[![npm](https://img.shields.io/npm/v/@brnrdog/listbox)](https://img.shields.io/npm/v/@brnrdog/listboxx)
-[![codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox)](https://codecov.io/gh/brnrdog/listbox)
+![build](https://img.shields.io/github/workflow/status/brnrdog/listbox/Automated%20tests)
+![npm](https://img.shields.io/npm/v/@brnrdog/listbox)
+![codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox)
 
 React hooks written in ReScript for building accessible listbox components.
 
@@ -14,7 +15,6 @@ npm install --save @brnrdog/listbox
 ## Usage
 
 The`useListbox` hook provides primitives to build custom listbox components.
-
 
 ### Examples
 
