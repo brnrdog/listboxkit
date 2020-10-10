@@ -13,23 +13,24 @@ module ListboxComponent = {
   let make = () => {
     let {
       highlightedIndex, 
-      getOptionProps
+      getOptionProps,
+      getContainerProps,
     }: Listbox.listbox = Listbox.useListbox(~options)
 
-    <ul> 
+    let { role, tabIndex, onKeyDown } = getContainerProps()
+
+    <ul role tabIndex onKeyDown> 
       {
         options 
         |> Array.mapi((index, option) => {
           let {
             ariaSelected,
             onClick, 
-            onKeyDown,
             role,
-            tabIndex
           }: Listbox.optionProps = getOptionProps(index)
           let highlighted =  highlightedIndex == index
 
-          <li key=option onClick onKeyDown role ariaSelected tabIndex>
+          <li key=option onClick onKeyDown role ariaSelected>
             {(highlighted ? `* ${option}` : option) |> React.string}
           </li>
         }) 
@@ -53,10 +54,19 @@ module FireEvent = {
   let pressEsc   = FireEvent.keyDown(~eventInit={"key": "Esc" })
 }
 
+let getListbox = getByRole(~matcher=#Str("listbox"))
+
 let getOption = (name) => getByRole(
   ~matcher=#Str("option"),
   ~options=DomTestingLibrary.ByRoleQuery.makeOptions(~name, ()),
 )
+
+test("render listbox container", () => {
+  render(component)
+  |> getListbox
+  |> expect
+  |> toBeInTheDocument
+})
 
 test("renders the option role for 'Red' ", () => {
   render(component)
@@ -124,51 +134,33 @@ test("sets option aria-selected to true when clicked", () => {
 })
 
 test("highlights next option when pressing arrow down ", () => {
-  let component = render(component)
+  let component = render(component) 
+  let listbox = component |> getListbox
+
+  // Looping over the options:
+  listbox |> FireEvent.pressDown
+  listbox |> FireEvent.pressDown
+  listbox |> FireEvent.pressDown
+  listbox |> FireEvent.pressDown
 
   component
-  |> getOption("Red") 
-  |> FireEvent.click
-
-  component 
   |> getOption("* Red") 
-  |> FireEvent.pressDown
-  
-  component 
-  |> getOption("* Green") 
-  |> FireEvent.pressDown
-
-  component 
-  |> getOption("* Blue") 
-  |> FireEvent.pressDown
-  
-  component
-  |> getOption("* Red")
   |> expect
   |> toBeInTheDocument
 })
 
-test("highlights prev option when pressing arrow up", () => {
-  let component = render(component)
+test("highlights previous option when pressing arrow up ", () => {
+  let component = render(component) 
+  let listbox = component |> getListbox
 
-  component 
-  |> getOption("Red")
-  |> FireEvent.click
-  
-  component 
-  |> getOption("* Red") 
-  |> FireEvent.pressUp
+  // Looping over the options:
+  listbox |> FireEvent.pressUp
+  listbox |> FireEvent.pressUp
+  listbox |> FireEvent.pressUp
+  listbox |> FireEvent.pressUp
 
-  component 
+  component
   |> getOption("* Blue") 
-  |> FireEvent.pressUp
-
-  component 
-  |> getOption("* Green") 
-  |> FireEvent.pressUp
-
-  component 
-  |> getOption("* Red") 
   |> expect
   |> toBeInTheDocument
 })
@@ -187,7 +179,7 @@ test("selecting and unselecting", () => {
   |> _ => ()
 
   component
-  |> getOption("* Red")
+  |> getListbox
   |> FireEvent.pressEnter
 
   component 
@@ -197,7 +189,7 @@ test("selecting and unselecting", () => {
   |> _ => ()
 
   component
-  |> getOption("* Red")
+  |> getListbox
   |> FireEvent.pressSpace
 
  component 

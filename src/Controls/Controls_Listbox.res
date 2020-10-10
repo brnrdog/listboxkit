@@ -13,7 +13,7 @@ module Navigation = {
   let firstIndex = _index => 0
   let lastIndex  = (~size, _index)=> size - 1
   let nextIndex  = (~size, index) => size - index == 1 ? 0 : index + 1
-  let prevIndex  = (~size, index) => index == 0 ? size - 1 : index - 1
+  let prevIndex  = (~size, index) => index <= 0 ? size - 1 : index - 1
 }
 
 let equals = x => y => x == y

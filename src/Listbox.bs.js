@@ -25,10 +25,15 @@ function useListbox(options) {
                     return i === index;
                   })),
             role: "option",
-            tabIndex: 0,
             onClick: (function (param) {
                 return EventHandlers.onClick(index, selectIndex, param);
-              }),
+              })
+          };
+  };
+  var getContainerProps = function (param) {
+    return {
+            role: "listbox",
+            tabIndex: 0,
             onKeyDown: (function (param) {
                 return EventHandlers.onKeyDown(true, noop, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, (function (param) {
                               
@@ -39,7 +44,8 @@ function useListbox(options) {
   return {
           highlightedIndex: match.highlightedIndex,
           selectedIndexes: selectedIndexes,
-          getOptionProps: getOptionProps
+          getOptionProps: getOptionProps,
+          getContainerProps: getContainerProps
         };
 }
 

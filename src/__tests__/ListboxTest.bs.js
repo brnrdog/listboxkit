@@ -19,15 +19,20 @@ function ListboxTest$ListboxComponent(Props) {
   var match = Listbox.useListbox(options);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
-  return React.createElement("ul", undefined, $$Array.mapi((function (index, option) {
+  var match$1 = Curry._1(match.getContainerProps, undefined);
+  var onKeyDown = match$1.onKeyDown;
+  return React.createElement("ul", {
+              role: match$1.role,
+              tabIndex: match$1.tabIndex,
+              onKeyDown: onKeyDown
+            }, $$Array.mapi((function (index, option) {
                     var match = Curry._1(getOptionProps, index);
                     var highlighted = highlightedIndex === index;
                     return React.createElement("li", {
                                 key: option,
                                 "aria-selected": match["aria-selected"],
                                 role: match.role,
-                                tabIndex: match.tabIndex,
-                                onKeyDown: match.onKeyDown,
+                                onKeyDown: onKeyDown,
                                 onClick: match.onClick
                               }, highlighted ? "* " + option : option);
                   }), options));
@@ -291,6 +296,15 @@ var FireEvent = {
   pressEsc: pressEsc
 };
 
+var partial_arg = {
+  NAME: "Str",
+  VAL: "listbox"
+};
+
+function getListbox(param, param$1) {
+  return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
+}
+
 function getOption(name) {
   var partial_arg = {
     name: name
@@ -303,6 +317,10 @@ function getOption(name) {
     return ReactTestingLibrary.getByRole(partial_arg$1, partial_arg, param);
   };
 }
+
+Jest.test("render listbox container", (function (param) {
+        return JestDom.toBeInTheDocument(expect(getListbox(undefined, ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component))));
+      }));
 
 Jest.test("renders the option role for 'Red' ", (function (param) {
         return JestDom.toBeInTheDocument(expect(getOption("Red")(ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component))));
@@ -337,34 +355,37 @@ Jest.test("sets option aria-selected to true when clicked", (function (param) {
 
 Jest.test("highlights next option when pressing arrow down ", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
-        Curry._2(click, undefined, getOption("Red")(component$1));
-        Curry._1(pressDown, getOption("* Red")(component$1));
-        Curry._1(pressDown, getOption("* Green")(component$1));
-        Curry._1(pressDown, getOption("* Blue")(component$1));
+        var listbox = getListbox(undefined, component$1);
+        Curry._1(pressDown, listbox);
+        Curry._1(pressDown, listbox);
+        Curry._1(pressDown, listbox);
+        Curry._1(pressDown, listbox);
         return JestDom.toBeInTheDocument(expect(getOption("* Red")(component$1)));
       }));
 
-Jest.test("highlights prev option when pressing arrow up", (function (param) {
+Jest.test("highlights previous option when pressing arrow up ", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
-        Curry._2(click, undefined, getOption("Red")(component$1));
-        Curry._1(pressUp, getOption("* Red")(component$1));
-        Curry._1(pressUp, getOption("* Blue")(component$1));
-        Curry._1(pressUp, getOption("* Green")(component$1));
-        return JestDom.toBeInTheDocument(expect(getOption("* Red")(component$1)));
+        var listbox = getListbox(undefined, component$1);
+        Curry._1(pressUp, listbox);
+        Curry._1(pressUp, listbox);
+        Curry._1(pressUp, listbox);
+        Curry._1(pressUp, listbox);
+        return JestDom.toBeInTheDocument(expect(getOption("* Blue")(component$1)));
       }));
 
 Jest.test("selecting and unselecting", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
         Curry._2(click, undefined, getOption("Red")(component$1));
         JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
-        Curry._1(pressEnter, getOption("* Red")(component$1));
+        Curry._1(pressEnter, getListbox(undefined, component$1));
         JestDom.toHaveAttribute("aria-selected", "false")(expect(getOption("* Red")(component$1)));
-        Curry._1(pressSpace, getOption("* Red")(component$1));
+        Curry._1(pressSpace, getListbox(undefined, component$1));
         return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
       }));
 
 exports.ListboxComponent = ListboxComponent;
 exports.component = component;
 exports.FireEvent = FireEvent;
+exports.getListbox = getListbox;
 exports.getOption = getOption;
 /* component Not a pure module */

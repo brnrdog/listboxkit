@@ -23,7 +23,7 @@ function nextIndex(size, index) {
 }
 
 function prevIndex(size, index) {
-  if (index === 0) {
+  if (index <= 0) {
     return size - 1 | 0;
   } else {
     return index - 1 | 0;
