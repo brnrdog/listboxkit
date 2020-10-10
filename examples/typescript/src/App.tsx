@@ -14,13 +14,14 @@ function App() {
   const {
     highlightedIndex,
     getOptionProps,
+    getContainerProps,
   } = useListbox(options);
 
   return (
     <div className="container">
       <h1>Simple listbox example</h1>
 
-      <ul className="listbox">
+      <ul className="listbox" {...getContainerProps()}>
         {options.map((o, index) => {
           const optionProps = getOptionProps(index)
           const highlighted = index === highlightedIndex
