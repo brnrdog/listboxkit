@@ -1,3 +1,9 @@
+type containerProps = {
+  role: string; 
+  tabIndex: number;
+  onKeyDown(event: any): void;
+}
+
 type optionProps = {
   role: string;
   'aria-selected': boolean;
@@ -7,6 +13,7 @@ type optionProps = {
 type listbox = {
   highlightedIndex: number;
   selectedIndexes: Array<number>;
+  getContainerProps(): containerProps;
   getOptionProps(index: number): optionProps;
 }
 
