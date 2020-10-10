@@ -1,6 +1,6 @@
 {
   "name": "@brnrdog/listbox",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -48,11 +48,6 @@
       "<rootDir>/src/**/*.bs.js",
       "!<rootDir>/src/Controls/Controls_DropdownListbox.bs.js",
       "!<rootDir>/src/__tests__/**/*.bs.js"
-    ],
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "clover"
     ]
   }
 }
