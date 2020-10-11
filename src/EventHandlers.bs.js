@@ -50,10 +50,16 @@ function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlig
   }
 }
 
+function onBlur(resetHighlighted, _event) {
+  Curry._1(resetHighlighted, undefined);
+  
+}
+
 function onClick(index, selectIndex, _event) {
   return Curry._1(selectIndex, index);
 }
 
 exports.onKeyDown = onKeyDown;
+exports.onBlur = onBlur;
 exports.onClick = onClick;
 /* No side effect */

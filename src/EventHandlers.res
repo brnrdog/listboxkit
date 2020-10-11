@@ -33,4 +33,10 @@ let onKeyDown = (
   }
 }
 
+let onBlur = (~resetHighlighted, _event) => {
+  resetHighlighted()
+  
+  ()
+}
+
 let onClick = (~index, ~selectIndex, _event) => selectIndex(index)

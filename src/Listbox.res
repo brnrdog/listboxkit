@@ -1,6 +1,7 @@
 type containerProps = {
   role        : string,
   tabIndex    : int,
+  onBlur      : ReactEvent.Focus.t => unit,
   onKeyDown   : ReactEvent.Keyboard.t => unit,
 }
 
@@ -24,6 +25,7 @@ let useListbox = (~options) => {
   let size = Belt.Array.length(options)
   let {
     highlightedIndex,
+    resetHighlighted,
     selectedIndexes,
     selectIndex,
     highlightNext,
@@ -42,6 +44,7 @@ let useListbox = (~options) => {
   let getContainerProps = () => {
     role: "listbox",
     tabIndex: 0,
+    onBlur: EventHandlers.onBlur(~resetHighlighted),
     onKeyDown: EventHandlers.onKeyDown(
       ~menuVisible = true,
       ~hideMenu = noop,

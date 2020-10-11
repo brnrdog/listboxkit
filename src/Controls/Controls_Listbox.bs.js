@@ -30,11 +30,16 @@ function prevIndex(size, index) {
   }
 }
 
+function reset(_index) {
+  return -1;
+}
+
 var Navigation = {
   firstIndex: firstIndex,
   lastIndex: lastIndex,
   nextIndex: nextIndex,
-  prevIndex: prevIndex
+  prevIndex: prevIndex,
+  reset: reset
 };
 
 var equals = Caml_obj.caml_equal;
@@ -87,6 +92,9 @@ function useControls(size) {
                   return prevIndex(size, param);
                 }));
   };
+  var resetHighlighted = function (param) {
+    return Curry._1(setHighlightedIndex, reset);
+  };
   var selectHighlighted = function (param) {
     return selectIndex(setHighlightedIndex, setSelectedIndexes, highlightedIndex);
   };
@@ -100,6 +108,7 @@ function useControls(size) {
           highlightLast: highlightLast,
           highlightNext: highlightNext,
           highlightPrev: highlightPrev,
+          resetHighlighted: resetHighlighted,
           selectHighlighted: selectHighlighted,
           selectIndex: selectIndex$1
         };

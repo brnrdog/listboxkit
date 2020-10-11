@@ -14,6 +14,7 @@ function useListbox(options) {
   var match = Controls_Listbox.useControls(size);
   var selectIndex = match.selectIndex;
   var selectHighlighted = match.selectHighlighted;
+  var resetHighlighted = match.resetHighlighted;
   var highlightPrev = match.highlightPrev;
   var highlightNext = match.highlightNext;
   var highlightLast = match.highlightLast;
@@ -34,6 +35,9 @@ function useListbox(options) {
     return {
             role: "listbox",
             tabIndex: 0,
+            onBlur: (function (param) {
+                return EventHandlers.onBlur(resetHighlighted, param);
+              }),
             onKeyDown: (function (param) {
                 return EventHandlers.onKeyDown(true, noop, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, (function (param) {
                               

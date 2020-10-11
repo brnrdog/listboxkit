@@ -5,6 +5,7 @@ type controls = {
   highlightLast    : unit => unit,
   highlightNext    : unit => unit,
   highlightPrev    : unit => unit,
+  resetHighlighted : unit => unit,
   selectHighlighted: unit => unit,
   selectIndex      : int  => unit,
 }
@@ -14,6 +15,7 @@ module Navigation = {
   let lastIndex  = (~size, _index)=> size - 1
   let nextIndex  = (~size, index) => size - index == 1 ? 0 : index + 1
   let prevIndex  = (~size, index) => index <= 0 ? size - 1 : index - 1
+  let reset      = (_index) => -1;
 }
 
 let equals = x => y => x == y
@@ -44,6 +46,7 @@ let useControls = (~size) => {
   let highlightLast  = _  => setHighlightedIndex(Navigation.lastIndex(~size))
   let highlightNext  = () => setHighlightedIndex(Navigation.nextIndex(~size))
   let highlightPrev  = () => setHighlightedIndex(Navigation.prevIndex(~size))
+  let resetHighlighted = () => setHighlightedIndex(Navigation.reset)
   
   let selectHighlighted = () => selectIndex(
     ~setSelectedIndexes, 
@@ -62,6 +65,7 @@ let useControls = (~size) => {
     highlightLast,
     highlightNext,
     highlightPrev,
+    resetHighlighted,
     selectedIndexes,
     selectHighlighted,
     selectIndex,

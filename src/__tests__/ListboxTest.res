@@ -2,6 +2,8 @@ open Jest
 open JestDom
 open ReactTestingLibrary
 
+let assertAndContinue = _ => ()
+
 type t = {
   key: string
 }
@@ -17,9 +19,9 @@ module ListboxComponent = {
       getContainerProps,
     }: Listbox.listbox = Listbox.useListbox(~options)
 
-    let { role, tabIndex, onKeyDown } = getContainerProps()
+    let { role, tabIndex, onKeyDown, onBlur } = getContainerProps()
 
-    <ul role tabIndex onKeyDown> 
+    <ul role tabIndex onKeyDown onBlur> 
       {
         options 
         |> Array.mapi((index, option) => {
@@ -68,28 +70,28 @@ test("render listbox container", () => {
   |> toBeInTheDocument
 })
 
-test("renders the option role for 'Red' ", () => {
-  render(component)
+test("renders the options: Red, Green and Blue", () => {
+  let component = render(component)
+  
+  component
   |> getOption("Red") 
   |> expect 
   |> toBeInTheDocument
-})
+  |> assertAndContinue
 
-test("renders the option role for 'Green'", () => {
-  render(component) 
+  component
   |> getOption("Green") 
   |> expect 
   |> toBeInTheDocument
-})
+  |> assertAndContinue
 
-test("renders the option role for 'Blue'", () => {
-  render(component )
+  component
   |> getOption("Blue") 
   |> expect 
   |> toBeInTheDocument
 })
 
-test("highlights last option when pressing End", () => {
+test("highlights last option when pressing END", () => {
   let component = render(component)
 
   component
@@ -102,7 +104,7 @@ test("highlights last option when pressing End", () => {
   |> toBeInTheDocument
 })
 
-test("highlights first option when pressing Home", () => {
+test("highlights first option when pressing HOME", () => {
   let component = render(component)
 
   component
@@ -133,39 +135,71 @@ test("sets option aria-selected to true when clicked", () => {
   |> toHaveAttribute("aria-selected", ~value="true")
 })
 
-test("highlights next option when pressing arrow down ", () => {
+test("highlights next option when pressing DOWN ", () => {
   let component = render(component) 
   let listbox = component |> getListbox
 
-  // Looping over the options:
   listbox |> FireEvent.pressDown
+  component 
+  |> getOption("* Red") 
+  |> expect 
+  |> toBeInTheDocument 
+  |> assertAndContinue
+  
   listbox |> FireEvent.pressDown
-  listbox |> FireEvent.pressDown
-  listbox |> FireEvent.pressDown
+  component 
+  |> getOption("* Green") 
+  |> expect 
+  |> toBeInTheDocument 
+  |> assertAndContinue
 
+  listbox |> FireEvent.pressDown
+  component 
+  |> getOption("* Blue") 
+  |> expect 
+  |> toBeInTheDocument 
+  |> assertAndContinue
+
+  listbox |> FireEvent.pressDown
   component
   |> getOption("* Red") 
   |> expect
   |> toBeInTheDocument
 })
 
-test("highlights previous option when pressing arrow up ", () => {
+test("highlights previous option when pressing UP ", () => {
   let component = render(component) 
   let listbox = component |> getListbox
 
-  // Looping over the options:
   listbox |> FireEvent.pressUp
-  listbox |> FireEvent.pressUp
-  listbox |> FireEvent.pressUp
-  listbox |> FireEvent.pressUp
+  component
+  |> getOption("* Blue") 
+  |> expect
+  |> toBeInTheDocument 
+  |> assertAndContinue
 
+  listbox |> FireEvent.pressUp
+  component
+  |> getOption("* Green") 
+  |> expect
+  |> toBeInTheDocument 
+  |> assertAndContinue
+  
+  listbox |> FireEvent.pressUp
+  component
+  |> getOption("* Red") 
+  |> expect
+  |> toBeInTheDocument 
+  |> assertAndContinue
+
+  listbox |> FireEvent.pressUp
   component
   |> getOption("* Blue") 
   |> expect
   |> toBeInTheDocument
 })
 
-test("selecting and unselecting", () => {
+test("selects and deselects option when pressing SPACE/ENTER", () => {
   let component = render(component)
 
   component
@@ -198,3 +232,20 @@ test("selecting and unselecting", () => {
   |> toHaveAttribute("aria-selected", ~value="true") 
 })
 
+test("resets highlighted option when focus out", () => {
+  let component = render(component)
+  let listbox = component |> getListbox
+
+  listbox |> FireEvent.pressDown
+  component
+  |> getOption("* Red")
+  |> expect
+  |> toBeInTheDocument
+  |> assertAndContinue
+
+  listbox |> FireEvent.blur
+  component
+  |> getOption("Red")
+  |> expect
+  |> toBeInTheDocument
+})
