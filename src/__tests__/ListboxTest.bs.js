@@ -29,6 +29,7 @@ function ListboxTest$ListboxComponent(Props) {
               role: match$1.role,
               tabIndex: match$1.tabIndex,
               onKeyDown: onKeyDown,
+              onFocus: match$1.onFocus,
               onBlur: match$1.onBlur
             }, $$Array.mapi((function (index, option) {
                     var match = Curry._1(getOptionProps, index);
@@ -53,6 +54,8 @@ var component = React.createElement(ListboxTest$ListboxComponent, {});
 var blur = ReactTestingLibrary.FireEvent.blur;
 
 var click = ReactTestingLibrary.FireEvent.click;
+
+var focus = ReactTestingLibrary.FireEvent.focus;
 
 var pressDown = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
       key: "ArrowDown"
@@ -137,8 +140,6 @@ var FireEvent_encrypted = ReactTestingLibrary.FireEvent.encrypted;
 var FireEvent_ended = ReactTestingLibrary.FireEvent.ended;
 
 var FireEvent_error = ReactTestingLibrary.FireEvent.error;
-
-var FireEvent_focus = ReactTestingLibrary.FireEvent.focus;
 
 var FireEvent_focusIn = ReactTestingLibrary.FireEvent.focusIn;
 
@@ -251,7 +252,7 @@ var FireEvent = {
   encrypted: FireEvent_encrypted,
   ended: FireEvent_ended,
   error: FireEvent_error,
-  focus: FireEvent_focus,
+  focus: focus,
   focusIn: FireEvent_focusIn,
   focusOut: FireEvent_focusOut,
   input: FireEvent_input,
@@ -387,6 +388,23 @@ Jest.test("selects and deselects option when pressing SPACE/ENTER", (function (p
         JestDom.toHaveAttribute("aria-selected", "false")(expect(getOption("* Red")(component$1)));
         Curry._1(pressSpace, getListbox(undefined, component$1));
         return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
+      }));
+
+Jest.test("highlights first when focused and no option selected", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
+        var listbox = getListbox(undefined, component$1);
+        Curry._2(focus, undefined, listbox);
+        return JestDom.toBeInTheDocument(expect(getOption("* Red")(component$1)));
+      }));
+
+Jest.test("highlights selected index when focus and option selected", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
+        Curry._2(click, undefined, getOption("Green")(component$1));
+        JestDom.toBeInTheDocument(expect(getOption("* Green")(component$1)));
+        Curry._1(pressDown, getListbox(undefined, component$1));
+        JestDom.toBeInTheDocument(expect(getOption("* Blue")(component$1)));
+        Curry._2(focus, undefined, getListbox(undefined, component$1));
+        return JestDom.toBeInTheDocument(expect(getOption("* Green")(component$1)));
       }));
 
 Jest.test("resets highlighted option when focus out", (function (param) {

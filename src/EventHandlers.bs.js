@@ -2,6 +2,8 @@
 'use strict';
 
 var Curry = require("bs-platform/lib/js/curry.js");
+var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
+var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 
 function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, showMenu, $$event) {
   $$event.preventDefault();
@@ -51,8 +53,11 @@ function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlig
 }
 
 function onBlur(resetHighlighted, _event) {
-  Curry._1(resetHighlighted, undefined);
-  
+  return Curry._1(resetHighlighted, undefined);
+}
+
+function onFocus(selectedIndexes, highlightIndex, _event) {
+  return Curry._1(highlightIndex, Belt_Option.getWithDefault(Belt_Array.get(Belt_Array.reverse(selectedIndexes), 0), 0));
 }
 
 function onClick(index, selectIndex, _event) {
@@ -61,5 +66,6 @@ function onClick(index, selectIndex, _event) {
 
 exports.onKeyDown = onKeyDown;
 exports.onBlur = onBlur;
+exports.onFocus = onFocus;
 exports.onClick = onClick;
 /* No side effect */

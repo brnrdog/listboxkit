@@ -19,6 +19,7 @@ function useListbox(options) {
   var highlightNext = match.highlightNext;
   var highlightLast = match.highlightLast;
   var highlightFirst = match.highlightFirst;
+  var highlightIndex = match.highlightIndex;
   var selectedIndexes = match.selectedIndexes;
   var getOptionProps = function (index) {
     return {
@@ -42,6 +43,9 @@ function useListbox(options) {
                 return EventHandlers.onKeyDown(true, noop, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, (function (param) {
                               
                             }), param);
+              }),
+            onFocus: (function (param) {
+                return EventHandlers.onFocus(selectedIndexes, highlightIndex, param);
               })
           };
   };

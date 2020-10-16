@@ -3,6 +3,7 @@ type containerProps = {
   tabIndex    : int,
   onBlur      : ReactEvent.Focus.t => unit,
   onKeyDown   : ReactEvent.Keyboard.t => unit,
+  onFocus     : ReactEvent.Focus.t => unit,
 }
 
 type optionProps = {
@@ -28,6 +29,7 @@ let useListbox = (~options) => {
     resetHighlighted,
     selectedIndexes,
     selectIndex,
+    highlightIndex,
     highlightNext,
     highlightPrev,
     highlightFirst,
@@ -45,6 +47,7 @@ let useListbox = (~options) => {
     role: "listbox",
     tabIndex: 0,
     onBlur: EventHandlers.onBlur(~resetHighlighted),
+    onFocus: EventHandlers.onFocus(~highlightIndex, ~selectedIndexes),
     onKeyDown: EventHandlers.onKeyDown(
       ~menuVisible = true,
       ~hideMenu = noop,
