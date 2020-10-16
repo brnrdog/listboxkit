@@ -19,9 +19,9 @@ module ListboxComponent = {
       getContainerProps,
     }: Listbox.listbox = Listbox.useListbox(~options)
 
-    let { role, tabIndex, onKeyDown, onBlur } = getContainerProps()
+    let { role, tabIndex, onKeyDown, onFocus, onBlur } = getContainerProps()
 
-    <ul role tabIndex onKeyDown onBlur> 
+    <ul role tabIndex onKeyDown onFocus onBlur> 
       {
         options 
         |> Array.mapi((index, option) => {
@@ -230,6 +230,52 @@ test("selects and deselects option when pressing SPACE/ENTER", () => {
   |> getOption("* Red") 
   |> expect 
   |> toHaveAttribute("aria-selected", ~value="true") 
+})
+
+test("highlights first when focused and no option selected", () => {
+  let component = render(component)
+  let listbox = component |> getListbox
+
+  listbox
+  |> FireEvent.focus
+
+  component
+  |> getOption("* Red")
+  |> expect
+  |> toBeInTheDocument
+})
+
+test("highlights selected index when focus and option selected", () => {
+  let component = render(component)
+
+  component
+  |> getOption("Green")
+  |> FireEvent.click
+
+  component 
+  |> getOption("* Green") 
+  |> expect
+  |> toBeInTheDocument
+  |> _ => ()
+
+  component
+  |> getListbox
+  |> FireEvent.pressDown
+
+  component 
+  |> getOption("* Blue") 
+  |> expect
+  |> toBeInTheDocument
+  |> _ => ()
+
+  component
+  |> getListbox
+  |> FireEvent.focus
+
+  component
+  |> getOption("* Green")
+  |> expect
+  |> toBeInTheDocument
 })
 
 test("resets highlighted option when focus out", () => {

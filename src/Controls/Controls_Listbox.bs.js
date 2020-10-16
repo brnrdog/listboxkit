@@ -74,6 +74,11 @@ function useControls(size) {
       });
   var setHighlightedIndex = match$1[1];
   var highlightedIndex = match$1[0];
+  var highlightIndex = function (i) {
+    return Curry._1(setHighlightedIndex, (function (param) {
+                  return i;
+                }));
+  };
   var highlightFirst = function (param) {
     return Curry._1(setHighlightedIndex, firstIndex);
   };
@@ -104,6 +109,7 @@ function useControls(size) {
   return {
           highlightedIndex: highlightedIndex,
           selectedIndexes: match[0],
+          highlightIndex: highlightIndex,
           highlightFirst: highlightFirst,
           highlightLast: highlightLast,
           highlightNext: highlightNext,

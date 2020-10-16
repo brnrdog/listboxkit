@@ -35,8 +35,14 @@ let onKeyDown = (
 
 let onBlur = (~resetHighlighted, _event) => {
   resetHighlighted()
-  
-  ()
+}
+
+let onFocus = (~selectedIndexes, ~highlightIndex, _event) => {
+  selectedIndexes
+  -> Belt.Array.reverse
+  -> Belt.Array.get(0)
+  -> Belt.Option.getWithDefault(0)
+  -> highlightIndex
 }
 
 let onClick = (~index, ~selectIndex, _event) => selectIndex(index)

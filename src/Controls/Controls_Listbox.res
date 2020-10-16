@@ -1,6 +1,7 @@
 type controls = {
   highlightedIndex : int,
   selectedIndexes  : array<int>,
+  highlightIndex   : int => unit,
   highlightFirst   : unit => unit,
   highlightLast    : unit => unit,
   highlightNext    : unit => unit,
@@ -42,6 +43,7 @@ let useControls = (~size) => {
   let (selectedIndexes, setSelectedIndexes)   = React.useState(() => [])
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
 
+  let highlightIndex = i  => setHighlightedIndex(_ => i)
   let highlightFirst = _  => setHighlightedIndex(Navigation.firstIndex)
   let highlightLast  = _  => setHighlightedIndex(Navigation.lastIndex(~size))
   let highlightNext  = () => setHighlightedIndex(Navigation.nextIndex(~size))
@@ -60,6 +62,7 @@ let useControls = (~size) => {
   )
     
   {
+    highlightIndex,
     highlightedIndex,
     highlightFirst,
     highlightLast,
