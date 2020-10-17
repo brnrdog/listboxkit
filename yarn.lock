@@ -286,6 +286,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@drewschrauf/bs-user-event@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@drewschrauf/bs-user-event/-/bs-user-event-0.1.1.tgz#aabacc98bb3b91ddb39057e61d72312c0e161a49"
+  integrity sha512-eEP7QB6mSLMNqhSGo1T4oE6a6iBOE9o9o1SfRfDWLLy+TiJud1w2b/8vUg8HJs6bYsGUeF2WwiemhSAqqX66ng==
+  dependencies:
+    "@testing-library/user-event" "^10.1.0"
+
 "@glennsl/bs-jest@^0.5.1":
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/@glennsl/bs-jest/-/bs-jest-0.5.1.tgz#2e16ad94268fc1e5ba0af978c141db1684556a55"
@@ -721,6 +728,13 @@
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@testing-library/dom" "^7.24.2"
+
+"@testing-library/user-event@^10.1.0":
+  version "10.4.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-10.4.1.tgz#f62adeae45681484dc24e6ca4f0b8f8a09321429"
+  integrity sha512-3sdJAfjT0i4aNvo0Gqod5MvZXutMXarVsLtb+r1t65AaRJY7BgMIzWgOtfM5dxRvZsc7IdXnCt9+gcWhiXk1xg==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
 
 "@types/aria-query@^4.2.0":
   version "4.2.0"

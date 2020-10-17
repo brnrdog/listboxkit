@@ -21,24 +21,30 @@ module ListboxComponent = {
 
     let { role, tabIndex, onKeyDown, onFocus, onBlur } = getContainerProps()
 
-    <ul role tabIndex onKeyDown onFocus onBlur> 
-      {
-        options 
-        |> Array.mapi((index, option) => {
-          let {
-            ariaSelected,
-            onClick, 
-            role,
-          }: Listbox.optionProps = getOptionProps(index)
-          let highlighted =  highlightedIndex == index
+    <div>
+      <ul role tabIndex onKeyDown onFocus onBlur> 
+        {
+          options 
+          |> Array.mapi((index, option) => {
+            let {
+              ariaSelected,
+              onClick, 
+              role,
+            }: Listbox.optionProps = getOptionProps(index)
+            let highlighted =  highlightedIndex == index
 
-          <li key=option onClick onKeyDown role ariaSelected>
-            {(highlighted ? `* ${option}` : option) |> React.string}
-          </li>
-        }) 
-        |> React.array
-      } 
-    </ul>
+            <li key=option onClick onKeyDown role ariaSelected>
+              {(highlighted ? `* ${option}` : option) |> React.string}
+            </li>
+          }) 
+          |> React.array
+        } 
+      </ul>
+
+      <button tabIndex={0}>
+        {React.string("Dumb")}
+      </button>
+    </div>
   }
 }
 
@@ -54,6 +60,7 @@ module FireEvent = {
   let pressEnd   = FireEvent.keyDown(~eventInit={"key": "End" })
   let pressHome  = FireEvent.keyDown(~eventInit={"key": "Home" })
   let pressEsc   = FireEvent.keyDown(~eventInit={"key": "Esc" })
+  let pressTab   = FireEvent.keyDown(~eventInit={"key": "Tab" })
 }
 
 let getListbox = getByRole(~matcher=#Str("listbox"))
@@ -256,7 +263,7 @@ test("highlights selected index when focus and option selected", () => {
   |> getOption("* Green") 
   |> expect
   |> toBeInTheDocument
-  |> _ => ()
+  |> assertAndContinue
 
   component
   |> getListbox
@@ -266,7 +273,7 @@ test("highlights selected index when focus and option selected", () => {
   |> getOption("* Blue") 
   |> expect
   |> toBeInTheDocument
-  |> _ => ()
+  |> assertAndContinue
 
   component
   |> getListbox
@@ -292,6 +299,39 @@ test("resets highlighted option when focus out", () => {
   listbox |> FireEvent.blur
   component
   |> getOption("Red")
+  |> expect
+  |> toBeInTheDocument
+})
+
+test("focus out when pressing Tab", () => {
+  let component = render(component)
+
+  UserEvent.tab()
+
+  // Highlights first
+  component
+  |> getOption("* Red")
+  |> expect
+  |> toBeInTheDocument
+  |> assertAndContinue
+
+  UserEvent.tab()
+
+  // Loses focus, highlights none
+  component
+  |> getOption("Red")
+  |> expect
+  |> toBeInTheDocument
+  |> assertAndContinue
+
+  component
+  |> getOption("Green")
+  |> expect
+  |> toBeInTheDocument
+  |> assertAndContinue
+
+  component
+  |> getOption("Blue")
   |> expect
   |> toBeInTheDocument
 })

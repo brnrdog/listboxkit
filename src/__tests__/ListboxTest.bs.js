@@ -7,6 +7,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var JestDom = require("bs-jest-dom/src/JestDom.bs.js");
 var Listbox = require("../Listbox.bs.js");
+var UserEvent = require("@drewschrauf/bs-user-event/src/UserEvent.bs.js");
 var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
 
 function assertAndContinue(param) {
@@ -25,23 +26,25 @@ function ListboxTest$ListboxComponent(Props) {
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);
   var onKeyDown = match$1.onKeyDown;
-  return React.createElement("ul", {
-              role: match$1.role,
-              tabIndex: match$1.tabIndex,
-              onKeyDown: onKeyDown,
-              onFocus: match$1.onFocus,
-              onBlur: match$1.onBlur
-            }, $$Array.mapi((function (index, option) {
-                    var match = Curry._1(getOptionProps, index);
-                    var highlighted = highlightedIndex === index;
-                    return React.createElement("li", {
-                                key: option,
-                                "aria-selected": match["aria-selected"],
-                                role: match.role,
-                                onKeyDown: onKeyDown,
-                                onClick: match.onClick
-                              }, highlighted ? "* " + option : option);
-                  }), options));
+  return React.createElement("div", undefined, React.createElement("ul", {
+                  role: match$1.role,
+                  tabIndex: match$1.tabIndex,
+                  onKeyDown: onKeyDown,
+                  onFocus: match$1.onFocus,
+                  onBlur: match$1.onBlur
+                }, $$Array.mapi((function (index, option) {
+                        var match = Curry._1(getOptionProps, index);
+                        var highlighted = highlightedIndex === index;
+                        return React.createElement("li", {
+                                    key: option,
+                                    "aria-selected": match["aria-selected"],
+                                    role: match.role,
+                                    onKeyDown: onKeyDown,
+                                    onClick: match.onClick
+                                  }, highlighted ? "* " + option : option);
+                      }), options)), React.createElement("button", {
+                  tabIndex: 0
+                }, "Dumb"));
 }
 
 var ListboxComponent = {
@@ -83,6 +86,10 @@ var pressHome = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
 
 var pressEsc = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
       key: "Esc"
+    });
+
+var pressTab = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
+      key: "Tab"
     });
 
 var FireEvent_abort = ReactTestingLibrary.FireEvent.abort;
@@ -299,7 +306,8 @@ var FireEvent = {
   pressSpace: pressSpace,
   pressEnd: pressEnd,
   pressHome: pressHome,
-  pressEsc: pressEsc
+  pressEsc: pressEsc,
+  pressTab: pressTab
 };
 
 var partial_arg = {
@@ -414,6 +422,16 @@ Jest.test("resets highlighted option when focus out", (function (param) {
         JestDom.toBeInTheDocument(expect(getOption("* Red")(component$1)));
         Curry._2(blur, undefined, listbox);
         return JestDom.toBeInTheDocument(expect(getOption("Red")(component$1)));
+      }));
+
+Jest.test("focus out when pressing Tab", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component);
+        UserEvent.tab(undefined, undefined, undefined);
+        JestDom.toBeInTheDocument(expect(getOption("* Red")(component$1)));
+        UserEvent.tab(undefined, undefined, undefined);
+        JestDom.toBeInTheDocument(expect(getOption("Red")(component$1)));
+        JestDom.toBeInTheDocument(expect(getOption("Green")(component$1)));
+        return JestDom.toBeInTheDocument(expect(getOption("Blue")(component$1)));
       }));
 
 exports.assertAndContinue = assertAndContinue;
