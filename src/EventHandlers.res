@@ -9,8 +9,11 @@ let onKeyDown = (
   ~showMenu,
   event,
 ) => {
-  ReactEvent.Keyboard.preventDefault(event)
   let key = ReactEvent.Keyboard.key(event)
+
+  if (key != "Tab") {
+    ReactEvent.Keyboard.preventDefault(event)
+  }
 
   let selectCurrent = () => {
     selectHighlighted()

@@ -6,8 +6,10 @@ var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 
 function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, showMenu, $$event) {
-  $$event.preventDefault();
   var key = $$event.key;
+  if (key !== "Tab") {
+    $$event.preventDefault();
+  }
   switch (key) {
     case "ArrowDown" :
         if (menuVisible) {
