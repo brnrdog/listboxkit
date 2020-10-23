@@ -1,0 +1,164 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #3578e5;
+  --ifm-color-primary-dark: #1d68e1;
+  --ifm-color-primary-darker: #1b62d4;
+  --ifm-color-primary-darkest: #1751af;
+  --ifm-color-primary-light: #4e89e8;
+  --ifm-color-primary-lighter: #5a91ea;
+  --ifm-color-primary-lightest: #80aaef;
+  --ifm-code-font-size: 95%;
+  --lbx-text-color: #333;
+  --lbx-color-focus: #d1dff5;
+  --lbx-color-hover: #f0f6ff;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.hero {
+  background: transparent;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.hero__subtitle {
+  max-width: 32rem;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.listbox {
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid var(--ifm-color-secondary-dark);
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.listbox:focus {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--lbx-color-focus);
+  border-color: var(--ifm-color-primary-lightest);
+}
+
+.listbox-option {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--ifm-color-secondary-darker);
+  color: var(--ifm-font-color-secondary);
+  list-style: none;
+  outline: none;
+  padding: 0.5em 1em;
+}
+
+.markdown .listbox-option {
+  margin: 0;
+}
+
+.listbox-option .checkbox {
+  margin-right: .5rem;
+}
+
+.listbox-option:last-child {
+  border-bottom: 0;
+}
+
+.listbox-option:hover:not(.active),
+.listbox-option.highlighted {
+  background: var(--lbx-color-hover);
+}
+
+.listbox-option:hover .checkbox:not(.active),
+.listbox-option.highlighted:not(.active) .checkbox {
+  border-color: var(--ifm-color-primary-lightest);
+}
+
+.listbox-option:hover:not(.active) .checkbox path,
+.listbox-option.highlighted .checkbox path {
+  fill: var(--ifm-color-primary-lightest);
+}
+
+.listbox-option.highlighted.active {
+  background: #3a5fcc;
+  color: white;
+}
+
+.listbox-option.active .checkbox {
+  border-color: var(--ifm-color-primary-lightest);
+}
+
+.listbox-option[aria-selected="true"] {
+  font-weight: 600;
+}
+
+.listbox-option[aria-selected="true"]:hover .checkbox path,
+.listbox-option.highlighted[aria-selected="true"] .checkbox path {
+  fill: var(--ifm-color-primary-lighter);
+  opacity: 1;
+}
+
+.listbox-option[aria-selected="true"] .checkbox path {
+  fill: var(--ifm-color-primary-lighter);
+  opacity: 1
+}
+
+.page {
+  padding: 2rem 0;
+}
+
+.example-selected {
+  margin: 1rem 0;
+}
+
+.label {
+  display: inline-block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.checkbox {
+  cursor: pointer;
+  border: 2px solid var(--ifm-color-primary-lightest);
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.checkbox svg {
+  width: 75%;
+  height: 75%;
+}
+
+.checkbox svg path {
+  fill: var(--ifm-color-primary-lightest);
+  opacity: 0.5;
+}
+
+.tag {
+  display: inline-block;
+  background: var(--ifm-color-secondary);
+  border-radius: 4px;
+  margin: 0 .25rem;
+  padding: 0.25rem 1rem;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-secondary);
+}
