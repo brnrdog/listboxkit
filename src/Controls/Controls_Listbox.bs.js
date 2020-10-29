@@ -46,25 +46,30 @@ var equals = Caml_obj.caml_equal;
 
 var diff = Caml_obj.caml_notequal;
 
-function selectIndex(setHighlightedIndex, setSelectedIndexes, index) {
+function selectIndex(multiSelect, setHighlightedIndex, setSelectedIndexes, index) {
   Curry._1(setHighlightedIndex, (function (param) {
           return index;
         }));
   Curry._1(setSelectedIndexes, (function (selectedIndexes) {
-          if (Belt_Array.some(selectedIndexes, (function (param) {
-                    return Caml_obj.caml_equal(index, param);
-                  }))) {
-            return Belt_Array.keep(selectedIndexes, (function (param) {
-                          return Caml_obj.caml_notequal(index, param);
-                        }));
+          if (multiSelect) {
+            if (Belt_Array.some(selectedIndexes, (function (param) {
+                      return Caml_obj.caml_equal(index, param);
+                    }))) {
+              return Belt_Array.keep(selectedIndexes, (function (param) {
+                            return Caml_obj.caml_notequal(index, param);
+                          }));
+            } else {
+              return Belt_Array.concat(selectedIndexes, [index]);
+            }
           } else {
-            return Belt_Array.concat(selectedIndexes, [index]);
+            return [index];
           }
         }));
   
 }
 
-function useControls(size) {
+function useControls(multiSelectOpt, size) {
+  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
   var match = React.useState(function () {
         return [];
       });
@@ -101,10 +106,10 @@ function useControls(size) {
     return Curry._1(setHighlightedIndex, reset);
   };
   var selectHighlighted = function (param) {
-    return selectIndex(setHighlightedIndex, setSelectedIndexes, highlightedIndex);
+    return selectIndex(multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
   };
   var selectIndex$1 = function (param) {
-    return selectIndex(setHighlightedIndex, setSelectedIndexes, param);
+    return selectIndex(multiSelect, setHighlightedIndex, setSelectedIndexes, param);
   };
   return {
           highlightedIndex: highlightedIndex,

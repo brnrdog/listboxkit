@@ -20,7 +20,7 @@ function useControls(size) {
                   return false;
                 }));
   };
-  var match$1 = Controls_Listbox.useControls(size);
+  var match$1 = Controls_Listbox.useControls(true, size);
   return {
           highlightedIndex: match$1.highlightedIndex,
           menuVisible: match[0],

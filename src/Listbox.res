@@ -22,7 +22,7 @@ type listbox = {
 
 let noop = () => ()
 
-let useListbox = (~options) => {
+let useListbox = (options, ~multiSelect = false, ()) => {
   let size = Belt.Array.length(options)
   let {
     highlightedIndex,
@@ -35,7 +35,7 @@ let useListbox = (~options) => {
     highlightFirst,
     highlightLast,
     selectHighlighted,
-  } = Controls.Listbox.useControls(~size)
+  } = Controls.Listbox.useControls(~multiSelect, ~size)
 
   let getOptionProps = index => {
     ariaSelected: Belt.Array.some(selectedIndexes, i => i == index),

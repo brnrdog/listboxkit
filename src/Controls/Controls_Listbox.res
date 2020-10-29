@@ -23,6 +23,7 @@ let equals = x => y => x == y
 let diff   = x => y => x != y
 
 let selectIndex = (
+  ~multiSelect,
   ~setHighlightedIndex, 
   ~setSelectedIndexes, 
   index
@@ -30,16 +31,17 @@ let selectIndex = (
   open Belt.Array
 
   setHighlightedIndex(_ => index)
+
   setSelectedIndexes(selectedIndexes => {
-    index |> equals |> some(selectedIndexes)
+    multiSelect ? (index |> equals |> some(selectedIndexes)
     ? keep(selectedIndexes, diff(index)) 
-    : concat(selectedIndexes, [index])
+    : concat(selectedIndexes, [index])) : [index]
   })
   
   ()
 }
 
-let useControls = (~size) => {
+let useControls = (~multiSelect = false, ~size) => {
   let (selectedIndexes, setSelectedIndexes)   = React.useState(() => [])
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
 
@@ -53,10 +55,12 @@ let useControls = (~size) => {
   let selectHighlighted = () => selectIndex(
     ~setSelectedIndexes, 
     ~setHighlightedIndex,
+    ~multiSelect,
     highlightedIndex
   )
 
   let selectIndex = selectIndex(
+    ~multiSelect,
     ~setSelectedIndexes, 
     ~setHighlightedIndex,
   )

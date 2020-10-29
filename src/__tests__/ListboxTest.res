@@ -12,12 +12,12 @@ module ListboxComponent = {
   let options = ["Red", "Green", "Blue"]
 
   @react.component
-  let make = () => {
+  let make = (~multiSelect=false) => {
     let {
       highlightedIndex, 
       getOptionProps,
       getContainerProps,
-    }: Listbox.listbox = Listbox.useListbox(~options)
+    }: Listbox.listbox = Listbox.useListbox(options, ~multiSelect, ())
 
     let { role, tabIndex, onKeyDown, onFocus, onBlur } = getContainerProps()
 
@@ -48,7 +48,7 @@ module ListboxComponent = {
   }
 }
 
-let component = <ListboxComponent />
+let component = (~multiSelect=true, ()) => <ListboxComponent multiSelect />
 
 module FireEvent = {
   include ReactTestingLibrary.FireEvent
@@ -71,14 +71,14 @@ let getOption = (name) => getByRole(
 )
 
 test("render listbox container", () => {
-  render(component)
+  render(component())
   |> getListbox
   |> expect
   |> toBeInTheDocument
 })
 
 test("renders the options: Red, Green and Blue", () => {
-  let component = render(component)
+  let component = render(component())
   
   component
   |> getOption("Red") 
@@ -99,7 +99,7 @@ test("renders the options: Red, Green and Blue", () => {
 })
 
 test("highlights last option when pressing END", () => {
-  let component = render(component)
+  let component = render(component())
 
   component
   |> getOption("Red")
@@ -112,7 +112,7 @@ test("highlights last option when pressing END", () => {
 })
 
 test("highlights first option when pressing HOME", () => {
-  let component = render(component)
+  let component = render(component())
 
   component
   |> getOption("Blue")
@@ -125,7 +125,7 @@ test("highlights first option when pressing HOME", () => {
 })
 
 test("sets option aria-selected to true when clicked", () => {
-  let component = render(component)
+  let component = render(component())
 
   // Nothing should happen when pressing esc.
   component 
@@ -143,7 +143,7 @@ test("sets option aria-selected to true when clicked", () => {
 })
 
 test("highlights next option when pressing DOWN ", () => {
-  let component = render(component) 
+  let component = render(component()) 
   let listbox = component |> getListbox
 
   listbox |> FireEvent.pressDown
@@ -175,7 +175,7 @@ test("highlights next option when pressing DOWN ", () => {
 })
 
 test("highlights previous option when pressing UP ", () => {
-  let component = render(component) 
+  let component = render(component()) 
   let listbox = component |> getListbox
 
   listbox |> FireEvent.pressUp
@@ -207,7 +207,7 @@ test("highlights previous option when pressing UP ", () => {
 })
 
 test("selects and deselects option when pressing SPACE/ENTER", () => {
-  let component = render(component)
+  let component = render(component())
 
   component
   |> getOption("Red")
@@ -217,7 +217,7 @@ test("selects and deselects option when pressing SPACE/ENTER", () => {
   |> getOption("* Red") 
   |> expect 
   |> toHaveAttribute("aria-selected", ~value="true")
-  |> _ => ()
+  |> assertAndContinue
 
   component
   |> getListbox
@@ -227,7 +227,7 @@ test("selects and deselects option when pressing SPACE/ENTER", () => {
   |> getOption("* Red") 
   |> expect 
   |> toHaveAttribute("aria-selected", ~value="false")
-  |> _ => ()
+  |> assertAndContinue
 
   component
   |> getListbox
@@ -240,7 +240,7 @@ test("selects and deselects option when pressing SPACE/ENTER", () => {
 })
 
 test("highlights first when focused and no option selected", () => {
-  let component = render(component)
+  let component = render(component())
   let listbox = component |> getListbox
 
   listbox
@@ -253,7 +253,7 @@ test("highlights first when focused and no option selected", () => {
 })
 
 test("highlights selected index when focus and option selected", () => {
-  let component = render(component)
+  let component = render(component())
 
   component
   |> getOption("Green")
@@ -286,7 +286,7 @@ test("highlights selected index when focus and option selected", () => {
 })
 
 test("resets highlighted option when focus out", () => {
-  let component = render(component)
+  let component = render(component())
   let listbox = component |> getListbox
 
   listbox |> FireEvent.pressDown
@@ -304,7 +304,7 @@ test("resets highlighted option when focus out", () => {
 })
 
 test("focus out when pressing Tab", () => {
-  let component = render(component)
+  let component = render(component())
 
   UserEvent.tab()
 
@@ -334,4 +334,42 @@ test("focus out when pressing Tab", () => {
   |> getOption("Blue")
   |> expect
   |> toBeInTheDocument
+})
+
+test("selects multiple when multiSelect is true", () => {
+  let component = render(component(~multiSelect=true, ()))
+
+  UserEvent.tab()
+
+  component
+  |> getListbox
+  |> FireEvent.pressEnter
+
+  component 
+  |> getOption("* Red") 
+  |> expect 
+  |> toHaveAttribute("aria-selected", ~value="true")
+  |> assertAndContinue
+
+  component
+  |> getListbox
+  |> FireEvent.pressDown
+
+  component
+  |> getListbox
+  |> FireEvent.pressEnter
+
+  component
+  |> getListbox
+  |> FireEvent.pressDown
+
+  component
+  |> getListbox
+  |> FireEvent.pressEnter
+
+  component 
+  |> getOption("Red") 
+  |> expect 
+  |> toHaveAttribute("aria-selected", ~value="true")
+  
 })

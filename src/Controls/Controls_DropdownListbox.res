@@ -27,7 +27,7 @@ let useControls = (~size) => {
     selectedIndexes,
     selectHighlighted,
     selectIndex,
-  } = Controls_Listbox.useControls(~size)
+  } = Controls_Listbox.useControls(~multiSelect=true, ~size)
 
   {
     highlightedIndex,

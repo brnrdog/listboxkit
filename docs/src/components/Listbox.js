@@ -23,7 +23,7 @@ function Listbox() {
     selectedIndexes,
     getOptionProps,
     getContainerProps,
-  } = useListbox(options);
+  } = useListbox(options, true);
 
   return (
     <div>
@@ -51,7 +51,7 @@ function Listbox() {
         })}
       </ul>
       <div className="example-selected">
-        {selectedIndexes.length ? (
+        {selectedIndexes?.length ? (
           <>
             You have selected:
             {selectedIndexes.map((i, index) => (

@@ -9,9 +9,10 @@ function noop(param) {
   
 }
 
-function useListbox(options) {
+function useListbox(options, multiSelectOpt, param) {
+  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
   var size = options.length;
-  var match = Controls_Listbox.useControls(size);
+  var match = Controls_Listbox.useControls(multiSelect, size);
   var selectIndex = match.selectIndex;
   var selectHighlighted = match.selectHighlighted;
   var resetHighlighted = match.resetHighlighted;

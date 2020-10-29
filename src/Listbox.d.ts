@@ -17,4 +17,4 @@ type listbox = {
   getOptionProps(index: number): optionProps;
 }
 
-export function useListbox<A>(options: Array<A>): listbox;
+export function useListbox<A>(options: Array<A>, multi?: boolean): listbox;
