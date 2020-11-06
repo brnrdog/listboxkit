@@ -5,21 +5,30 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 
-function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectHighlighted, showMenu, $$event) {
+function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectPrev, selectNext, selectHighlighted, showMenu, $$event) {
   var key = $$event.key;
+  var shiftKey = $$event.shiftKey;
   if (key !== "Tab") {
     $$event.preventDefault();
   }
   switch (key) {
     case "ArrowDown" :
         if (menuVisible) {
-          return Curry._1(highlightNext, undefined);
+          if (shiftKey) {
+            return Curry._1(selectNext, undefined);
+          } else {
+            return Curry._1(highlightNext, undefined);
+          }
         } else {
           return Curry._1(showMenu, undefined);
         }
     case "ArrowUp" :
         if (menuVisible) {
-          return Curry._1(highlightPrev, undefined);
+          if (shiftKey) {
+            return Curry._1(selectPrev, undefined);
+          } else {
+            return Curry._1(highlightPrev, undefined);
+          }
         } else {
           return Curry._1(showMenu, undefined);
         }

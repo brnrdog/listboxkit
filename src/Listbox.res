@@ -35,6 +35,8 @@ let useListbox = (options, ~multiSelect = false, ()) => {
     highlightFirst,
     highlightLast,
     selectHighlighted,
+    selectNext,
+    selectPrev,
   } = Controls.Listbox.useControls(~multiSelect, ~size)
 
   let getOptionProps = index => {
@@ -53,7 +55,9 @@ let useListbox = (options, ~multiSelect = false, ()) => {
       ~hideMenu = noop,
       ~highlightFirst, 
       ~highlightLast, 
-      ~highlightNext, 
+      ~highlightNext,
+      ~selectPrev,
+      ~selectNext, 
       ~highlightPrev,
       ~selectHighlighted,
       ~showMenu = () => (),

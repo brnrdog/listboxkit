@@ -1,14 +1,16 @@
 type controls = {
   highlightedIndex : int,
-  selectedIndexes  : array<int>,
-  highlightIndex   : int => unit,
   highlightFirst   : unit => unit,
+  highlightIndex   : int => unit,
   highlightLast    : unit => unit,
   highlightNext    : unit => unit,
   highlightPrev    : unit => unit,
   resetHighlighted : unit => unit,
+  selectedIndexes  : array<int>,
   selectHighlighted: unit => unit,
   selectIndex      : int  => unit,
+  selectNext       : unit => unit,
+  selectPrev       : unit => unit,
 }
 
 module Navigation = {
@@ -23,9 +25,10 @@ let equals = x => y => x == y
 let diff   = x => y => x != y
 
 let selectIndex = (
+  ~force = false,
   ~multiSelect,
   ~setHighlightedIndex, 
-  ~setSelectedIndexes, 
+  ~setSelectedIndexes,
   index
 ) => {
   open Belt.Array
@@ -33,9 +36,18 @@ let selectIndex = (
   setHighlightedIndex(_ => index)
 
   setSelectedIndexes(selectedIndexes => {
-    multiSelect ? (index |> equals |> some(selectedIndexes)
-    ? keep(selectedIndexes, diff(index)) 
-    : concat(selectedIndexes, [index])) : [index]
+    let isIncluded = index |> equals |> some(selectedIndexes)
+
+    switch (multiSelect, force, isIncluded) {
+    | (true, true, true)   => selectedIndexes
+    | (true, true, false)  => concat(selectedIndexes, [index])
+    | (true, false, true)  => keep(selectedIndexes, diff(index))
+    | (true, false, false) => concat(selectedIndexes, [index])
+    | (false, true, true)  => selectedIndexes
+    | (false, false, false)=> []
+    | (false, false, true) => []
+    | (false, true, false) => [index]
+    }
   })
   
   ()
@@ -51,24 +63,31 @@ let useControls = (~multiSelect = false, ~size) => {
   let highlightNext  = () => setHighlightedIndex(Navigation.nextIndex(~size))
   let highlightPrev  = () => setHighlightedIndex(Navigation.prevIndex(~size))
   let resetHighlighted = () => setHighlightedIndex(Navigation.reset)
-  
-  let selectHighlighted = () => selectIndex(
-    ~setSelectedIndexes, 
-    ~setHighlightedIndex,
-    ~multiSelect,
-    highlightedIndex
-  )
 
   let selectIndex = selectIndex(
     ~multiSelect,
     ~setSelectedIndexes, 
     ~setHighlightedIndex,
   )
+  
+  let selectHighlighted = () => selectIndex(highlightedIndex)
+
+  let selectNext = () => {
+    selectIndex(highlightedIndex, ~force=true)
+    selectIndex(highlightedIndex + 1, ~force=true)
+  }
+
+  let selectPrev = () => {
+    if (highlightedIndex > 0) {
+      selectIndex(highlightedIndex)
+      selectIndex(highlightedIndex - 1)
+    }
+  }
     
   {
-    highlightIndex,
     highlightedIndex,
     highlightFirst,
+    highlightIndex,
     highlightLast,
     highlightNext,
     highlightPrev,
@@ -76,5 +95,7 @@ let useControls = (~multiSelect = false, ~size) => {
     selectedIndexes,
     selectHighlighted,
     selectIndex,
+    selectNext,
+    selectPrev,
   }
 }

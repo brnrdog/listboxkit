@@ -46,23 +46,39 @@ var equals = Caml_obj.caml_equal;
 
 var diff = Caml_obj.caml_notequal;
 
-function selectIndex(multiSelect, setHighlightedIndex, setSelectedIndexes, index) {
+function selectIndex(forceOpt, multiSelect, setHighlightedIndex, setSelectedIndexes, index) {
+  var force = forceOpt !== undefined ? forceOpt : false;
   Curry._1(setHighlightedIndex, (function (param) {
           return index;
         }));
   Curry._1(setSelectedIndexes, (function (selectedIndexes) {
+          var isIncluded = Belt_Array.some(selectedIndexes, (function (param) {
+                  return Caml_obj.caml_equal(index, param);
+                }));
           if (multiSelect) {
-            if (Belt_Array.some(selectedIndexes, (function (param) {
-                      return Caml_obj.caml_equal(index, param);
-                    }))) {
+            if (force) {
+              if (isIncluded) {
+                return selectedIndexes;
+              } else {
+                return Belt_Array.concat(selectedIndexes, [index]);
+              }
+            } else if (isIncluded) {
               return Belt_Array.keep(selectedIndexes, (function (param) {
                             return Caml_obj.caml_notequal(index, param);
                           }));
             } else {
               return Belt_Array.concat(selectedIndexes, [index]);
             }
+          } else if (force) {
+            if (isIncluded) {
+              return selectedIndexes;
+            } else {
+              return [index];
+            }
+          } else if (isIncluded) {
+            return [];
           } else {
-            return [index];
+            return [];
           }
         }));
   
@@ -106,22 +122,34 @@ function useControls(multiSelectOpt, size) {
     return Curry._1(setHighlightedIndex, reset);
   };
   var selectHighlighted = function (param) {
-    return selectIndex(multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
+    return selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
   };
-  var selectIndex$1 = function (param) {
-    return selectIndex(multiSelect, setHighlightedIndex, setSelectedIndexes, param);
+  var selectNext = function (param) {
+    selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
+    return selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex + 1 | 0);
+  };
+  var selectPrev = function (param) {
+    if (highlightedIndex > 0) {
+      selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
+      return selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex - 1 | 0);
+    }
+    
   };
   return {
           highlightedIndex: highlightedIndex,
-          selectedIndexes: match[0],
-          highlightIndex: highlightIndex,
           highlightFirst: highlightFirst,
+          highlightIndex: highlightIndex,
           highlightLast: highlightLast,
           highlightNext: highlightNext,
           highlightPrev: highlightPrev,
           resetHighlighted: resetHighlighted,
+          selectedIndexes: match[0],
           selectHighlighted: selectHighlighted,
-          selectIndex: selectIndex$1
+          selectIndex: (function (eta) {
+              return selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, eta);
+            }),
+          selectNext: selectNext,
+          selectPrev: selectPrev
         };
 }
 
