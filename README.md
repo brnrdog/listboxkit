@@ -1,8 +1,8 @@
 # Listbox
 
-![build](https://img.shields.io/github/workflow/status/brnrdog/listbox/Automated%20tests)
-![npm](https://img.shields.io/npm/v/@brnrdog/listbox)
-![codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brnrdog/listbox/Release?style=flat-square)
+![npm](https://img.shields.io/npm/v/@brnrdog/listbox?style=flat-square)
+![Codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox?style=flat-square)
 
 React hooks written in ReScript for building accessible listbox components.
 
