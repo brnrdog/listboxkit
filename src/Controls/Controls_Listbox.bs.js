@@ -125,15 +125,10 @@ function useControls(multiSelectOpt, size) {
     return selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
   };
   var selectNext = function (param) {
-    selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
-    return selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex + 1 | 0);
+    return selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, nextIndex(size, highlightedIndex));
   };
   var selectPrev = function (param) {
-    if (highlightedIndex > 0) {
-      selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex);
-      return selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, highlightedIndex - 1 | 0);
-    }
-    
+    return selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, prevIndex(size, highlightedIndex));
   };
   return {
           highlightedIndex: highlightedIndex,

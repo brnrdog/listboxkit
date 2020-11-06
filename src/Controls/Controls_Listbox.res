@@ -16,7 +16,9 @@ type controls = {
 module Navigation = {
   let firstIndex = _index => 0
   let lastIndex  = (~size, _index)=> size - 1
-  let nextIndex  = (~size, index) => size - index == 1 ? 0 : index + 1
+  let nextIndex  = (~size, index) => {
+    size - index == 1 ? 0 : index + 1
+  }
   let prevIndex  = (~size, index) => index <= 0 ? size - 1 : index - 1
   let reset      = (_index) => -1;
 }
@@ -57,11 +59,11 @@ let useControls = (~multiSelect = false, ~size) => {
   let (selectedIndexes, setSelectedIndexes)   = React.useState(() => [])
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
 
-  let highlightIndex = i  => setHighlightedIndex(_ => i)
-  let highlightFirst = _  => setHighlightedIndex(Navigation.firstIndex)
-  let highlightLast  = _  => setHighlightedIndex(Navigation.lastIndex(~size))
-  let highlightNext  = () => setHighlightedIndex(Navigation.nextIndex(~size))
-  let highlightPrev  = () => setHighlightedIndex(Navigation.prevIndex(~size))
+  let highlightIndex = i    => setHighlightedIndex(_ => i)
+  let highlightFirst = _    => setHighlightedIndex(Navigation.firstIndex)
+  let highlightLast  = _    => setHighlightedIndex(Navigation.lastIndex(~size))
+  let highlightNext  = ()   => setHighlightedIndex(Navigation.nextIndex(~size))
+  let highlightPrev  = ()   => setHighlightedIndex(Navigation.prevIndex(~size))
   let resetHighlighted = () => setHighlightedIndex(Navigation.reset)
 
   let selectIndex = selectIndex(
@@ -69,19 +71,12 @@ let useControls = (~multiSelect = false, ~size) => {
     ~setSelectedIndexes, 
     ~setHighlightedIndex,
   )
-  
   let selectHighlighted = () => selectIndex(highlightedIndex)
-
   let selectNext = () => {
-    selectIndex(highlightedIndex, ~force=true)
-    selectIndex(highlightedIndex + 1, ~force=true)
+    selectIndex(Navigation.nextIndex(~size, highlightedIndex), ~force=true)
   }
-
   let selectPrev = () => {
-    if (highlightedIndex > 0) {
-      selectIndex(highlightedIndex)
-      selectIndex(highlightedIndex - 1)
-    }
+    selectIndex(Navigation.prevIndex(~size, highlightedIndex), ~force=true)
   }
     
   {
