@@ -2,6 +2,35 @@ open Jest
 open JestDom
 open ReactTestingLibrary
 
+module FireEvent = {
+  include ReactTestingLibrary.FireEvent
+
+  module Keyboard = {
+    let down      = { "key": "ArrowDown" }
+    let downShift = { "key": "ArrowDown", "shiftKey": true }
+    let end       = { "key": "End" }
+    let enter     = { "key" : "Enter" }
+    let esc       = { "key": "Esc" }
+    let home      = { "key": "Home" }
+    let space     = { "key": " " }
+    let tab       = { "key" : "Tab" }
+    let up        = { "key": "ArrowUp" }
+    let upShift   = { "key": "ArrowUp", "shiftKey": true }
+  }
+
+  let pressDown      = FireEvent.keyDown(~eventInit=Keyboard.down)
+  let pressDownShift = FireEvent.keyDown(~eventInit=Keyboard.downShift)
+  let pressEnd       = FireEvent.keyDown(~eventInit=Keyboard.end)
+  let pressEnter     = FireEvent.keyDown(~eventInit=Keyboard.enter)
+  let pressEsc       = FireEvent.keyDown(~eventInit=Keyboard.esc)
+  let pressHome      = FireEvent.keyDown(~eventInit=Keyboard.home)
+  let pressShiftDown = FireEvent.keyDown(~eventInit=Keyboard.downShift)
+  let pressSpace     = FireEvent.keyDown(~eventInit=Keyboard.space)
+  let pressTab       = FireEvent.keyDown(~eventInit=Keyboard.tab)
+  let pressUp        = FireEvent.keyDown(~eventInit=Keyboard.up)
+  let pressUpShift   = FireEvent.keyDown(~eventInit=Keyboard.upShift)
+}
+
 let assertAndContinue = _ => ()
 
 type t = {
@@ -49,19 +78,6 @@ module ListboxComponent = {
 }
 
 let component = (~multiSelect=true, ()) => <ListboxComponent multiSelect />
-
-module FireEvent = {
-  include ReactTestingLibrary.FireEvent
-
-  let pressDown  = FireEvent.keyDown(~eventInit={ "key": "ArrowDown" })
-  let pressUp    = FireEvent.keyDown(~eventInit={ "key": "ArrowUp" })
-  let pressEnter = FireEvent.keyDown(~eventInit={"key": "Enter" })
-  let pressSpace = FireEvent.keyDown(~eventInit={"key": " " })
-  let pressEnd   = FireEvent.keyDown(~eventInit={"key": "End" })
-  let pressHome  = FireEvent.keyDown(~eventInit={"key": "Home" })
-  let pressEsc   = FireEvent.keyDown(~eventInit={"key": "Esc" })
-  let pressTab   = FireEvent.keyDown(~eventInit={"key": "Tab" })
-}
 
 let getListbox = getByRole(~matcher=#Str("listbox"))
 
@@ -371,5 +387,34 @@ test("selects multiple when multiSelect is true", () => {
   |> getOption("Red") 
   |> expect 
   |> toHaveAttribute("aria-selected", ~value="true")
-  
+})
+
+test("selects next when pressing arrow down and shift", () => {
+  let component = render(component(~multiSelect=true, ()))
+
+  UserEvent.tab()
+
+  component
+  |> getListbox
+  |> FireEvent.pressDownShift
+
+  component
+  |> getOption("* Green")
+  |> expect
+  |> toHaveAttribute("aria-selected", ~value="true")
+})
+
+test("selects previous when pressing arrow up and shift", () => {
+  let component = render(component(~multiSelect=true, ()))
+
+  UserEvent.tab()
+
+  component
+  |> getListbox
+  |> FireEvent.pressUpShift
+
+  component
+  |> getOption("* Blue")
+  |> expect
+  |> toHaveAttribute("aria-selected", ~value="true")
 })

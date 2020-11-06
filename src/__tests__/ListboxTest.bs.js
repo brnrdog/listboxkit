@@ -8,58 +8,8 @@ var React = require("react");
 var JestDom = require("bs-jest-dom/src/JestDom.bs.js");
 var Listbox = require("../Listbox.bs.js");
 var UserEvent = require("@drewschrauf/bs-user-event/src/UserEvent.bs.js");
+var Caml_option = require("bs-platform/lib/js/caml_option.js");
 var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
-
-function assertAndContinue(param) {
-  
-}
-
-var options = [
-  "Red",
-  "Green",
-  "Blue"
-];
-
-function ListboxTest$ListboxComponent(Props) {
-  var multiSelectOpt = Props.multiSelect;
-  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listbox.useListbox(options, multiSelect, undefined);
-  var getOptionProps = match.getOptionProps;
-  var highlightedIndex = match.highlightedIndex;
-  var match$1 = Curry._1(match.getContainerProps, undefined);
-  var onKeyDown = match$1.onKeyDown;
-  return React.createElement("div", undefined, React.createElement("ul", {
-                  role: match$1.role,
-                  tabIndex: match$1.tabIndex,
-                  onKeyDown: onKeyDown,
-                  onFocus: match$1.onFocus,
-                  onBlur: match$1.onBlur
-                }, $$Array.mapi((function (index, option) {
-                        var match = Curry._1(getOptionProps, index);
-                        var highlighted = highlightedIndex === index;
-                        return React.createElement("li", {
-                                    key: option,
-                                    "aria-selected": match["aria-selected"],
-                                    role: match.role,
-                                    onKeyDown: onKeyDown,
-                                    onClick: match.onClick
-                                  }, highlighted ? "* " + option : option);
-                      }), options)), React.createElement("button", {
-                  tabIndex: 0
-                }, "Dumb"));
-}
-
-var ListboxComponent = {
-  options: options,
-  make: ListboxTest$ListboxComponent
-};
-
-function component(multiSelectOpt, param) {
-  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : true;
-  return React.createElement(ListboxTest$ListboxComponent, {
-              multiSelect: multiSelect
-            });
-}
 
 var blur = ReactTestingLibrary.FireEvent.blur;
 
@@ -67,37 +17,82 @@ var click = ReactTestingLibrary.FireEvent.click;
 
 var focus = ReactTestingLibrary.FireEvent.focus;
 
-var pressDown = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "ArrowDown"
-    });
+var down = {
+  key: "ArrowDown"
+};
 
-var pressUp = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "ArrowUp"
-    });
+var downShift = {
+  key: "ArrowDown",
+  shiftKey: true
+};
 
-var pressEnter = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "Enter"
-    });
+var end = {
+  key: "End"
+};
 
-var pressSpace = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: " "
-    });
+var enter = {
+  key: "Enter"
+};
 
-var pressEnd = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "End"
-    });
+var esc = {
+  key: "Esc"
+};
 
-var pressHome = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "Home"
-    });
+var home = {
+  key: "Home"
+};
 
-var pressEsc = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "Esc"
-    });
+var space = {
+  key: " "
+};
 
-var pressTab = Curry._1(ReactTestingLibrary.FireEvent.keyDown, {
-      key: "Tab"
-    });
+var tab = {
+  key: "Tab"
+};
+
+var up = {
+  key: "ArrowUp"
+};
+
+var upShift = {
+  key: "ArrowUp",
+  shiftKey: true
+};
+
+var Keyboard = {
+  down: down,
+  downShift: downShift,
+  end: end,
+  enter: enter,
+  esc: esc,
+  home: home,
+  space: space,
+  tab: tab,
+  up: up,
+  upShift: upShift
+};
+
+var pressDown = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(down));
+
+var pressDownShift = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(downShift));
+
+var pressEnd = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(end));
+
+var pressEnter = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(enter));
+
+var pressEsc = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(esc));
+
+var pressHome = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(home));
+
+var pressShiftDown = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(downShift));
+
+var pressSpace = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(space));
+
+var pressTab = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(tab));
+
+var pressUp = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(up));
+
+var pressUpShift = Curry._1(ReactTestingLibrary.FireEvent.keyDown, Caml_option.some(upShift));
 
 var FireEvent_abort = ReactTestingLibrary.FireEvent.abort;
 
@@ -307,15 +302,70 @@ var FireEvent = {
   volumeChange: FireEvent_volumeChange,
   waiting: FireEvent_waiting,
   wheel: FireEvent_wheel,
+  Keyboard: Keyboard,
   pressDown: pressDown,
-  pressUp: pressUp,
-  pressEnter: pressEnter,
-  pressSpace: pressSpace,
+  pressDownShift: pressDownShift,
   pressEnd: pressEnd,
-  pressHome: pressHome,
+  pressEnter: pressEnter,
   pressEsc: pressEsc,
-  pressTab: pressTab
+  pressHome: pressHome,
+  pressShiftDown: pressShiftDown,
+  pressSpace: pressSpace,
+  pressTab: pressTab,
+  pressUp: pressUp,
+  pressUpShift: pressUpShift
 };
+
+function assertAndContinue(param) {
+  
+}
+
+var options = [
+  "Red",
+  "Green",
+  "Blue"
+];
+
+function ListboxTest$ListboxComponent(Props) {
+  var multiSelectOpt = Props.multiSelect;
+  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
+  var match = Listbox.useListbox(options, multiSelect, undefined);
+  var getOptionProps = match.getOptionProps;
+  var highlightedIndex = match.highlightedIndex;
+  var match$1 = Curry._1(match.getContainerProps, undefined);
+  var onKeyDown = match$1.onKeyDown;
+  return React.createElement("div", undefined, React.createElement("ul", {
+                  role: match$1.role,
+                  tabIndex: match$1.tabIndex,
+                  onKeyDown: onKeyDown,
+                  onFocus: match$1.onFocus,
+                  onBlur: match$1.onBlur
+                }, $$Array.mapi((function (index, option) {
+                        var match = Curry._1(getOptionProps, index);
+                        var highlighted = highlightedIndex === index;
+                        return React.createElement("li", {
+                                    key: option,
+                                    "aria-selected": match["aria-selected"],
+                                    role: match.role,
+                                    onKeyDown: onKeyDown,
+                                    onClick: match.onClick
+                                  }, highlighted ? "* " + option : option);
+                      }), options)), React.createElement("button", {
+                  tabIndex: 0
+                }, "Dumb"));
+}
+
+var ListboxComponent = {
+  options: options,
+  make: ListboxTest$ListboxComponent
+};
+
+function component(multiSelectOpt, param) {
+  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : true;
+  return React.createElement(ListboxTest$ListboxComponent, {
+              multiSelect: multiSelect
+            });
+}
 
 var partial_arg = {
   NAME: "Str",
@@ -453,10 +503,24 @@ Jest.test("selects multiple when multiSelect is true", (function (param) {
         return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("Red")(component$1)));
       }));
 
+Jest.test("selects next when pressing arrow down and shift", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
+        UserEvent.tab(undefined, undefined, undefined);
+        Curry._1(pressDownShift, getListbox(undefined, component$1));
+        return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Green")(component$1)));
+      }));
+
+Jest.test("selects previous when pressing arrow up and shift", (function (param) {
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
+        UserEvent.tab(undefined, undefined, undefined);
+        Curry._1(pressUpShift, getListbox(undefined, component$1));
+        return JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Blue")(component$1)));
+      }));
+
+exports.FireEvent = FireEvent;
 exports.assertAndContinue = assertAndContinue;
 exports.ListboxComponent = ListboxComponent;
 exports.component = component;
-exports.FireEvent = FireEvent;
 exports.getListbox = getListbox;
 exports.getOption = getOption;
 /* pressDown Not a pure module */
