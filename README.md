@@ -1,10 +1,11 @@
 # Listbox
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brnrdog/listbox/Release?style=flat-square)
-![npm](https://img.shields.io/npm/v/@brnrdog/listbox?style=flat-square)
+[![npm](https://img.shields.io/npm/v/@brnrdog/listbox?style=flat-square)](https://www.npmjs.com/package/@brnrdog/listbox)
+![npm bundle size](https://img.shields.io/bundlephobia/min/@brnrdog/listbox?style=flat-square)
 ![Codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox?style=flat-square)
 
-React hooks written in ReScript for building accessible listbox components.
+Small and flexible React hooks for building custom and accessible listbox components.
 
 ## Installation
 

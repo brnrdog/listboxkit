@@ -1,7 +1,7 @@
 {
   "name": "@brnrdog/listbox",
   "version": "0.0.0-semantic-released",
-  "description": "React hooks written in ReScript for building accessible listbox components",
+  "description": "Small and flexible React hooks for building custom and accessible listbox components.",
   "repository": "git://github.com/brnrdog/listbox.git",
   "types": "./src/Listbox.d.ts",
   "scripts": {
