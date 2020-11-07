@@ -46,6 +46,7 @@
     "react-hooks-testing-library": "^0.6.0",
     "reason-react": "^0.9.1",
     "rollup": "^2.33.1",
+    "rollup-plugin-analyzer": "^3.3.0",
     "rollup-plugin-terser": "^7.0.2",
     "semantic-release": "^17.2.1",
     "typescript": "^4.0.2"
