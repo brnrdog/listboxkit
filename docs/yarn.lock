@@ -1075,10 +1075,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@brnrdog/listbox@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@brnrdog/listbox/-/listbox-2.0.0.tgz#5ec35e3b246ad6cce73c2c001a1e56852d05d99e"
-  integrity sha512-DrJhGSxfwZ95xM5BwGv+ECUJXBbxoX2a129I6lLG5J/C69FPEQbf2gMUm24IwYIg5aj1jxJG96CS8h/xxTOJ5g==
+"@brnrdog/listbox@^2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@brnrdog/listbox/-/listbox-2.3.2.tgz#9c175b82cf9d20657c4726d4ca9651b67de5a194"
+  integrity sha512-5dkXWDw+KkN3O726nVUdx7ODuFH9b62pkbyXBEuv+zEBJjkNTKcXbij0/LoCxFJY1zffqG+lxoBMLHvbiJF28w==
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
