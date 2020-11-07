@@ -7,19 +7,23 @@ slug: /
 
 ## Introduction
 
-This library aims to provide simple hooks written in [ReScript](https://rescript-lang.org/) for building listbox pattern components in React applications.
+This library provides hooks written in [ReScript](https://rescript-lang.org/) for building [listbox](https://www.w3.org/TR/wai-aria-practices-1.1/#Listbox) pattern components in React applications.
 
-## Installation 
+## Installation
 
-Install the library using the package manager of your preference:
+Install it using the package manager of your preference:
 
 ```bash
 npm install --save @brnrdog/listbox
-# or if you use yarn:
+```
+
+Or if your project uses yarn:
+
+```bash
 yarn add @brnrdog/listbox
 ```
 
-For **Reason/ReScript** projects, add `@brnrdog/listbox` as a dependency in your `bsconfig.json` file:
+For **ReScript** projects, add `@brnrdog/listbox` as a dependency in your `bsconfig.json` file:
 
 ```json
 {
@@ -33,10 +37,85 @@ For **Reason/ReScript** projects, add `@brnrdog/listbox` as a dependency in your
 
 ## Usage
 
-### Usage in ReScript projects:
+The main React hook for building listbox components is the `useListbox`. Given a list of options, this hook will provide the state and the necessary event handlers for building your listbox.
 
-Soon.
+### Using in JavaScript/TypeScript projects:
 
-### Usage in JavaScript/TypeScript projects:
+```js
+const options = ["Red", "Green", "Blue"];
 
-Soon.
+function ColorSelect() {
+  const {
+    highlightedIndex,
+    getOptionProps,
+    getContainerProps,
+    selectedIndexes
+  } = useListbox(options);
+
+  const selectedColors = selectedIndexes.map(i => options[i]).join(",")
+
+  return (
+    <div>
+      Selected color:{" "}
+      {selectedColors.length === 0 ? "no selected color" : selectedColors}.
+      <ul {...getContainerProps()}>
+        {options.map((option, index) => {
+          const highlighted = highlightedIndex === index;
+
+          return (
+            <li {...getOptionProps(index)}>
+              {highlighted ? `> ${option}` : option}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+```
+
+### Using in ReScript projects:
+
+```rescript
+module ColorSelect {
+  let options = ["Red", "Green", "Blue"]
+
+  @react.component
+  let make = () => {
+    let {
+      highlightedIndex,
+      getOptionProps,
+      getContainerProps,
+      selectedIndexes
+    }: Listbox.listbox = Listbox.useListbox(options)
+
+    let { role, tabIndex, onKeyDown, onFocus, onBlur } = getContainerProps()
+
+    let selectedOption = selectedIndexes
+    -> Belt.Array.map(i => options -> Belt.Array.get(i))
+    -> Belt.Array.get(0)
+    -> Belt.getWithDefault("no selected color.")
+
+    let renderColorOption = (index, option) => {
+      let {
+        ariaSelected,
+        onClick,
+        role,
+      }: Listbox.optionProps = getOptionProps(index)
+      let highlighted =  highlightedIndex == index
+
+      <li key=option onClick onKeyDown role ariaSelected>
+        {(highlighted ? `> ${option}` : option) |> React.string}
+      </li>
+    }
+
+    <div>
+      {React.string("Selected color :" ++ selectedOption)}
+      <ul role tabIndex onKeyDown onFocus onBlur>
+        {options
+          -> Belt.Array.mapWithIndex(renderOption)
+          -> React.array}
+      </ul>
+    </div>
+  }
+}
+```
