@@ -1,6 +1,6 @@
 {
   "name": "@brnrdog/listbox",
-  "version": "2.0.0",
+  "version": "0.0.0-semantic-released",
   "description": "React hooks written in ReScript for building accessible listbox components",
   "repository": "git://github.com/brnrdog/listbox.git",
   "types": "./src/Listbox.d.ts",
@@ -11,9 +11,11 @@
     "clean": "bsb -clean-world",
     "start": "bsb -make-world -w",
     "docs:start": "cd docs && yarn start",
-    "docs:build": "cd docs && yarn build"
+    "docs:build": "cd docs && yarn build",
+    "bundle": "rollup -c rollup.config.js"
   },
-  "main": "src/Listbox.bs.js",
+  "main": "dist/listbox.cjs.js",
+  "module": "dist/listbox.esm.js",
   "keywords": [
     "rescript",
     "react",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@drewschrauf/bs-user-event": "^0.1.1",
     "@glennsl/bs-jest": "^0.5.1",
+    "@rollup/plugin-commonjs": "^16.0.0",
     "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "^3.4.1",
     "bs-dom-testing-library": "^0.6.2",
@@ -42,6 +45,8 @@
     "react-dom": "^16.8.1",
     "react-hooks-testing-library": "^0.6.0",
     "reason-react": "^0.9.1",
+    "rollup": "^2.33.1",
+    "rollup-plugin-terser": "^7.0.2",
     "semantic-release": "^17.2.1",
     "typescript": "^4.0.2"
   },
