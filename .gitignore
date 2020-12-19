@@ -5,3 +5,4 @@
 .merlin
 coverage
 dist
+*.bs.js
