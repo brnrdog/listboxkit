@@ -36,7 +36,7 @@
     "@testing-library/react-hooks": "^3.4.1",
     "bs-dom-testing-library": "^0.6.2",
     "bs-jest-dom": "^4.1.1",
-    "bs-platform": "8.3.0",
+    "bs-platform": "^8.4.2",
     "bs-react-testing-library": "^0.7.3",
     "bs-webapi": "^0.19.1",
     "gentype": "^3.35.0",

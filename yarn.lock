@@ -1686,10 +1686,10 @@ bs-jest-dom@^4.1.1:
   dependencies:
     "@testing-library/jest-dom" "^5.10.0"
 
-bs-platform@8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-8.3.0.tgz#85e458d61dcbcbc78391051616cc2333d3e975f8"
-  integrity sha512-E/Yj3mbEnALkFKrHX4vU+GkLe2eIG7/bVWgNJZxO6/EqRkIimIoClPTG6MN30gwxVBRARLyHEJDXcQQ71MaUSQ==
+bs-platform@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-8.4.2.tgz#778dabd1dfb3bc95e0086c58dabae74e4ebdee8a"
+  integrity sha512-9q7S4/LLV/a68CweN382NJdCCr/lOSsJR3oQYnmPK98ChfO/AdiA3lYQkQTp6T+U0I5Z5RypUAUprNstwDtMDQ==
 
 bs-react-testing-library@^0.7.3:
   version "0.7.3"
