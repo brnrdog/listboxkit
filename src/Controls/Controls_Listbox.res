@@ -1,7 +1,7 @@
 type controls = {
   highlightedIndex : int,
   highlightFirst   : unit => unit,
-  highlightIndex   : int => unit,
+  highlightIndex   : int  => unit,
   highlightLast    : unit => unit,
   highlightNext    : unit => unit,
   highlightPrev    : unit => unit,
@@ -27,26 +27,25 @@ let equals = x => y => x == y
 let diff   = x => y => x != y
 
 let selectIndex = (
-  ~force = false,
+  ~keep = false,
   ~multiSelect,
   ~setHighlightedIndex, 
   ~setSelectedIndexes,
   index
 ) => {
-  open Belt.Array
 
   setHighlightedIndex(_ => index)
 
   setSelectedIndexes(selectedIndexes => {
-    let isIncluded = index |> equals |> some(selectedIndexes)
+    let isIncluded = index |> equals |> Belt.Array.some(selectedIndexes)
 
-    switch (multiSelect, force, isIncluded) {
+    switch (multiSelect, keep, isIncluded) {
     | (true, true, true)   => selectedIndexes
-    | (true, true, false)  => concat(selectedIndexes, [index])
-    | (true, false, true)  => keep(selectedIndexes, diff(index))
-    | (true, false, false) => concat(selectedIndexes, [index])
+    | (true, true, false)
+    | (true, false, false) => selectedIndexes->Belt.Array.concat([index])
+    | (true, false, true)  => selectedIndexes->Belt.Array.keep(diff(index))
     | (false, true, true)  => selectedIndexes
-    | (false, false, false)=> []
+    | (false, false, false)
     | (false, false, true) => []
     | (false, true, false) => [index]
     }
@@ -73,10 +72,10 @@ let useControls = (~multiSelect = false, ~size) => {
   )
   let selectHighlighted = () => selectIndex(highlightedIndex)
   let selectNext = () => {
-    selectIndex(Navigation.nextIndex(~size, highlightedIndex), ~force=true)
+    selectIndex(Navigation.nextIndex(~size, highlightedIndex), ~keep=true)
   }
   let selectPrev = () => {
-    selectIndex(Navigation.prevIndex(~size, highlightedIndex), ~force=true)
+    selectIndex(Navigation.prevIndex(~size, highlightedIndex), ~keep=true)
   }
     
   {

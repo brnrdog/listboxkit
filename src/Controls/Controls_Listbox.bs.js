@@ -46,8 +46,8 @@ var equals = Caml_obj.caml_equal;
 
 var diff = Caml_obj.caml_notequal;
 
-function selectIndex(forceOpt, multiSelect, setHighlightedIndex, setSelectedIndexes, index) {
-  var force = forceOpt !== undefined ? forceOpt : false;
+function selectIndex(keepOpt, multiSelect, setHighlightedIndex, setSelectedIndexes, index) {
+  var keep = keepOpt !== undefined ? keepOpt : false;
   Curry._1(setHighlightedIndex, (function (param) {
           return index;
         }));
@@ -56,7 +56,7 @@ function selectIndex(forceOpt, multiSelect, setHighlightedIndex, setSelectedInde
                   return Caml_obj.caml_equal(index, param);
                 }));
           if (multiSelect) {
-            if (force) {
+            if (keep) {
               if (isIncluded) {
                 return selectedIndexes;
               } else {
@@ -69,14 +69,12 @@ function selectIndex(forceOpt, multiSelect, setHighlightedIndex, setSelectedInde
             } else {
               return Belt_Array.concat(selectedIndexes, [index]);
             }
-          } else if (force) {
+          } else if (keep) {
             if (isIncluded) {
               return selectedIndexes;
             } else {
               return [index];
             }
-          } else if (isIncluded) {
-            return [];
           } else {
             return [];
           }
