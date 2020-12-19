@@ -69,10 +69,6 @@ module ListboxComponent = {
           |> React.array
         } 
       </ul>
-
-      <button tabIndex={0}>
-        {React.string("Dumb")}
-      </button>
     </div>
   }
 }
