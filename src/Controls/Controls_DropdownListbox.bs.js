@@ -5,11 +5,13 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Controls_Listbox = require("./Controls_Listbox.bs.js");
 
-function useControls(size) {
-  var match = React.useState(function () {
+function useControls(multiSelectOpt, size) {
+  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
+  var match = Controls_Listbox.useControls(multiSelect, size);
+  var match$1 = React.useState(function () {
         return false;
       });
-  var setMenuVisible = match[1];
+  var setMenuVisible = match$1[1];
   var showMenu = function (param) {
     return Curry._1(setMenuVisible, (function (param) {
                   return true;
@@ -20,18 +22,21 @@ function useControls(size) {
                   return false;
                 }));
   };
-  var match$1 = Controls_Listbox.useControls(true, size);
   return {
-          highlightedIndex: match$1.highlightedIndex,
-          menuVisible: match[0],
-          selectedIndexes: match$1.selectedIndexes,
           hideMenu: hideMenu,
-          highlightFirst: match$1.highlightFirst,
-          highlightLast: match$1.highlightLast,
-          highlightNext: match$1.highlightNext,
-          highlightPrev: match$1.highlightPrev,
-          selectHighlighted: match$1.selectHighlighted,
-          selectIndex: match$1.selectIndex,
+          highlightedIndex: match.highlightedIndex,
+          highlightFirst: match.highlightFirst,
+          highlightIndex: match.highlightIndex,
+          highlightLast: match.highlightLast,
+          highlightNext: match.highlightNext,
+          highlightPrev: match.highlightPrev,
+          menuVisible: match$1[0],
+          resetHighlighted: match.resetHighlighted,
+          selectedIndexes: match.selectedIndexes,
+          selectHighlighted: match.selectHighlighted,
+          selectIndex: match.selectIndex,
+          selectNext: match.selectNext,
+          selectPrev: match.selectPrev,
           showMenu: showMenu
         };
 }
