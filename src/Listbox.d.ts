@@ -4,6 +4,11 @@ type containerProps = {
   onKeyDown(event: any): void;
 }
 
+type dropdownProps = {
+  role: string; 
+  onClick(event: any): void;
+}
+
 type optionProps = {
   role: string;
   'aria-selected': boolean;
@@ -18,3 +23,16 @@ type listbox = {
 }
 
 export function useListbox<A>(options: Array<A>, multi?: boolean): listbox;
+
+type dropdownListbox = {
+  highlightedIndex: number;
+  menuVisible: boolean;
+  selectedIndexes: Array<number>;
+  getContainerProps(): containerProps;
+  getDropdownProps(): dropdownProps;
+  getOptionProps(index: number): optionProps;
+  hideMenu(): void;
+  showMenu(): void;
+}
+
+export function useDropdownListbox<A>(options: Array<A>, multi?: boolean): dropdownListbox;

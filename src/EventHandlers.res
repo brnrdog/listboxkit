@@ -54,3 +54,7 @@ let onFocus = (~selectedIndexes, ~highlightIndex, _event) => {
 }
 
 let onClick = (~index, ~selectIndex, _event) => selectIndex(index)
+
+let onDropdownClick = (~menuVisible, ~hideMenu, ~showMenu, _event) => {
+  menuVisible ? hideMenu() : showMenu()
+}

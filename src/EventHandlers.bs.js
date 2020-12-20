@@ -75,8 +75,17 @@ function onClick(index, selectIndex, _event) {
   return Curry._1(selectIndex, index);
 }
 
+function onDropdownClick(menuVisible, hideMenu, showMenu, _event) {
+  if (menuVisible) {
+    return Curry._1(hideMenu, undefined);
+  } else {
+    return Curry._1(showMenu, undefined);
+  }
+}
+
 exports.onKeyDown = onKeyDown;
 exports.onBlur = onBlur;
 exports.onFocus = onFocus;
 exports.onClick = onClick;
+exports.onDropdownClick = onDropdownClick;
 /* No side effect */

@@ -39,9 +39,9 @@
 }
 
 .listbox {
-  border: 1px solid black;
   cursor: pointer;
   border-radius: 8px;
+  max-width: 320px;
   border: 2px solid var(--ifm-color-secondary-dark);
   overflow: hidden;
   margin: 0;
@@ -50,6 +50,34 @@
   overflow: auto;
 }
 
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5em;
+  background: white;
+}
+
+.dropdown .listbox {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dropdown-button {
+  position: relative;
+  max-width: 320px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--ifm-color-secondary-dark);
+  border-radius: 8px;
+  color: var(--ifm-font-color-secondary);
+  list-style: none;
+  outline: none;
+  padding: 0.5em 1em;
+  margin-bottom: 0.5rem;;
+}
+
+.dropdown-button:focus-within,
 .listbox:focus {
   outline: 0;
   box-shadow: 0 0 0 3px var(--lbx-color-focus);
