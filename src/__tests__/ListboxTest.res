@@ -69,6 +69,8 @@ module ListboxComponent = {
           |> React.array
         } 
       </ul>
+
+      <div tabIndex={0} />
     </div>
   }
 }

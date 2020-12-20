@@ -350,9 +350,9 @@ function ListboxTest$ListboxComponent(Props) {
                                     onKeyDown: onKeyDown,
                                     onClick: match.onClick
                                   }, highlighted ? "* " + option : option);
-                      }), options)), React.createElement("button", {
+                      }), options)), React.createElement("div", {
                   tabIndex: 0
-                }, "Dumb"));
+                }));
 }
 
 var ListboxComponent = {
