@@ -75,8 +75,10 @@ function selectIndex(keepOpt, multiSelect, setHighlightedIndex, setSelectedIndex
             } else {
               return [index];
             }
-          } else {
+          } else if (isIncluded) {
             return [];
+          } else {
+            return [index];
           }
         }));
   
