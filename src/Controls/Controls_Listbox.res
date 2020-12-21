@@ -6,6 +6,7 @@ type controls = {
   highlightNext    : unit => unit,
   highlightPrev    : unit => unit,
   resetHighlighted : unit => unit,
+  selectedIndex    : int,
   selectedIndexes  : array<int>,
   selectHighlighted: unit => unit,
   selectIndex      : int  => unit,
@@ -23,6 +24,7 @@ module Navigation = {
   let reset      = (_index) => -1;
 }
 
+let firstIndex = i => i->Belt.Array.get(0)->Belt.Option.getWithDefault(-1)
 let equals = x => y => x == y
 let diff   = x => y => x != y
 
@@ -76,6 +78,8 @@ let useControls = (~multiSelect = false, ~size) => {
   let selectPrev = () => {
     selectIndex(Navigation.prevIndex(~size, highlightedIndex), ~keep=true)
   }
+
+  let selectedIndex = selectedIndexes->firstIndex
     
   {
     highlightedIndex,
@@ -85,6 +89,7 @@ let useControls = (~multiSelect = false, ~size) => {
     highlightNext,
     highlightPrev,
     resetHighlighted,
+    selectedIndex,
     selectedIndexes,
     selectHighlighted,
     selectIndex,

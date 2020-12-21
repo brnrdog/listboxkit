@@ -17,6 +17,7 @@ type optionProps = {
 
 type listbox = {
   highlightedIndex: number;
+  selectedIndex: number;
   selectedIndexes: Array<number>;
   getContainerProps(): containerProps;
   getOptionProps(index: number): optionProps;
@@ -27,6 +28,7 @@ export function useListbox<A>(options: Array<A>, multi?: boolean): listbox;
 type dropdownListbox = {
   highlightedIndex: number;
   menuVisible: boolean;
+  selectedIndex: number;
   selectedIndexes: Array<number>;
   getContainerProps(): containerProps;
   getDropdownProps(): dropdownProps;

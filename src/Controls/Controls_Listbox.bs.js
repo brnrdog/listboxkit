@@ -5,6 +5,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
+var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 
 function firstIndex(_index) {
   return 0;
@@ -41,6 +42,10 @@ var Navigation = {
   prevIndex: prevIndex,
   reset: reset
 };
+
+function firstIndex$1(i) {
+  return Belt_Option.getWithDefault(Belt_Array.get(i, 0), -1);
+}
 
 var equals = Caml_obj.caml_equal;
 
@@ -90,6 +95,7 @@ function useControls(multiSelectOpt, size) {
         return [];
       });
   var setSelectedIndexes = match[1];
+  var selectedIndexes = match[0];
   var match$1 = React.useState(function () {
         return -1;
       });
@@ -130,6 +136,7 @@ function useControls(multiSelectOpt, size) {
   var selectPrev = function (param) {
     return selectIndex(true, multiSelect, setHighlightedIndex, setSelectedIndexes, prevIndex(size, highlightedIndex));
   };
+  var selectedIndex = firstIndex$1(selectedIndexes);
   return {
           highlightedIndex: highlightedIndex,
           highlightFirst: highlightFirst,
@@ -138,7 +145,8 @@ function useControls(multiSelectOpt, size) {
           highlightNext: highlightNext,
           highlightPrev: highlightPrev,
           resetHighlighted: resetHighlighted,
-          selectedIndexes: match[0],
+          selectedIndex: selectedIndex,
+          selectedIndexes: selectedIndexes,
           selectHighlighted: selectHighlighted,
           selectIndex: (function (eta) {
               return selectIndex(undefined, multiSelect, setHighlightedIndex, setSelectedIndexes, eta);
@@ -149,6 +157,7 @@ function useControls(multiSelectOpt, size) {
 }
 
 exports.Navigation = Navigation;
+exports.firstIndex = firstIndex$1;
 exports.equals = equals;
 exports.diff = diff;
 exports.selectIndex = selectIndex;
