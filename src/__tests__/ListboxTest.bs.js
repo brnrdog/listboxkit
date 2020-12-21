@@ -446,7 +446,7 @@ Jest.test("highlights previous option when pressing UP ", (function (param) {
       }));
 
 Jest.test("selects and deselects option when pressing SPACE/ENTER", (function (param) {
-        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(false, undefined));
         Curry._2(click, undefined, getOption("Red")(component$1));
         JestDom.toHaveAttribute("aria-selected", "true")(expect(getOption("* Red")(component$1)));
         Curry._1(pressEnter, getListbox(undefined, component$1));

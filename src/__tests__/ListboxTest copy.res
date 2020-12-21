@@ -221,7 +221,7 @@ test("highlights previous option when pressing UP ", () => {
 })
 
 test("selects and deselects option when pressing SPACE/ENTER", () => {
-  let component = render(component(~multiSelect=false, ()))
+  let component = render(component())
 
   component
   |> getOption("Red")
