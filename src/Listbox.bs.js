@@ -53,6 +53,7 @@ function useListbox(options, multiSelectOpt, param) {
   };
   return {
           highlightedIndex: match.highlightedIndex,
+          selectedIndex: match.selectedIndex,
           selectedIndexes: selectedIndexes,
           getContainerProps: getContainerProps,
           getOptionProps: getOptionProps
@@ -118,6 +119,7 @@ function useDropdownListbox(options, multiSelectOpt, param) {
   return {
           highlightedIndex: match.highlightedIndex,
           menuVisible: menuVisible,
+          selectedIndex: match.selectedIndex,
           selectedIndexes: selectedIndexes,
           getContainerProps: getContainerProps,
           getDropdownProps: getDropdownProps,

@@ -32,6 +32,7 @@ function useControls(multiSelectOpt, size) {
           highlightPrev: match.highlightPrev,
           menuVisible: match$1[0],
           resetHighlighted: match.resetHighlighted,
+          selectedIndex: match.selectedIndex,
           selectedIndexes: match.selectedIndexes,
           selectHighlighted: match.selectHighlighted,
           selectIndex: match.selectIndex,

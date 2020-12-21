@@ -24,24 +24,27 @@ type optionProps = {
 
 type listbox = {
   highlightedIndex : int,
+  selectedIndex    : int,
   selectedIndexes  : array<int>,
   getContainerProps: () => containerProps,
   getOptionProps   : int => optionProps,
 }
 
+
 let useListbox = (options, ~multiSelect = false, ()) => {
   let size = options -> Belt.Array.length
   let {
     highlightedIndex,
-    resetHighlighted,
-    selectedIndexes,
-    selectIndex,
+    highlightFirst,
     highlightIndex,
+    highlightLast,
     highlightNext,
     highlightPrev,
-    highlightFirst,
-    highlightLast,
+    resetHighlighted,
+    selectedIndex,
+    selectedIndexes,
     selectHighlighted,
+    selectIndex,
     selectNext,
     selectPrev,
   } = Controls.Listbox.useControls(~multiSelect, ~size)
@@ -72,16 +75,18 @@ let useListbox = (options, ~multiSelect = false, ()) => {
   }
 
   {
-    highlightedIndex,
-    selectedIndexes,
     getContainerProps,
     getOptionProps,
-}
+    highlightedIndex,
+    selectedIndex,
+    selectedIndexes,
+  }
 }
 
 type dropdownListbox = {
   highlightedIndex : int,
   menuVisible      : bool,
+  selectedIndex    : int,
   selectedIndexes  : array<int>,
   getContainerProps: () => containerProps,
   getDropdownProps : () => dropdownProps,
@@ -102,6 +107,7 @@ let useDropdownListbox = (options, ~multiSelect = false, ()) => {
     highlightPrev,
     menuVisible,
     resetHighlighted,
+    selectedIndex,
     selectedIndexes,
     selectHighlighted,
     selectIndex,
@@ -149,6 +155,7 @@ let useDropdownListbox = (options, ~multiSelect = false, ()) => {
     hideMenu,
     highlightedIndex,
     menuVisible,
+    selectedIndex,
     selectedIndexes,
     showMenu
   }
