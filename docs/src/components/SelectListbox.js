@@ -4,39 +4,22 @@ import options from "./countries.json";
 
 const labelId = "people-listbox";
 
-const Checkbox = () => {
-  return (
-    <div className="checkbox">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-        <path
-          fill="#030104"
-          d="M11.941 28.877L0 16.935l5.695-5.695 6.246 6.246L26.305 3.123 32 8.818z"
-        />
-      </svg>
-    </div>
-  );
-};
-
-function DropdownListbox() {
+function SelectListbox() {
   const {
     highlightedIndex,
     menuVisible,
-    selectedIndexes,
+    selectedIndex,
     getContainerProps,
     getDropdownProps,
     getOptionProps,
-  } = useDropdownListbox(options, true);
+  } = useDropdownListbox(options, false);
+
+  const selectedOption = options[selectedIndex];
 
   return (
     <div>
       <div className="dropdown-button" {...getDropdownProps()}>
-        {selectedIndexes?.length
-          ? selectedIndexes.map((i, index) => (
-              <div key={index} className="tag">
-                {options[i].abbreviation}
-              </div>
-            ))
-          : "Select countries..."}
+        {selectedOption ? selectedOption.country : "Select a country"}
         <div className="dropdown">
           <ul
             hidden={!menuVisible}
@@ -56,7 +39,6 @@ function DropdownListbox() {
 
               return (
                 <li className={className} key={index} {...optionProps}>
-                  <Checkbox checked={selectedIndexes.includes(index)} />
                   {o.country}
                 </li>
               );
@@ -68,4 +50,4 @@ function DropdownListbox() {
   );
 }
 
-export default DropdownListbox;
+export default SelectListbox;
