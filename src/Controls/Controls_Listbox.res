@@ -33,7 +33,6 @@ let selectIndex = (
   ~setSelectedIndexes,
   index
 ) => {
-
   setHighlightedIndex(_ => index)
 
   setSelectedIndexes(selectedIndexes => {
@@ -45,8 +44,8 @@ let selectIndex = (
     | (true, false, false) => selectedIndexes->Belt.Array.concat([index])
     | (true, false, true)  => selectedIndexes->Belt.Array.keep(diff(index))
     | (false, true, true)  => selectedIndexes
-    | (false, false, false)
     | (false, false, true) => []
+    | (false, false, false)
     | (false, true, false) => [index]
     }
   })
