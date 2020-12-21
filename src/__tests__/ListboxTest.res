@@ -46,7 +46,7 @@ module ListboxComponent = {
       highlightedIndex, 
       getOptionProps,
       getContainerProps,
-    }: Listbox.listbox = Listbox.useListbox(options, ~multiSelect, ())
+    } = Listbox.useListbox(options, ~multiSelect, ())
 
     let { role, tabIndex, onKeyDown, onFocus, onBlur } = getContainerProps()
 
@@ -59,7 +59,7 @@ module ListboxComponent = {
               ariaSelected,
               onClick, 
               role,
-            }: Listbox.optionProps = getOptionProps(index)
+            } = getOptionProps(index)
             let highlighted =  highlightedIndex == index
 
             <li key=option onClick onKeyDown role ariaSelected>
