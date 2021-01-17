@@ -8,6 +8,7 @@ var Controls_Listbox = require("./Controls_Listbox.bs.js");
 function useControls(multiSelectOpt, size) {
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
   var match = Controls_Listbox.useControls(multiSelect, size);
+  var selectIndex = match.selectIndex;
   var match$1 = React.useState(function () {
         return false;
       });
@@ -18,6 +19,12 @@ function useControls(multiSelectOpt, size) {
                 }));
   };
   var hideMenu = function (param) {
+    return Curry._1(setMenuVisible, (function (param) {
+                  return false;
+                }));
+  };
+  var selectIndex$1 = function (index) {
+    Curry._1(selectIndex, index);
     return Curry._1(setMenuVisible, (function (param) {
                   return false;
                 }));
@@ -35,7 +42,7 @@ function useControls(multiSelectOpt, size) {
           selectedIndex: match.selectedIndex,
           selectedIndexes: match.selectedIndexes,
           selectHighlighted: match.selectHighlighted,
-          selectIndex: match.selectIndex,
+          selectIndex: selectIndex$1,
           selectNext: match.selectNext,
           selectPrev: match.selectPrev,
           showMenu: showMenu
