@@ -2,12 +2,11 @@
 'use strict';
 
 var Listbox_Listbox = require("./Listbox_Listbox.bs.js");
-var Listbox_DropdownListbox = require("./Listbox_DropdownListbox.bs.js");
+
+var Dropdown;
 
 var useListbox = Listbox_Listbox.useListbox;
 
-var useDropdownListbox = Listbox_DropdownListbox.useDropdownListbox;
-
+exports.Dropdown = Dropdown;
 exports.useListbox = useListbox;
-exports.useDropdownListbox = useDropdownListbox;
 /* Listbox_Listbox Not a pure module */
