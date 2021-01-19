@@ -1,5 +1,5 @@
 module.exports = {
-  title: "@brnrdog/listbox",
+  title: "listboxkit",
   tagline:
     "React hooks written in ReScript for building accessible listbox components.",
   url: "https://brnrdog.github.io/listbox",
@@ -34,7 +34,7 @@ module.exports = {
           items: [
             {
               label: "Getting started",
-              to: "docs"
+              to: "docs",
             },
             {
               label: "Examples",
@@ -61,8 +61,7 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          editUrl:
-            "https://github.com/brnrdog/listbox/edit/master/docs/",
+          editUrl: "https://github.com/brnrdog/listbox/edit/master/docs/",
         },
         blog: {
           showReadingTime: true,

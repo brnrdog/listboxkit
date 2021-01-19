@@ -1,5 +1,5 @@
 import React from "react";
-import { useDropdownListbox } from "@brnrdog/listbox";
+import { useDropdownListbox } from "listboxkit";
 import options from "./countries.json";
 
 const labelId = "people-listbox";

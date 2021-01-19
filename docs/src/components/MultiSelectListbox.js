@@ -1,5 +1,5 @@
 import React from "react";
-import { useListbox } from "@brnrdog/listbox";
+import { useListbox } from "listboxkit";
 import options from "./countries.json";
 
 const labelId = "people-listbox";
@@ -52,10 +52,8 @@ function MultiSelectListbox() {
           })}
         </ul>
       </div>
-      <div style={{ padding: '1rem' }}>
-        <label className="label">
-          You have selected:
-        </label>
+      <div style={{ padding: "1rem" }}>
+        <label className="label">You have selected:</label>
         <div className="example-selected">
           {selectedIndexes?.length ? (
             <>

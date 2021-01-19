@@ -1,5 +1,5 @@
 {
-  "name": "@brnrdog/listbox",
+  "name": "listboxkit",
   "version": "0.0.0-semantic-released",
   "description": "Small and flexible React hooks for building custom and accessible listbox components.",
   "repository": "git://github.com/brnrdog/listbox.git",

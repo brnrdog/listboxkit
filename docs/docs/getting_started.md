@@ -14,22 +14,22 @@ This library provides hooks written in [ReScript](https://rescript-lang.org/) fo
 Install it using the package manager of your preference:
 
 ```bash
-npm install --save @brnrdog/listbox
+npm install --save listboxkit
 ```
 
 Or if your project uses yarn:
 
 ```bash
-yarn add @brnrdog/listbox
+yarn add listboxkit
 ```
 
-For **ReScript** projects, add `@brnrdog/listbox` as a dependency in your `bsconfig.json` file:
+For **ReScript** projects, add `listboxkit` as a dependency in your `bsconfig.json` file:
 
 ```json
 {
   // ...
   "bs-dependencies": [
-    "@brnrdog/listbox"
+    "listboxkit"
     // ...
   ]
 }
