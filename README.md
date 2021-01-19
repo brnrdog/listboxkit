@@ -1,11 +1,11 @@
-# Listbox
+# listboxkit
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brnrdog/listbox/Release?style=flat-square)
 [![npm](https://img.shields.io/npm/v/listboxkit?style=flat-square)](https://www.npmjs.com/package/listboxkit)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/listboxkit?style=flat-square)](https://bundlephobia.com/result?p=listboxkit)
 ![Codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox?style=flat-square)
 
-Light and flexible React hooks for building custom and accessible listbox components.
+Light and flexible React hooks written in ReScript for building accessible listbox composed components, like menus, dropdown select and others.
 
 ## Installation
 
