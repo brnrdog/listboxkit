@@ -1,33 +1,31 @@
 # Listbox
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brnrdog/listbox/Release?style=flat-square)
-[![npm](https://img.shields.io/npm/v/@brnrdog/listbox?style=flat-square)](https://www.npmjs.com/package/@brnrdog/listbox)
-[![npm bundle size](https://img.shields.io/bundlephobia/min/@brnrdog/listbox?style=flat-square)](https://bundlephobia.com/result?p=@brnrdog/listbox)
+[![npm](https://img.shields.io/npm/v/listboxkit?style=flat-square)](https://www.npmjs.com/package/listboxkit)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/listboxkit?style=flat-square)](https://bundlephobia.com/result?p=listboxkit)
 ![Codecov](https://img.shields.io/codecov/c/github/brnrdog/listbox?style=flat-square)
 
-Light and flexible React hooks for building custom and accessible listbox components. 
+Light and flexible React hooks for building custom and accessible listbox components.
 
 ## Installation
 
 Install it using the package manager of your preference:
 
 ```bash
-npm install --save @brnrdog/listbox
+npm install --save listboxkit
 ```
 
 Or if your project uses yarn:
 
 ```bash
-yarn add @brnrdog/listbox
+yarn add listboxkit
 ```
 
-For **ReScript** projects, add `@brnrdog/listbox` as a dependency in your `bsconfig.json` file:
+For **ReScript** projects, add `listboxkit` as a dependency in your `bsconfig.json` file:
 
 ```json
 {
-  "bs-dependencies": [
-    "@brnrdog/listbox"
-  ]
+  "bs-dependencies": ["listboxkit"]
 }
 ```
 

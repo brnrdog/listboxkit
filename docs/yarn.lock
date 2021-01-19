@@ -1075,9 +1075,9 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@brnrdog/listbox@^2.3.2":
+"listboxkit@^2.3.2":
   version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@brnrdog/listbox/-/listbox-2.3.2.tgz#9c175b82cf9d20657c4726d4ca9651b67de5a194"
+  resolved "https://registry.yarnpkg.com/listboxkit/-/listbox-2.3.2.tgz#9c175b82cf9d20657c4726d4ca9651b67de5a194"
   integrity sha512-5dkXWDw+KkN3O726nVUdx7ODuFH9b62pkbyXBEuv+zEBJjkNTKcXbij0/LoCxFJY1zffqG+lxoBMLHvbiJF28w==
 
 "@csstools/convert-colors@^1.4.0":
