@@ -9,7 +9,7 @@ var $$String = require("bs-platform/lib/js/string.js");
 var TestUtils = require("./TestUtils.bs.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
-var Listbox_DropdownListbox = require("../Listbox_DropdownListbox.bs.js");
+var Listboxkit__Dropdown = require("../Listboxkit__Dropdown.bs.js");
 
 var options = [
   "Red",
@@ -17,10 +17,10 @@ var options = [
   "Blue"
 ];
 
-function DropdownListboxTest$DropdownListboxComponent(Props) {
+function DropdownTest$DropdownListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listbox_DropdownListbox.useDropdownListbox(options, multiSelect, undefined);
+  var match = Listboxkit__Dropdown.useDropdownListbox(options, multiSelect, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);
@@ -58,12 +58,12 @@ function DropdownListboxTest$DropdownListboxComponent(Props) {
 
 var DropdownListboxComponent = {
   options: options,
-  make: DropdownListboxTest$DropdownListboxComponent
+  make: DropdownTest$DropdownListboxComponent
 };
 
 function component(multiSelectOpt, param) {
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  return React.createElement(DropdownListboxTest$DropdownListboxComponent, {
+  return React.createElement(DropdownTest$DropdownListboxComponent, {
               multiSelect: multiSelect
             });
 }

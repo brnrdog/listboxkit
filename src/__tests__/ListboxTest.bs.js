@@ -5,9 +5,9 @@ var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
 var $$Array = require("bs-platform/lib/js/array.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
-var Listbox = require("../Listbox.bs.js");
 var TestUtils = require("./TestUtils.bs.js");
 var UserEvent = require("@drewschrauf/bs-user-event/src/UserEvent.bs.js");
+var Listboxkit__Listbox = require("../Listboxkit__Listbox.bs.js");
 var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
 
 var options = [
@@ -19,7 +19,7 @@ var options = [
 function ListboxTest$ListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listbox.useListbox(options, multiSelect, undefined);
+  var match = Listboxkit__Listbox.useListbox(options, multiSelect, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);
