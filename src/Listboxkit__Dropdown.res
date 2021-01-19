@@ -1,39 +1,39 @@
 type containerProps = {
-  role        : string,
-  tabIndex    : int,
-  onBlur      : ReactEvent.Focus.t => unit,
-  onKeyDown   : ReactEvent.Keyboard.t => unit,
-  onFocus     : ReactEvent.Focus.t => unit,
+  role: string,
+  tabIndex: int,
+  onBlur: ReactEvent.Focus.t => unit,
+  onKeyDown: ReactEvent.Keyboard.t => unit,
+  onFocus: ReactEvent.Focus.t => unit,
 }
 
 type dropdownProps = {
-  role    : string,
+  role: string,
   tabIndex: int,
-  onClick : ReactEvent.Mouse.t => unit,
-  onKeyDown   : ReactEvent.Keyboard.t => unit,
+  onClick: ReactEvent.Mouse.t => unit,
+  onKeyDown: ReactEvent.Keyboard.t => unit,
 }
 
 type optionProps = {
-  @bs.as("aria-selected") 
+  @bs.as("aria-selected")
   ariaSelected: bool,
-  role        : string,
-  onClick     : ReactEvent.Mouse.t => unit,
+  role: string,
+  onClick: ReactEvent.Mouse.t => unit,
 }
 
 type dropdownListbox = {
-  highlightedIndex : int,
-  menuVisible      : bool,
-  selectedIndex    : int,
-  selectedIndexes  : array<int>,
-  getContainerProps: () => containerProps,
-  getDropdownProps : () => dropdownProps,
-  getOptionProps   : int => optionProps,
-  hideMenu         : () => (),
-  showMenu         : () => (),
+  highlightedIndex: int,
+  menuVisible: bool,
+  selectedIndex: int,
+  selectedIndexes: array<int>,
+  getContainerProps: unit => containerProps,
+  getDropdownProps: unit => dropdownProps,
+  getOptionProps: int => optionProps,
+  hideMenu: unit => unit,
+  showMenu: unit => unit,
 }
 
-let useDropdownListbox = (options, ~multiSelect = false, ()) => {
-  let size = options -> Belt.Array.length 
+let useDropdownListbox = (options, ~multiSelect=false, ()) => {
+  let size = options->Belt.Array.length
   let {
     hideMenu,
     highlightedIndex,
@@ -64,7 +64,7 @@ let useDropdownListbox = (options, ~multiSelect = false, ()) => {
     tabIndex: 0,
     onBlur: EventHandlers.onBlur(~resetHighlighted),
     onFocus: EventHandlers.onFocus(~highlightIndex, ~selectedIndexes),
-    onKeyDown: _ => ()
+    onKeyDown: _ => (),
   }
 
   let getDropdownProps = () => {
@@ -74,26 +74,26 @@ let useDropdownListbox = (options, ~multiSelect = false, ()) => {
     onKeyDown: EventHandlers.onKeyDown(
       ~menuVisible,
       ~hideMenu,
-      ~highlightFirst, 
-      ~highlightLast, 
+      ~highlightFirst,
+      ~highlightLast,
       ~highlightNext,
       ~selectPrev,
-      ~selectNext, 
+      ~selectNext,
       ~highlightPrev,
       ~selectHighlighted,
       ~showMenu,
-    )
+    ),
   }
 
   {
-    getContainerProps,
-    getDropdownProps,
-    getOptionProps,
-    hideMenu,
-    highlightedIndex,
-    menuVisible,
-    selectedIndex,
-    selectedIndexes,
-    showMenu
+    getContainerProps: getContainerProps,
+    getDropdownProps: getDropdownProps,
+    getOptionProps: getOptionProps,
+    hideMenu: hideMenu,
+    highlightedIndex: highlightedIndex,
+    menuVisible: menuVisible,
+    selectedIndex: selectedIndex,
+    selectedIndexes: selectedIndexes,
+    showMenu: showMenu,
   }
 }

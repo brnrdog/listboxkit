@@ -3,14 +3,14 @@ import { terser } from "rollup-plugin-terser";
 import analyze from "rollup-plugin-analyzer";
 
 export default {
-  input: "src/Listbox.bs.js",
+  input: "src/Listboxkit.bs.js",
   output: [
     {
-      file: "dist/listbox.cjs.js",
+      file: "dist/.cjs.js",
       format: "cjs",
     },
     {
-      file: "dist/listbox.esm.js",
+      file: "dist/.esm.js",
       format: "esm",
     },
   ],
