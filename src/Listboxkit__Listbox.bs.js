@@ -39,11 +39,13 @@ function useListbox(options, multiSelectOpt, param) {
     return {
             role: "listbox",
             tabIndex: 0,
-            onBlur: (function (param) {
-                return EventHandlers.onBlur(resetHighlighted, param);
+            onBlur: (function (eta) {
+                var param;
+                var param$1;
+                return EventHandlers.onBlur(resetHighlighted, param, param$1, eta);
               }),
             onKeyDown: (function (param) {
-                return EventHandlers.onKeyDown(true, noop, highlightFirst, highlightLast, highlightNext, highlightPrev, selectPrev, selectNext, selectHighlighted, noop, param);
+                return EventHandlers.onKeyDown(noop, highlightFirst, highlightLast, highlightNext, highlightPrev, true, selectHighlighted, selectNext, selectPrev, noop, param);
               }),
             onFocus: (function (param) {
                 return EventHandlers.onFocus(selectedIndexes, highlightIndex, param);

@@ -97,3 +97,19 @@ test("allow multiple selection when multiSelect is true", () => {
   |> expect
   |> toBeInTheDocument
 })
+
+test("hide listbox when focusing out from listbox", () => {
+  let screen = component() |> render
+
+  screen |> getByRole(~matcher=#Str("button")) |> FireEvent.pressDown
+  screen |> getByRole(~matcher=#Str("listbox")) |> expect |> toBeVisible |> assertAndContinue
+  screen |> getByRole(~matcher=#Str("listbox")) |> FireEvent.blur
+  screen
+  |> getByRole(
+    ~matcher=#Str("listbox"),
+    ~options=DomTestingLibrary.ByRoleQuery.makeOptions(~hidden=true, ()),
+  )
+  |> expect
+  |> not__
+  |> toBeVisible
+})

@@ -5,7 +5,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
 var Belt_Option = require("bs-platform/lib/js/belt_Option.js");
 
-function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectPrev, selectNext, selectHighlighted, showMenu, $$event) {
+function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, $$event) {
   var key = $$event.key;
   var shiftKey = $$event.shiftKey;
   if (key !== "Tab") {
@@ -63,8 +63,12 @@ function onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlig
   }
 }
 
-function onBlur(resetHighlighted, _event) {
-  return Curry._1(resetHighlighted, undefined);
+function onBlur(resetHighlighted, hideMenu, menuVisible, _event) {
+  if (menuVisible !== undefined && menuVisible && hideMenu !== undefined) {
+    return Curry._1(hideMenu, undefined);
+  } else {
+    return Curry._1(resetHighlighted, undefined);
+  }
 }
 
 function onFocus(selectedIndexes, highlightIndex, _event) {

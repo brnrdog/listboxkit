@@ -35,11 +35,13 @@ function useDropdownListbox(options, multiSelectOpt, param) {
           };
   };
   var getContainerProps = function (param) {
+    var partial_arg = menuVisible;
+    var partial_arg$1 = hideMenu;
     return {
             role: "listbox",
             tabIndex: 0,
             onBlur: (function (param) {
-                return EventHandlers.onBlur(resetHighlighted, param);
+                return EventHandlers.onBlur(resetHighlighted, partial_arg$1, partial_arg, param);
               }),
             onKeyDown: (function (param) {
                 
@@ -57,7 +59,7 @@ function useDropdownListbox(options, multiSelectOpt, param) {
                 return EventHandlers.onDropdownClick(menuVisible, hideMenu, showMenu, param);
               }),
             onKeyDown: (function (param) {
-                return EventHandlers.onKeyDown(menuVisible, hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, selectPrev, selectNext, selectHighlighted, showMenu, param);
+                return EventHandlers.onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, param);
               })
           };
   };

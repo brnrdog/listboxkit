@@ -211,6 +211,41 @@ Jest.test("allow multiple selection when multiSelect is true", (function (param)
                           }, component$1)));
       }));
 
+Jest.test("hide listbox when focusing out from listbox", (function (param) {
+        var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        var partial_arg = {
+          NAME: "Str",
+          VAL: "button"
+        };
+        var arg = function (param, param$1) {
+          return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
+        };
+        Curry._1(TestUtils.FireEvent.pressDown, Curry._2(arg, undefined, screen));
+        var partial_arg$1 = {
+          NAME: "Str",
+          VAL: "listbox"
+        };
+        var arg$1 = function (param, param$1) {
+          return ReactTestingLibrary.getByRole(partial_arg$1, param, param$1);
+        };
+        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(Curry._2(arg$1, undefined, screen))));
+        var arg$2 = TestUtils.FireEvent.blur;
+        var partial_arg$2 = {
+          NAME: "Str",
+          VAL: "listbox"
+        };
+        var arg$3 = function (param, param$1) {
+          return ReactTestingLibrary.getByRole(partial_arg$2, param, param$1);
+        };
+        Curry._2(arg$2, undefined, Curry._2(arg$3, undefined, screen));
+        return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole({
+                            NAME: "Str",
+                            VAL: "listbox"
+                          }, {
+                            hidden: true
+                          }, screen)).not);
+      }));
+
 var FireEvent = TestUtils.FireEvent;
 
 var assertAndContinue = TestUtils.assertAndContinue;

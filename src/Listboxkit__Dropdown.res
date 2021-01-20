@@ -62,7 +62,7 @@ let useDropdownListbox = (options, ~multiSelect=false, ()) => {
   let getContainerProps = () => {
     role: "listbox",
     tabIndex: 0,
-    onBlur: EventHandlers.onBlur(~resetHighlighted),
+    onBlur: EventHandlers.onBlur(~resetHighlighted, ~menuVisible, ~hideMenu),
     onFocus: EventHandlers.onFocus(~highlightIndex, ~selectedIndexes),
     onKeyDown: _ => (),
   }
