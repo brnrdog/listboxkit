@@ -2,14 +2,15 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
-var $$Array = require("bs-platform/lib/js/array.js");
-var Curry = require("bs-platform/lib/js/curry.js");
+var $$Array = require("rescript/lib/js/array.js");
+var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
-var $$String = require("bs-platform/lib/js/string.js");
+var $$String = require("rescript/lib/js/string.js");
 var TestUtils = require("./TestUtils.bs.js");
-var Belt_Array = require("bs-platform/lib/js/belt_Array.js");
-var ReactTestingLibrary = require("bs-react-testing-library/src/ReactTestingLibrary.bs.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
 var Listboxkit__Dropdown = require("../Listboxkit__Dropdown.bs.js");
+var DomTestingLibrary__UserEvent = require("rescript-dom-testing-library/src/DomTestingLibrary__UserEvent.bs.js");
 
 var options = [
   "Red",
@@ -70,179 +71,100 @@ function component(multiSelectOpt, param) {
 
 Jest.test("select option when clicked", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        var arg = TestUtils.FireEvent.click;
-        var partial_arg = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$1 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
-        };
-        Curry._2(arg, undefined, Curry._2(arg$1, undefined, component$1));
-        var partial_arg$1 = {
-          NAME: "Str",
-          VAL: "listbox"
-        };
-        var arg$2 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$1, param, param$1);
-        };
-        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(Curry._2(arg$2, undefined, component$1))));
-        var arg$3 = TestUtils.FireEvent.click;
-        Curry._2(arg$3, undefined, ReactTestingLibrary.getByRole({
+        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
+                          NAME: "Str",
+                          VAL: "listbox"
+                        }, component$1))));
+        DomTestingLibrary__UserEvent.click(undefined, undefined, ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, "Blue", undefined), {
                   NAME: "Str",
                   VAL: "option"
-                }, {
-                  name: "Blue"
                 }, component$1));
-        var partial_arg$2 = {
+        var partial_arg = {
           NAME: "Str",
           VAL: "Blue"
         };
-        var arg$4 = function (param) {
-          return TestUtils.toHaveTextContent(partial_arg$2, param);
+        var arg = function (param) {
+          return TestUtils.toHaveTextContent(partial_arg, param);
         };
-        var partial_arg$3 = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$5 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$3, param, param$1);
-        };
-        return Curry._2(arg$4, undefined, expect(Curry._2(arg$5, undefined, component$1)));
+        return Curry._2(arg, undefined, expect(ReactTestingLibrary.getByRole(undefined, {
+                            NAME: "Str",
+                            VAL: "button"
+                          }, component$1)));
       }));
 
 Jest.test("show listbox when pressing arrow down", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        var partial_arg = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressDown, Curry._2(arg, undefined, component$1));
-        var partial_arg$1 = {
-          NAME: "Str",
-          VAL: "listbox"
-        };
-        var arg$1 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$1, param, param$1);
-        };
-        return TestUtils.toBeVisible(expect(Curry._2(arg$1, undefined, component$1)));
+        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
+                            NAME: "Str",
+                            VAL: "listbox"
+                          }, component$1)));
       }));
 
 Jest.test("show listbox when pressing arrow up", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        var partial_arg = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressUp, Curry._2(arg, undefined, component$1));
-        var partial_arg$1 = {
-          NAME: "Str",
-          VAL: "listbox"
-        };
-        var arg$1 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$1, param, param$1);
-        };
-        return TestUtils.toBeVisible(expect(Curry._2(arg$1, undefined, component$1)));
+        TestUtils.FireEvent.pressUp(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
+                            NAME: "Str",
+                            VAL: "listbox"
+                          }, component$1)));
       }));
 
 Jest.test("allow multiple selection when multiSelect is true", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
-        var arg = TestUtils.FireEvent.click;
-        var partial_arg = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$1 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
-        };
-        Curry._2(arg, undefined, Curry._2(arg$1, undefined, component$1));
-        var partial_arg$1 = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$2 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$1, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressDown, Curry._2(arg$2, undefined, component$1));
-        var partial_arg$2 = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$3 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$2, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressSpace, Curry._2(arg$3, undefined, component$1));
-        var arg$4 = TestUtils.FireEvent.click;
-        var partial_arg$3 = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$5 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$3, param, param$1);
-        };
-        Curry._2(arg$4, undefined, Curry._2(arg$5, undefined, component$1));
-        var partial_arg$4 = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$6 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$4, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressDown, Curry._2(arg$6, undefined, component$1));
-        var partial_arg$5 = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg$7 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$5, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressSpace, Curry._2(arg$7, undefined, component$1));
-        return TestUtils.toBeInTheDocument(expect(ReactTestingLibrary.getByRole({
+        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        TestUtils.FireEvent.pressSpace(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        TestUtils.FireEvent.pressSpace(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
+        return TestUtils.toBeInTheDocument(expect(ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, "Red, Green", undefined), {
                             NAME: "Str",
                             VAL: "button"
-                          }, {
-                            name: "Red, Green"
                           }, component$1)));
       }));
 
 Jest.test("hide listbox when focusing out from listbox", (function (param) {
         var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        var partial_arg = {
-          NAME: "Str",
-          VAL: "button"
-        };
-        var arg = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg, param, param$1);
-        };
-        Curry._1(TestUtils.FireEvent.pressDown, Curry._2(arg, undefined, screen));
-        var partial_arg$1 = {
-          NAME: "Str",
-          VAL: "listbox"
-        };
-        var arg$1 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$1, param, param$1);
-        };
-        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(Curry._2(arg$1, undefined, screen))));
-        var arg$2 = TestUtils.FireEvent.blur;
-        var partial_arg$2 = {
-          NAME: "Str",
-          VAL: "listbox"
-        };
-        var arg$3 = function (param, param$1) {
-          return ReactTestingLibrary.getByRole(partial_arg$2, param, param$1);
-        };
-        Curry._2(arg$2, undefined, Curry._2(arg$3, undefined, screen));
-        return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole({
+        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, screen));
+        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
+                          NAME: "Str",
+                          VAL: "listbox"
+                        }, screen))));
+        TestUtils.FireEvent.blur(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "listbox"
+                }, screen));
+        return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
                             NAME: "Str",
                             VAL: "listbox"
-                          }, {
-                            hidden: true
                           }, screen)).not);
       }));
 

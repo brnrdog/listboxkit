@@ -25,19 +25,21 @@ let onKeyDown = (
 
   switch (key, menuVisible, shiftKey) {
   | ("ArrowDown", false, _)
-  | ("ArrowUp",   false, _)
-  | ("Enter",     false, _)
-  | (" ",         false, _)    => showMenu()
+  | ("ArrowUp", false, _)
+  | ("Enter", false, _)
+  | (" ", false, _) =>
+    showMenu()
   | ("ArrowDown", true, false) => highlightNext()
-  | ("ArrowDown", true, true)  => selectNext()
-  | ("ArrowUp",   true, false) => highlightPrev()
-  | ("ArrowUp",   true, true)  => selectPrev()
-  | ("Enter",     true, _)
-  | (" ",         true, _)     => selectCurrent()
-  | ("Home",      true, _)     => highlightFirst()
-  | ("End",       true, _)     => highlightLast()
-  | ("Escape",    true, _)     => hideMenu()
-  | _                          => ()
+  | ("ArrowDown", true, true) => selectNext()
+  | ("ArrowUp", true, false) => highlightPrev()
+  | ("ArrowUp", true, true) => selectPrev()
+  | ("Enter", true, _)
+  | (" ", true, _) =>
+    selectCurrent()
+  | ("Home", true, _) => highlightFirst()
+  | ("End", true, _) => highlightLast()
+  | ("Escape", true, _) => hideMenu()
+  | _ => ()
   }
 }
 
