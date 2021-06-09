@@ -1,33 +1,38 @@
 open Jest
-open ReactTestingLibrary
+open DomTestingLibrary
 
 module FireEvent = {
-  include ReactTestingLibrary.FireEvent
-
   module Keyboard = {
-    let down = {"key": "ArrowDown"}
-    let downShift = {"key": "ArrowDown", "shiftKey": true}
-    let end = {"key": "End"}
-    let enter = {"key": "Enter"}
-    let esc = {"key": "Esc"}
-    let home = {"key": "Home"}
-    let space = {"key": " "}
-    let tab = {"key": "Tab"}
-    let up = {"key": "ArrowUp"}
-    let upShift = {"key": "ArrowUp", "shiftKey": true}
+    let down = "{arrowDown}"
+    let downShift = "{shift}{arrowDown}"
+    let end = "{end}"
+    let enter = "{enter}"
+    let esc = "{esc}"
+    let home = "{home}"
+    let space = "{space}"
+    let tab = "{tab}"
+    let up = "{arrowUp}"
+    let upShift = "{shift}{arrowUp}"
   }
 
-  let pressDown = FireEvent.keyDown(~eventInit=Keyboard.down)
-  let pressDownShift = FireEvent.keyDown(~eventInit=Keyboard.downShift)
-  let pressEnd = FireEvent.keyDown(~eventInit=Keyboard.end)
-  let pressEnter = FireEvent.keyDown(~eventInit=Keyboard.enter)
-  let pressEsc = FireEvent.keyDown(~eventInit=Keyboard.esc)
-  let pressHome = FireEvent.keyDown(~eventInit=Keyboard.home)
-  let pressShiftDown = FireEvent.keyDown(~eventInit=Keyboard.downShift)
-  let pressSpace = FireEvent.keyDown(~eventInit=Keyboard.space)
-  let pressTab = FireEvent.keyDown(~eventInit=Keyboard.tab)
-  let pressUp = FireEvent.keyDown(~eventInit=Keyboard.up)
-  let pressUpShift = FireEvent.keyDown(~eventInit=Keyboard.upShift)
+  let pressDown = e => e->UserEvent.type_(Keyboard.down)
+  let pressDownShift = e => e->UserEvent.type_(Keyboard.downShift)
+  let pressEnd = e => e->UserEvent.type_(Keyboard.end)
+  let pressEnter = e => e->UserEvent.type_(Keyboard.enter)
+  let pressEsc = e => e->UserEvent.type_(Keyboard.esc)
+  let pressHome = e => e->UserEvent.type_(Keyboard.home)
+  let pressSpace = e => e->UserEvent.type_(Keyboard.space)
+  let pressTab = e => e->UserEvent.type_(Keyboard.tab)
+  let pressUp = e => e->UserEvent.type_(Keyboard.up)
+  let pressUpShift = e => e->UserEvent.type_(Keyboard.upShift)
+
+  let click = e => e->UserEvent.click
+  // Not implemented
+  let blur = _ => ()
+  // Not implemented
+  let focus = _ => ()
+  // Not implemented
+  let tab = _ => ()
 }
 
 let assertAndContinue = _ => ()

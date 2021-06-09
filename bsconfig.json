@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
   "name": "listboxkit",
   "version": "2.0.0",
   "sources": {
@@ -16,12 +15,12 @@
   "suffix": ".bs.js",
   "bs-dependencies": [
     "@drewschrauf/bs-user-event",
+    "@rescript/react",
     "@glennsl/bs-jest",
-    "bs-dom-testing-library",
     "bs-jest-dom",
-    "bs-react-testing-library",
     "bs-webapi",
-    "reason-react"
+    "rescript-dom-testing-library",
+    "rescript-react-testing-library"
   ],
   "warnings": {
     "error": "+101",
