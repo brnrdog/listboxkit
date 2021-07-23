@@ -6,11 +6,11 @@ export default {
   input: "src/Listboxkit.bs.js",
   output: [
     {
-      file: "dist/.cjs.js",
+      file: "dist/listboxkit.cjs.js",
       format: "cjs",
     },
     {
-      file: "dist/.esm.js",
+      file: "dist/listboxkit.esm.js",
       format: "esm",
     },
   ],
