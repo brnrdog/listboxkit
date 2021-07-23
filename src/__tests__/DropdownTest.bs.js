@@ -10,7 +10,6 @@ var TestUtils = require("./TestUtils.bs.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
 var Listboxkit__Dropdown = require("../Listboxkit__Dropdown.bs.js");
-var DomTestingLibrary__UserEvent = require("rescript-dom-testing-library/src/DomTestingLibrary__UserEvent.bs.js");
 
 var options = [
   "Red",
@@ -32,29 +31,29 @@ function DropdownTest$DropdownListboxComponent(Props) {
                 })), ", ", (function (s) {
               return s;
             })));
-  return React.createElement("div", undefined, React.createElement("div", {
+  return React.createElement("div", undefined, React.createElement("button", {
                   role: dropdownProps.role,
                   tabIndex: dropdownProps.tabIndex,
                   onKeyDown: dropdownProps.onKeyDown,
                   onClick: dropdownProps.onClick
-                }, selectedOption, React.createElement("div", {
-                      hidden: !match.menuVisible,
-                      role: match$1.role,
-                      tabIndex: match$1.tabIndex,
-                      onKeyDown: onKeyDown,
-                      onFocus: match$1.onFocus,
-                      onBlur: match$1.onBlur
-                    }, $$Array.mapi((function (index, option) {
-                            var match = Curry._1(getOptionProps, index);
-                            var highlighted = highlightedIndex === index;
-                            return React.createElement("div", {
-                                        key: option,
-                                        "aria-selected": match["aria-selected"],
-                                        role: match.role,
-                                        onKeyDown: onKeyDown,
-                                        onClick: match.onClick
-                                      }, highlighted ? "* " + option : option);
-                          }), options))));
+                }, selectedOption), React.createElement("ul", {
+                  hidden: !match.menuVisible,
+                  role: match$1.role,
+                  tabIndex: match$1.tabIndex,
+                  onKeyDown: onKeyDown,
+                  onFocus: match$1.onFocus,
+                  onBlur: match$1.onBlur
+                }, $$Array.mapi((function (index, option) {
+                        var match = Curry._1(getOptionProps, index);
+                        var highlighted = highlightedIndex === index;
+                        return React.createElement("li", {
+                                    key: option,
+                                    "aria-selected": match["aria-selected"],
+                                    role: match.role,
+                                    onKeyDown: onKeyDown,
+                                    onClick: match.onClick
+                                  }, highlighted ? "* " + option : option);
+                      }), options)));
 }
 
 var DropdownListboxComponent = {
@@ -71,11 +70,15 @@ function component(multiSelectOpt, param) {
 
 Jest.test("select option when clicked", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, component$1));
         TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
                           NAME: "Str",
                           VAL: "listbox"
                         }, component$1))));
-        DomTestingLibrary__UserEvent.click(undefined, undefined, ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, "Blue", undefined), {
+        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, "Blue", undefined), {
                   NAME: "Str",
                   VAL: "option"
                 }, component$1));
@@ -118,54 +121,18 @@ Jest.test("show listbox when pressing arrow up", (function (param) {
 
 Jest.test("allow multiple selection when multiSelect is true", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
-        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, component$1));
-        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, component$1));
-        TestUtils.FireEvent.pressSpace(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, component$1));
-        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, component$1));
-        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, component$1));
-        TestUtils.FireEvent.pressSpace(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, component$1));
+        var button = ReactTestingLibrary.getByRole(undefined, {
+              NAME: "Str",
+              VAL: "button"
+            }, component$1);
+        TestUtils.FireEvent.click(button);
+        TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Red"));
+        TestUtils.FireEvent.click(button);
+        TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Green"));
         return TestUtils.toBeInTheDocument(expect(ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, "Red, Green", undefined), {
                             NAME: "Str",
                             VAL: "button"
                           }, component$1)));
-      }));
-
-Jest.test("hide listbox when focusing out from listbox", (function (param) {
-        var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "button"
-                }, screen));
-        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
-                          NAME: "Str",
-                          VAL: "listbox"
-                        }, screen))));
-        TestUtils.FireEvent.blur(ReactTestingLibrary.getByRole(undefined, {
-                  NAME: "Str",
-                  VAL: "listbox"
-                }, screen));
-        return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
-                            NAME: "Str",
-                            VAL: "listbox"
-                          }, screen)).not);
       }));
 
 var FireEvent = TestUtils.FireEvent;
@@ -175,6 +142,8 @@ var assertAndContinue = TestUtils.assertAndContinue;
 var getListbox = TestUtils.getListbox;
 
 var getButton = TestUtils.getButton;
+
+var getOption = TestUtils.getOption;
 
 var HaveClass = TestUtils.HaveClass;
 
@@ -228,6 +197,7 @@ exports.FireEvent = FireEvent;
 exports.assertAndContinue = assertAndContinue;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
+exports.getOption = getOption;
 exports.HaveClass = HaveClass;
 exports.TextContent = TextContent;
 exports.toBeDisabled = toBeDisabled;

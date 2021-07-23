@@ -56,139 +56,130 @@ function component(multiSelectOpt, param) {
             });
 }
 
-function getOption(e, name) {
-  return ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, name, undefined), {
-              NAME: "Str",
-              VAL: "option"
-            }, e);
-}
-
 Jest.test("render listbox container", (function (param) {
         return TestUtils.toBeInTheDocument(expect(Curry._1(TestUtils.getListbox(undefined), ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined)))));
       }));
 
 Jest.test("renders the options: Red, Green and Blue", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "Red"))));
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "Green"))));
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "Blue")));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Red"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Green"))));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Blue")));
       }));
 
 Jest.test("highlights last option when pressing END", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        TestUtils.FireEvent.pressEnd(getOption(component$1, "Red"));
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Blue")));
+        TestUtils.FireEvent.pressEnd(TestUtils.getOption(component$1, "Red"));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Blue")));
       }));
 
 Jest.test("highlights first option when pressing HOME", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        TestUtils.FireEvent.pressHome(getOption(component$1, "Blue"));
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red")));
+        TestUtils.FireEvent.pressHome(TestUtils.getOption(component$1, "Blue"));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Red")));
       }));
 
 Jest.test("sets option aria-selected to true when clicked", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        TestUtils.FireEvent.pressEsc(getOption(component$1, "Red"));
-        TestUtils.FireEvent.click(getOption(component$1, "Red"));
-        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "* Red")));
+        TestUtils.FireEvent.click(component$1);
+        TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Red"));
+        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "* Red")));
       }));
 
-Jest.test("highlights next option when pressing DOWN ", (function (param) {
+Jest.Only.test("highlights next option when pressing DOWN ", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         var listbox = Curry._1(TestUtils.getListbox(undefined), component$1);
         TestUtils.FireEvent.pressDown(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Green"))));
         TestUtils.FireEvent.pressDown(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Green"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Blue"))));
         TestUtils.FireEvent.pressDown(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Blue"))));
-        TestUtils.FireEvent.pressDown(listbox);
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red")));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Red")));
       }));
 
 Jest.test("highlights previous option when pressing UP ", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         var listbox = Curry._1(TestUtils.getListbox(undefined), component$1);
         TestUtils.FireEvent.pressUp(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Blue"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Blue"))));
         TestUtils.FireEvent.pressUp(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Green"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Green"))));
         TestUtils.FireEvent.pressUp(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Red"))));
         TestUtils.FireEvent.pressUp(listbox);
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Blue")));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Blue")));
       }));
 
 Jest.test("selects and deselects option when pressing SPACE/ENTER", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(false, undefined));
-        TestUtils.FireEvent.click(getOption(component$1, "Red"));
-        TestUtils.assertAndContinue(TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "* Red"))));
+        TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Red"));
+        TestUtils.assertAndContinue(TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "* Red"))));
         TestUtils.FireEvent.pressEnter(Curry._1(TestUtils.getListbox(undefined), component$1));
-        TestUtils.assertAndContinue(TestUtils.toHaveAttribute("aria-selected", "false")(expect(getOption(component$1, "* Red"))));
+        TestUtils.assertAndContinue(TestUtils.toHaveAttribute("aria-selected", "false")(expect(TestUtils.getOption(component$1, "* Red"))));
         TestUtils.FireEvent.pressSpace(Curry._1(TestUtils.getListbox(undefined), component$1));
-        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "* Red")));
+        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "* Red")));
       }));
 
 Jest.test("highlights first when focused and no option selected", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         var listbox = Curry._1(TestUtils.getListbox(undefined), component$1);
         TestUtils.FireEvent.focus(listbox);
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red")));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Red")));
       }));
 
 Jest.test("highlights selected index when focus and option selected", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
-        TestUtils.FireEvent.click(getOption(component$1, "Green"));
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Green"))));
+        TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Green"));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Green"))));
         TestUtils.FireEvent.pressDown(Curry._1(TestUtils.getListbox(undefined), component$1));
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Blue"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Blue"))));
         TestUtils.FireEvent.focus(Curry._1(TestUtils.getListbox(undefined), component$1));
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Green")));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Green")));
       }));
 
 Jest.test("resets highlighted option when focus out", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         var listbox = Curry._1(TestUtils.getListbox(undefined), component$1);
         TestUtils.FireEvent.pressDown(listbox);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Red"))));
         TestUtils.FireEvent.blur(listbox);
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "Red")));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Red")));
       }));
 
 Jest.test("focus out when pressing Tab", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         TestUtils.FireEvent.tab(undefined);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "* Red"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "* Red"))));
         TestUtils.FireEvent.tab(undefined);
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "Red"))));
-        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(getOption(component$1, "Green"))));
-        return TestUtils.toBeInTheDocument(expect(getOption(component$1, "Blue")));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Red"))));
+        TestUtils.assertAndContinue(TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Green"))));
+        return TestUtils.toBeInTheDocument(expect(TestUtils.getOption(component$1, "Blue")));
       }));
 
 Jest.test("selects multiple when multiSelect is true", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
         TestUtils.FireEvent.tab(undefined);
         TestUtils.FireEvent.pressEnter(Curry._1(TestUtils.getListbox(undefined), component$1));
-        TestUtils.assertAndContinue(TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "* Red"))));
+        TestUtils.assertAndContinue(TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "* Red"))));
         TestUtils.FireEvent.pressDown(Curry._1(TestUtils.getListbox(undefined), component$1));
         TestUtils.FireEvent.pressEnter(Curry._1(TestUtils.getListbox(undefined), component$1));
         TestUtils.FireEvent.pressDown(Curry._1(TestUtils.getListbox(undefined), component$1));
         TestUtils.FireEvent.pressEnter(Curry._1(TestUtils.getListbox(undefined), component$1));
-        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "Red")));
+        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "Red")));
       }));
 
 Jest.test("selects next when pressing arrow down and shift", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
         TestUtils.FireEvent.tab(undefined);
         TestUtils.FireEvent.pressDownShift(Curry._1(TestUtils.getListbox(undefined), component$1));
-        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "* Green")));
+        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "* Green")));
       }));
 
 Jest.test("selects previous when pressing arrow up and shift", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
         TestUtils.FireEvent.tab(undefined);
         TestUtils.FireEvent.pressUpShift(Curry._1(TestUtils.getListbox(undefined), component$1));
-        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(getOption(component$1, "* Blue")));
+        return TestUtils.toHaveAttribute("aria-selected", "true")(expect(TestUtils.getOption(component$1, "* Blue")));
       }));
 
 var FireEvent = TestUtils.FireEvent;
@@ -198,6 +189,8 @@ var assertAndContinue = TestUtils.assertAndContinue;
 var getListbox = TestUtils.getListbox;
 
 var getButton = TestUtils.getButton;
+
+var getOption = TestUtils.getOption;
 
 var HaveClass = TestUtils.HaveClass;
 
@@ -251,6 +244,7 @@ exports.FireEvent = FireEvent;
 exports.assertAndContinue = assertAndContinue;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
+exports.getOption = getOption;
 exports.HaveClass = HaveClass;
 exports.TextContent = TextContent;
 exports.toBeDisabled = toBeDisabled;
@@ -277,5 +271,4 @@ exports.toBePartiallyChecked = toBePartiallyChecked;
 exports.toHaveDescription = toHaveDescription;
 exports.ListboxComponent = ListboxComponent;
 exports.component = component;
-exports.getOption = getOption;
 /*  Not a pure module */

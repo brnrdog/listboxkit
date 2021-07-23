@@ -89,8 +89,7 @@ function selectIndex(keepOpt, multiSelect, setHighlightedIndex, setSelectedIndex
   
 }
 
-function useControls(multiSelectOpt, size) {
-  var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
+function useControls(multiSelect, size) {
   var match = React.useState(function () {
         return [];
       });

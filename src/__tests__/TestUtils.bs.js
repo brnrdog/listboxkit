@@ -4,7 +4,7 @@
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
 var Curry = require("rescript/lib/js/curry.js");
 var JestDom = require("bs-jest-dom/src/JestDom.bs.js");
-var DomTestingLibrary = require("rescript-dom-testing-library/src/DomTestingLibrary.bs.js");
+var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
 var DomTestingLibrary__UserEvent = require("rescript-dom-testing-library/src/DomTestingLibrary__UserEvent.bs.js");
 
 var down = "{arrowDown}";
@@ -119,17 +119,24 @@ function assertAndContinue(param) {
 }
 
 function getListbox(param) {
-  return Curry._2(DomTestingLibrary.getByRole, param, {
+  return Curry._2(ReactTestingLibrary.getByRole, param, {
               NAME: "Str",
               VAL: "listbox"
             });
 }
 
 function getButton(param) {
-  return Curry._2(DomTestingLibrary.getByRole, param, {
+  return Curry._2(ReactTestingLibrary.getByRole, param, {
               NAME: "Str",
               VAL: "button"
             });
+}
+
+function getOption(e, name) {
+  return ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, name, undefined), {
+              NAME: "Str",
+              VAL: "option"
+            }, e);
 }
 
 var HaveClass = JestDom.HaveClass;
@@ -184,6 +191,7 @@ exports.FireEvent = FireEvent;
 exports.assertAndContinue = assertAndContinue;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
+exports.getOption = getOption;
 exports.HaveClass = HaveClass;
 exports.TextContent = TextContent;
 exports.toBeDisabled = toBeDisabled;

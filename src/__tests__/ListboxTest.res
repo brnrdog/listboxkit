@@ -36,9 +36,6 @@ module ListboxComponent = {
 
 let component = (~multiSelect=true, ()) => <ListboxComponent multiSelect />
 
-let getOption = (e, name) =>
-  e->getByRole(~matcher=#Str("option"), ~options=makeByRoleOptions(~name, ()))
-
 test("render listbox container", () => {
   component()->render->getListbox->expect->toBeInTheDocument
 })
@@ -69,17 +66,15 @@ test("sets option aria-selected to true when clicked", () => {
   let component = render(component())
 
   // Nothing should happen when pressing esc.
-  component->getOption("Red") |> FireEvent.pressEsc
+  component->FireEvent.click
   component->getOption("Red")->FireEvent.click
   component->getOption("* Red")->expect |> toHaveAttribute("aria-selected", ~value="true")
 })
 
-test("highlights next option when pressing DOWN ", () => {
+Only.test("highlights next option when pressing DOWN ", () => {
   let component = render(component())
-  let listbox = component->getListbox
 
-  listbox->FireEvent.pressDown
-  component->getOption("* Red")->expect->toBeInTheDocument->assertAndContinue
+  let listbox = component->getListbox
 
   listbox->FireEvent.pressDown
   component->getOption("* Green")->expect->toBeInTheDocument->assertAndContinue
