@@ -55,7 +55,7 @@ let selectIndex = (
   ()
 }
 
-let useControls = (~multiSelect = false, ~size) => {
+let useControls = (~multiSelect, ~size) => {
   let (selectedIndexes, setSelectedIndexes)   = React.useState(() => [])
   let (highlightedIndex, setHighlightedIndex) = React.useState(() => -1)
 

@@ -1,7 +1,8 @@
 open Jest
-open DomTestingLibrary
 
 module FireEvent = {
+  open ReactTestingLibrary.UserEvent
+
   module Keyboard = {
     let down = "{arrowDown}"
     let downShift = "{shift}{arrowDown}"
@@ -15,18 +16,18 @@ module FireEvent = {
     let upShift = "{shift}{arrowUp}"
   }
 
-  let pressDown = e => e->UserEvent.type_(Keyboard.down)
-  let pressDownShift = e => e->UserEvent.type_(Keyboard.downShift)
-  let pressEnd = e => e->UserEvent.type_(Keyboard.end)
-  let pressEnter = e => e->UserEvent.type_(Keyboard.enter)
-  let pressEsc = e => e->UserEvent.type_(Keyboard.esc)
-  let pressHome = e => e->UserEvent.type_(Keyboard.home)
-  let pressSpace = e => e->UserEvent.type_(Keyboard.space)
-  let pressTab = e => e->UserEvent.type_(Keyboard.tab)
-  let pressUp = e => e->UserEvent.type_(Keyboard.up)
-  let pressUpShift = e => e->UserEvent.type_(Keyboard.upShift)
+  let pressDown = e => e->ReactTestingLibrary.UserEvent.type_(Keyboard.down)
+  let pressDownShift = e => e->type_(Keyboard.downShift)
+  let pressEnd = e => e->type_(Keyboard.end)
+  let pressEnter = e => e->type_(Keyboard.enter)
+  let pressEsc = e => e->type_(Keyboard.esc)
+  let pressHome = e => e->type_(Keyboard.home)
+  let pressSpace = e => e->type_(Keyboard.space)
+  let pressTab = e => e->type_(Keyboard.tab)
+  let pressUp = e => e->type_(Keyboard.up)
+  let pressUpShift = e => e->type_(Keyboard.upShift)
 
-  let click = e => e->UserEvent.click
+  let click = e => e->click
   // Not implemented
   let blur = _ => ()
   // Not implemented
@@ -37,8 +38,11 @@ module FireEvent = {
 
 let assertAndContinue = _ => ()
 
+open ReactTestingLibrary
 let getListbox = getByRole(~matcher=#Str("listbox"))
 let getButton = getByRole(~matcher=#Str("button"))
+let getOption = (e, name) =>
+  e->getByRole(~matcher=#Str("option"), ~options=makeByRoleOptions(~name, ()))
 
 include Jest
 include JestDom
