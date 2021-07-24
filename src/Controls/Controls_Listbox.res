@@ -42,13 +42,11 @@ let selectIndex = (
 
     switch (multiSelect, keep, isIncluded) {
     | (true, true, true)   => selectedIndexes
-    | (true, true, false)
-    | (true, false, false) => selectedIndexes->Belt.Array.concat([index])
+    | (true, _, false)     => selectedIndexes->Belt.Array.concat([index])
     | (true, false, true)  => selectedIndexes->Belt.Array.keep(diff(index))
     | (false, true, true)  => selectedIndexes
     | (false, false, true) => []
-    | (false, false, false)
-    | (false, true, false) => [index]
+    | (false, _, false)    => [index]
     }
   })
   
