@@ -14,8 +14,8 @@
     "docs:build": "cd docs && yarn build",
     "bundle": "rollup -c rollup.config.js"
   },
-  "main": "dist/listbox.cjs.js",
-  "module": "dist/listbox.esm.js",
+  "main": "dist/listboxkit.cjs.js",
+  "module": "dist/listboxkit.esm.js",
   "keywords": [
     "rescript",
     "react",
