@@ -33,7 +33,7 @@ module FireEvent = {
   // Not implemented
   let focus = _ => ()
   // Not implemented
-  let tab = _ => ()
+  let tab = UserEvent.tab
 }
 
 let assertAndContinue = _ => ()

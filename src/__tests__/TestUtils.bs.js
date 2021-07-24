@@ -4,6 +4,7 @@
 var Jest = require("@glennsl/bs-jest/src/jest.bs.js");
 var Curry = require("rescript/lib/js/curry.js");
 var JestDom = require("bs-jest-dom/src/JestDom.bs.js");
+var UserEvent = require("@drewschrauf/bs-user-event/src/UserEvent.bs.js");
 var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
 var DomTestingLibrary__UserEvent = require("rescript-dom-testing-library/src/DomTestingLibrary__UserEvent.bs.js");
 
@@ -92,10 +93,6 @@ function focus(param) {
   
 }
 
-function tab$1(param) {
-  
-}
-
 var FireEvent = {
   Keyboard: Keyboard,
   pressDown: pressDown,
@@ -111,7 +108,7 @@ var FireEvent = {
   click: click,
   blur: blur,
   focus: focus,
-  tab: tab$1
+  tab: UserEvent.tab
 };
 
 function assertAndContinue(param) {

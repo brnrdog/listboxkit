@@ -29,7 +29,7 @@ module ListboxComponent = {
         })
         |> React.array}
       </ul>
-      <div tabIndex={0} />
+      <div tabIndex={0}> {"Focus out"->React.string} </div>
     </div>
   }
 }
@@ -71,7 +71,7 @@ test("sets option aria-selected to true when clicked", () => {
   component->getOption("* Red")->expect |> toHaveAttribute("aria-selected", ~value="true")
 })
 
-Only.test("highlights next option when pressing DOWN ", () => {
+test("highlights next option when pressing DOWN ", () => {
   let component = render(component())
 
   let listbox = component->getListbox
@@ -127,12 +127,12 @@ test("highlights first when focused and no option selected", () => {
   let component = render(component())
   let listbox = component->getListbox
 
-  listbox->FireEvent.focus
+  listbox->FireEvent.click
 
   component->getOption("* Red")->expect->toBeInTheDocument
 })
 
-test("highlights selected index when focus and option selected", () => {
+test("highlights selected index when focus and option is selected", () => {
   let component = render(component())
 
   component->getOption("Green")->FireEvent.click
@@ -143,7 +143,9 @@ test("highlights selected index when focus and option selected", () => {
 
   component->getOption("* Blue")->expect->toBeInTheDocument->assertAndContinue
 
-  component->getListbox->FireEvent.focus
+  FireEvent.tab()
+
+  component->getListbox->FireEvent.click
 
   component->getOption("* Green")->expect->toBeInTheDocument
 })
@@ -153,17 +155,16 @@ test("resets highlighted option when focus out", () => {
   let listbox = component->getListbox
 
   listbox->FireEvent.pressDown
-  component->getOption("* Red")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("* Green")->expect->toBeInTheDocument->assertAndContinue
 
-  listbox->FireEvent.blur
-  component->getOption("Red")->expect->toBeInTheDocument
+  FireEvent.tab()
+  component->getOption("Green")->expect->toBeInTheDocument
 })
 
 test("focus out when pressing Tab", () => {
   let component = render(component())
 
   FireEvent.tab()
-
   // Highlights first
   component->getOption("* Red")->expect->toBeInTheDocument->assertAndContinue
 
