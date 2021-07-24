@@ -8,8 +8,8 @@ var React = require("react");
 var $$String = require("rescript/lib/js/string.js");
 var TestUtils = require("./TestUtils.bs.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Listboxkit = require("../src/Listboxkit.bs.js");
 var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
-var Listboxkit__Dropdown = require("../Listboxkit__Dropdown.bs.js");
 
 var options = [
   "Red",
@@ -20,7 +20,7 @@ var options = [
 function DropdownTest$DropdownListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listboxkit__Dropdown.useDropdownListbox(options, multiSelect, undefined);
+  var match = Curry._3(Listboxkit.Dropdown.useDropdownListbox, options, multiSelect, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);

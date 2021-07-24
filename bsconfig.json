@@ -1,10 +1,17 @@
 {
   "name": "listboxkit",
   "version": "2.0.0",
-  "sources": {
-    "dir": "src",
-    "subdirs": true
-  },
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "tests",
+      "subdirs": true,
+      "type": "dev"
+    }
+  ],
   "reason": {
     "react-jsx": 3
   },
@@ -13,12 +20,11 @@
     "in-source": true
   },
   "suffix": ".bs.js",
-  "bs-dependencies": [
+  "bs-dependencies": ["@rescript/react", "bs-webapi"],
+  "bs-dev-dependencies": [
     "@drewschrauf/bs-user-event",
-    "@rescript/react",
     "@glennsl/bs-jest",
     "bs-jest-dom",
-    "bs-webapi",
     "rescript-dom-testing-library",
     "rescript-react-testing-library"
   ],

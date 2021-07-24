@@ -56,12 +56,11 @@
   "jest": {
     "testEnvironment": "jest-environment-jsdom-sixteen",
     "testMatch": [
-      "<rootDir>/src/__tests__/*Test.bs.js"
+      "<rootDir>/tests/*Test.bs.js"
     ],
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.bs.js",
-      "!<rootDir>/src/Controls/Controls.bs.js",
-      "!<rootDir>/src/__tests__/**/*.bs.js"
+      "!<rootDir>/src/Controls/Controls.bs.js"
     ]
   }
 }
