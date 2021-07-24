@@ -1,5 +1,5 @@
 import React from "react";
-import { useDropdownListbox } from "listboxkit";
+import { Dropdown } from "listboxkit";
 import options from "./countries.json";
 
 const labelId = "people-listbox";
@@ -12,7 +12,7 @@ function SelectListbox() {
     getContainerProps,
     getDropdownProps,
     getOptionProps,
-  } = useDropdownListbox(options, false);
+  } = Dropdown.useDropdownListbox(options, false);
 
   const selectedOption = options[selectedIndex];
 
