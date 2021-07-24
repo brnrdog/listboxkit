@@ -6,7 +6,7 @@ var $$Array = require("rescript/lib/js/array.js");
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
 var TestUtils = require("./TestUtils.bs.js");
-var Listboxkit__Listbox = require("../Listboxkit__Listbox.bs.js");
+var Listboxkit = require("../src/Listboxkit.bs.js");
 var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
 
 var options = [
@@ -18,7 +18,7 @@ var options = [
 function ListboxTest$ListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listboxkit__Listbox.useListbox(options, multiSelect, undefined);
+  var match = Curry._3(Listboxkit.Listbox.useListbox, options, multiSelect, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);

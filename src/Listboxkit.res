@@ -1,2 +1,7 @@
-module Dropdown = Listboxkit__Dropdown
-module Listbox = Listboxkit__Listbox
+module Dropdown = {
+  include Listboxkit__Dropdown
+}
+
+module Listbox = {
+  include Listboxkit__Listbox
+}
