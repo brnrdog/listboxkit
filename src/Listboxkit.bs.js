@@ -4,10 +4,13 @@
 var Listboxkit__Listbox = require("./Listboxkit__Listbox.bs.js");
 var Listboxkit__Dropdown = require("./Listboxkit__Dropdown.bs.js");
 
-var Dropdown = Listboxkit__Dropdown;
+var useDropdownListbox = Listboxkit__Dropdown.useDropdownListbox;
 
-var Listbox = Listboxkit__Listbox;
+var noop = Listboxkit__Listbox.noop;
 
-exports.Dropdown = Dropdown;
-exports.Listbox = Listbox;
+var useListbox = Listboxkit__Listbox.useListbox;
+
+exports.useDropdownListbox = useDropdownListbox;
+exports.noop = noop;
+exports.useListbox = useListbox;
 /* Listboxkit__Listbox Not a pure module */

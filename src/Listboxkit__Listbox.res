@@ -1,4 +1,4 @@
-type containerProps = {
+type listboxContainerProps = {
   role        : string,
   tabIndex    : int,
   onBlur      : ReactEvent.Focus.t => unit,
@@ -6,7 +6,7 @@ type containerProps = {
   onFocus     : ReactEvent.Focus.t => unit,
 }
 
-type optionProps = {
+type listboxOptionProps = {
   @bs.as("aria-selected") 
   ariaSelected: bool,
   role        : string,
@@ -17,8 +17,8 @@ type listbox = {
   highlightedIndex : int,
   selectedIndex    : int,
   selectedIndexes  : array<int>,
-  getContainerProps: () => containerProps,
-  getOptionProps   : int => optionProps,
+  getContainerProps: () => listboxContainerProps,
+  getOptionProps   : int => listboxOptionProps,
 }
 
 let noop = () => ()

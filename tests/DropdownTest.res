@@ -14,7 +14,7 @@ module DropdownListboxComponent = {
       getOptionProps,
       getDropdownProps,
       getContainerProps,
-    } = Listboxkit.Dropdown.useDropdownListbox(options, ~multiSelect, ())
+    } = Listboxkit.useDropdownListbox(options, ~multiSelect, ())
 
     let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
 
