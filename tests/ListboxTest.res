@@ -8,7 +8,7 @@ module ListboxComponent = {
 
   @react.component
   let make = (~multiSelect=false) => {
-    let {highlightedIndex, getOptionProps, getContainerProps} = Listboxkit.Listbox.useListbox(
+    let {highlightedIndex, getOptionProps, getContainerProps} = Listboxkit.useListbox(
       options,
       ~multiSelect,
       (),

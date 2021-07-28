@@ -18,7 +18,7 @@ var options = [
 function ListboxTest$ListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Curry._3(Listboxkit.Listbox.useListbox, options, multiSelect, undefined);
+  var match = Listboxkit.useListbox(options, multiSelect, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);

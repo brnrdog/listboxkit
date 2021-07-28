@@ -1,9 +1,9 @@
-type containerProps = {
-  role: string,
-  tabIndex: int,
-  onBlur: ReactEvent.Focus.t => unit,
-  onKeyDown: ReactEvent.Keyboard.t => unit,
-  onFocus: ReactEvent.Focus.t => unit,
+type dropdownContainerProps = {
+  role        : string,
+  tabIndex    : int,
+  onBlur      : ReactEvent.Focus.t => unit,
+  onKeyDown   : ReactEvent.Keyboard.t => unit,
+  onFocus     : ReactEvent.Focus.t => unit,
 }
 
 type dropdownProps = {
@@ -13,23 +13,23 @@ type dropdownProps = {
   onKeyDown: ReactEvent.Keyboard.t => unit,
 }
 
-type optionProps = {
+type dropdownOptionProps = {
   @bs.as("aria-selected")
   ariaSelected: bool,
-  role: string,
-  onClick: ReactEvent.Mouse.t => unit,
+  role        : string,
+  onClick     : ReactEvent.Mouse.t => unit,
 }
 
 type dropdownListbox = {
-  highlightedIndex: int,
-  menuVisible: bool,
-  selectedIndex: int,
-  selectedIndexes: array<int>,
-  getContainerProps: unit => containerProps,
-  getDropdownProps: unit => dropdownProps,
-  getOptionProps: int => optionProps,
-  hideMenu: unit => unit,
-  showMenu: unit => unit,
+  highlightedIndex : int,
+  menuVisible      : bool,
+  selectedIndex    : int,
+  selectedIndexes  : array<int>,
+  getContainerProps: unit => dropdownContainerProps,
+  getDropdownProps : unit => dropdownProps,
+  getOptionProps   : int => dropdownOptionProps,
+  hideMenu         : unit => unit,
+  showMenu         : unit => unit,
 }
 
 let useDropdownListbox = (options, ~multiSelect=false, ()) => {
