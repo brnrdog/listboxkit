@@ -1,5 +1,5 @@
 import React from "react";
-import { Listbox } from "listboxkit";
+import { useListbox } from "listboxkit";
 import options from "./countries.json";
 
 const labelId = "people-listbox";
@@ -21,9 +21,10 @@ function MultiSelectListbox() {
   const {
     highlightedIndex,
     selectedIndexes,
+    selectedIndex,
     getOptionProps,
     getContainerProps,
-  } = Listbox.useListbox(options, true);
+  } = useListbox(options, true);
 
   return (
     <div style={{ display: "flex" }}>
