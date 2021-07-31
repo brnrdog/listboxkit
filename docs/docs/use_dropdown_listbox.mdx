@@ -5,7 +5,7 @@ sidebar_label: useDropdownListbox
 slug: /use_dropdown_listbox
 ---
 
-import ColorSelect from "../src/components/ColorSelect.bs.js";
+import { make as DropdownSelect } from "../src/components/DropdownSelect.bs.js";
 
 The useDropdownListbox hook provides behaviours for implementing collapsible list boxes,
 like dropdown select components.
@@ -33,45 +33,53 @@ Given a list of options, this hook returns a `dropdownListbox` record containing
 
 ### Example
 
-<SelectListbox />
+<DropdownSelect />
 
 ```rescript
-module ColorSelect = {
-  let options = ["Red", "Green", "Blue"]
+let options = ["Red", "Green", "Blue"]
 
-  @react.component
-  let make = () => {
-    open Listboxkit
-    open Belt
+@react.component
+let make = () => {
+  let {
+    highlightedIndex,
+    menuVisible,
+    selectedIndex,
+    getOptionProps,
+    getDropdownProps,
+    getContainerProps,
+  } = Listboxkit.useDropdownListbox(options, ~multiSelect=false, ())
 
-    let {
-      highlightedIndex,
-      getOptionProps,
-      getContainerProps,
-      selectedIndex,
-    }: Listboxkit.listbox = Listboxkit.useListbox(options, ())
+  let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
 
-    let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
+  let dropdownProps = getDropdownProps()
+  let selectedOption = selectedIndex === -1 ? "Select a color" : options[selectedIndex]
 
-    let selectedOption = options
-			->Array.get(selectedIndex)
-			->Option.getWithDefault("no selected color.")
+  <div>
+    <div
+      role=dropdownProps.role
+      tabIndex=dropdownProps.tabIndex
+      onClick=dropdownProps.onClick
+      className="dropdown-button"
+      onKeyDown=dropdownProps.onKeyDown>
+      {selectedOption->React.string}
+      <div className="dropdown">
+        <ul className="listbox" role tabIndex onKeyDown onFocus onBlur hidden={!menuVisible}>
+          {options
+          ->Js.Array2.mapi((option, index) => {
+            let {ariaSelected, onClick, role} = getOptionProps(index)
+            let highlighted = highlightedIndex == index
+            let className =
+              ["listbox-option", highlighted ? "highlighted" : ""]->Js.Array2.joinWith(" ")
 
-    let renderOption = (index, option) => {
-      let {ariaSelected, onClick, role}: listboxOptionProps = getOptionProps(index)
-      let highlighted = highlightedIndex == index
-
-      <li key=option onClick onKeyDown role ariaSelected>
-        {(highlighted ? `> ${option}` : option) |> React.string}
-      </li>
-    }
-
-    <div>
-      {React.string("Selected color :" ++ selectedOption)}
-      <ul role tabIndex onKeyDown onFocus onBlur>
-        {options->Belt.Array.mapWithIndex(renderOption)->React.array}
-      </ul>
+            <li className key=option onClick onKeyDown role ariaSelected>
+              {option->React.string}
+            </li>
+          })
+          ->React.array}
+        </ul>
+      </div>
     </div>
-  }
+  </div>
 }
+
 ```
