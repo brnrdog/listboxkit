@@ -11,7 +11,7 @@ var options = [
   "Blue"
 ];
 
-function ColorSelect(Props) {
+function Listbox(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
   var match = Listboxkit.useListbox(options, multiSelect, undefined);
@@ -45,7 +45,7 @@ function ColorSelect(Props) {
             }, options.map(listOption));
 }
 
-var make = ColorSelect;
+var make = Listbox;
 
 exports.options = options;
 exports.make = make;
