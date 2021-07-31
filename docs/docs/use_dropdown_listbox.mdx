@@ -5,24 +5,35 @@ sidebar_label: useDropdownListbox
 slug: /use_dropdown_listbox
 ---
 
-The useListbox hook provides the basic behaviours for implementing listbox components.
+import ColorSelect from "../src/components/ColorSelect.bs.js";
 
-Given a list of options, this hook returns a `listbox` record containing the listbox current state and functions to bind event handlers and aria attributes.
+The useDropdownListbox hook provides behaviours for implementing collapsible list boxes,
+like dropdown select components.
+
+Given a list of options, this hook returns a `dropdownListbox` record containing the dropdown listbox current state and functions to control the listbox visibility and to bind event handlers and aria attributes.
 
 ```res
   let options = ["Red", "Green", "Blue"]
-  let listbox = Listboxkit.useListbox(options, ~multiselect=true, ())
+  let dropdownListbox = Listboxkit.useDropdownListbox(options, ~multiselect=false, ())
 ```
+
+### DropdownListbox properties
 
 | Properties        | Type                          | Description                                                                     |
 | ----------------- | ----------------------------- | ------------------------------------------------------------------------------- |
 | highlightedIndex  | int                           | The current highlighted index, returns `-1` when no option is highlighted.      |
+| menuVisible       | bool                          | Indicates whether the list box with its options is visible                      |
 | selectedIndex     | int                           | The current selected index, returns `-1` when no option is selected.            |
 | selectedIndexes   | array<int\>                   | The current selected indexes, in case is a `multiselect` is `true`.             |
 | getContainerProps | unit => listboxContainerProps | Returns a record containing the properties to be used in the container element. |
+| getDropdownProps  | unit => dropdownProps         | Returns a record containning the properties to be used in the dropdown element. |
 | getOptionProps    | unit => listboxOptionProps    | Returns a record containing the properties to be used in the option elements.   |
+| hide              | unit => unit                  | Hides the listbox element.                                                      |
+| show              | unit => unit                  | Shows the listbox element.                                                      |
 
 ### Example
+
+<SelectListbox />
 
 ```rescript
 module ColorSelect = {

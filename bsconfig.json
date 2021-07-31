@@ -10,6 +10,11 @@
       "dir": "tests",
       "subdirs": true,
       "type": "dev"
+    },
+    {
+      "dir": "docs/src/components",
+      "subdirs": true,
+      "type": "dev"
     }
   ],
   "reason": {
