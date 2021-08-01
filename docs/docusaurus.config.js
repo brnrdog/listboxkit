@@ -3,14 +3,14 @@ module.exports = {
   tagline:
     "React hooks written in ReScript for building accessible listbox components.",
   url: "https://brnrdog.github.io",
-  baseUrl: "/listbox/",
+  baseUrl: "/listboxkit/",
   onBrokenLinks: "throw",
   favicon: "img/favicon.ico",
   organizationName: "brnrdog",
-  projectName: "listbox",
+  projectName: "listboxkit",
   themeConfig: {
     navbar: {
-      title: "listbox",
+      title: "listboxkit",
       items: [
         {
           to: "docs",
