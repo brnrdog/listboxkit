@@ -35,10 +35,6 @@ module.exports = {
               label: "Getting started",
               to: "docs",
             },
-            {
-              label: "Examples",
-              to: "docs/examples",
-            },
           ],
         },
         {
