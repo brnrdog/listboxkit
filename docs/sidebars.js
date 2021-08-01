@@ -12,9 +12,5 @@ module.exports = {
       type: "doc",
       id: "use_dropdown_listbox",
     },
-    {
-      type: "doc",
-      id: "examples",
-    },
   ],
 };

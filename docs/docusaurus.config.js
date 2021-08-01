@@ -18,7 +18,6 @@ module.exports = {
           label: "Documentation",
           position: "left",
         },
-        { to: "docs/examples", label: "Examples", position: "left" },
         {
           href: "https://github.com/brnrdog/listbox",
           label: "GitHub",
