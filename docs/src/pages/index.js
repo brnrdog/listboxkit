@@ -6,26 +6,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "./styles.module.css";
 
-const features = [
-  {
-    title: "Written in ReScript",
-    description: (
-      <>
-        <a href="https://rescript-lang.org/" target="_blank">ReScript</a> is a programming languages with a simple, robust and fast type system that compiles to clean and performatic JavaScript code.
-      </>
-    ),
-  },
-  {
-    title: "WAI-ARIA complient",
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
-  },
-  
-];
+const features = [];
 
 function Feature({ imageUrl, title, description }) {
   const imgUrl = useBaseUrl(imageUrl);
