@@ -35,14 +35,9 @@ function useDropdownListbox(options, multiSelectOpt, param) {
           };
   };
   var getContainerProps = function (param) {
-    var partial_arg = menuVisible;
-    var partial_arg$1 = hideMenu;
     return {
             role: "listbox",
             tabIndex: 0,
-            onBlur: (function (param) {
-                return EventHandlers.onBlur(resetHighlighted, partial_arg$1, partial_arg, param);
-              }),
             onKeyDown: (function (param) {
                 
               }),
@@ -52,9 +47,14 @@ function useDropdownListbox(options, multiSelectOpt, param) {
           };
   };
   var getDropdownProps = function (param) {
+    var partial_arg = menuVisible;
+    var partial_arg$1 = hideMenu;
     return {
             role: "button",
             tabIndex: 0,
+            onBlur: (function (param) {
+                return EventHandlers.onBlur(resetHighlighted, partial_arg$1, partial_arg, param);
+              }),
             onClick: (function (param) {
                 return EventHandlers.onDropdownClick(menuVisible, hideMenu, showMenu, param);
               }),

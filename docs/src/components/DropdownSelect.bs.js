@@ -26,6 +26,7 @@ function DropdownSelect(Props) {
                   role: dropdownProps.role,
                   tabIndex: dropdownProps.tabIndex,
                   onKeyDown: dropdownProps.onKeyDown,
+                  onBlur: dropdownProps.onBlur,
                   onClick: dropdownProps.onClick
                 }, selectedOption, React.createElement("div", {
                       className: "dropdown"
@@ -35,8 +36,7 @@ function DropdownSelect(Props) {
                           role: match$1.role,
                           tabIndex: match$1.tabIndex,
                           onKeyDown: onKeyDown,
-                          onFocus: match$1.onFocus,
-                          onBlur: match$1.onBlur
+                          onFocus: match$1.onFocus
                         }, options.map(function (option, index) {
                               var match = Curry._1(getOptionProps, index);
                               var highlighted = highlightedIndex === index;

@@ -187,6 +187,8 @@ var FireEvent = TestUtils.FireEvent;
 
 var assertAndContinue = TestUtils.assertAndContinue;
 
+var toEqual = TestUtils.toEqual;
+
 var getListbox = TestUtils.getListbox;
 
 var getButton = TestUtils.getButton;
@@ -243,6 +245,7 @@ var toHaveDescription = TestUtils.toHaveDescription;
 
 exports.FireEvent = FireEvent;
 exports.assertAndContinue = assertAndContinue;
+exports.toEqual = toEqual;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
 exports.getOption = getOption;

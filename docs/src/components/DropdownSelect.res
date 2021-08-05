@@ -11,7 +11,7 @@ let make = () => {
     getContainerProps,
   } = Listboxkit.useDropdownListbox(options, ~multiSelect=false, ())
 
-  let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
+  let {role, tabIndex, onKeyDown, onFocus} = getContainerProps()
 
   let dropdownProps = getDropdownProps()
   let selectedOption = selectedIndex === -1 ? "Select a color" : options[selectedIndex]
@@ -21,11 +21,12 @@ let make = () => {
       role=dropdownProps.role
       tabIndex=dropdownProps.tabIndex
       onClick=dropdownProps.onClick
+      onBlur=dropdownProps.onBlur
       className="dropdown-button"
       onKeyDown=dropdownProps.onKeyDown>
       {selectedOption->React.string}
       <div className="dropdown">
-        <ul className="listbox" role tabIndex onKeyDown onFocus onBlur hidden={!menuVisible}>
+        <ul className="listbox" role tabIndex onKeyDown onFocus hidden={!menuVisible}>
           {options
           ->Js.Array2.mapi((option, index) => {
             let {ariaSelected, onClick, role} = getOptionProps(index)
