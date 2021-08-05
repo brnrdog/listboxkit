@@ -35,14 +35,14 @@ function DropdownTest$DropdownListboxComponent(Props) {
                   role: dropdownProps.role,
                   tabIndex: dropdownProps.tabIndex,
                   onKeyDown: dropdownProps.onKeyDown,
+                  onBlur: dropdownProps.onBlur,
                   onClick: dropdownProps.onClick
                 }, selectedOption), React.createElement("ul", {
                   hidden: !match.menuVisible,
                   role: match$1.role,
                   tabIndex: match$1.tabIndex,
                   onKeyDown: onKeyDown,
-                  onFocus: match$1.onFocus,
-                  onBlur: match$1.onBlur
+                  onFocus: match$1.onFocus
                 }, $$Array.mapi((function (index, option) {
                         var match = Curry._1(getOptionProps, index);
                         var highlighted = highlightedIndex === index;
@@ -53,7 +53,9 @@ function DropdownTest$DropdownListboxComponent(Props) {
                                     onKeyDown: onKeyDown,
                                     onClick: match.onClick
                                   }, highlighted ? "* " + option : option);
-                      }), options)));
+                      }), options)), React.createElement("div", {
+                  tabIndex: 0
+                }, "Focus out"));
 }
 
 var DropdownListboxComponent = {
@@ -135,9 +137,31 @@ Jest.test("allow multiple selection when multiSelect is true", (function (param)
                           }, component$1)));
       }));
 
+Jest.test("hide listbox when focusing out from listbox", (function (param) {
+        var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "button"
+                }, screen));
+        TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
+                          NAME: "Str",
+                          VAL: "listbox"
+                        }, screen))));
+        TestUtils.FireEvent.click(ReactTestingLibrary.getByText(undefined, screen, {
+                  NAME: "Str",
+                  VAL: "Focus out"
+                }));
+        return TestUtils.toEqual(Jest.Expect.expect(ReactTestingLibrary.queryAllByRole(undefined, {
+                            NAME: "Str",
+                            VAL: "listbox"
+                          }, screen).length), 0);
+      }));
+
 var FireEvent = TestUtils.FireEvent;
 
 var assertAndContinue = TestUtils.assertAndContinue;
+
+var toEqual = TestUtils.toEqual;
 
 var getListbox = TestUtils.getListbox;
 
@@ -195,6 +219,7 @@ var toHaveDescription = TestUtils.toHaveDescription;
 
 exports.FireEvent = FireEvent;
 exports.assertAndContinue = assertAndContinue;
+exports.toEqual = toEqual;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
 exports.getOption = getOption;

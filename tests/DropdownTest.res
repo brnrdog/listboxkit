@@ -16,7 +16,7 @@ module DropdownListboxComponent = {
       getContainerProps,
     } = Listboxkit.useDropdownListbox(options, ~multiSelect, ())
 
-    let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
+    let {role, tabIndex, onKeyDown, onFocus} = getContainerProps()
 
     let dropdownProps = getDropdownProps()
     let selectedOption =
@@ -31,10 +31,11 @@ module DropdownListboxComponent = {
         role=dropdownProps.role
         tabIndex=dropdownProps.tabIndex
         onClick=dropdownProps.onClick
-        onKeyDown=dropdownProps.onKeyDown>
+        onKeyDown=dropdownProps.onKeyDown
+        onBlur=dropdownProps.onBlur>
         {selectedOption}
       </button>
-      <ul hidden={!menuVisible} role tabIndex onKeyDown onFocus onBlur>
+      <ul hidden={!menuVisible} role tabIndex onKeyDown onFocus>
         {options
         |> Array.mapi((index, option) => {
           let {ariaSelected, onClick, role} = getOptionProps(index)
@@ -46,6 +47,7 @@ module DropdownListboxComponent = {
         })
         |> React.array}
       </ul>
+      <div tabIndex={0}> {"Focus out"->React.string} </div>
     </div>
   }
 }
@@ -92,11 +94,11 @@ test("allow multiple selection when multiSelect is true", () => {
   ->toBeInTheDocument
 })
 
-// test("hide listbox when focusing out from listbox", () => {
-//   let screen = component() |> render
+test("hide listbox when focusing out from listbox", () => {
+  let screen = component()->render
 
-//   screen->getByRole(~matcher=#Str("button"))->FireEvent.pressDown
-//   screen->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible->assertAndContinue
-//   screen->getByRole(~matcher=#Str("listbox"))->FireEvent.blur
-//   screen->getByRole(~matcher=#Str("listbox"))->expect->not__->toBeVisible
-// })
+  screen->getByRole(~matcher=#Str("button"))->FireEvent.pressDown
+  screen->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible->assertAndContinue
+  screen->getByText(~matcher=#Str("Focus out"))->FireEvent.click
+  screen->queryAllByRole(~matcher=#Str("listbox"))->Array.length->Expect.expect->toEqual(0)
+})

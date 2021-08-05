@@ -1,20 +1,20 @@
 type dropdownContainerProps = {
-  role        : string,
-  tabIndex    : int,
-  onBlur      : ReactEvent.Focus.t => unit,
-  onKeyDown   : ReactEvent.Keyboard.t => unit,
-  onFocus     : ReactEvent.Focus.t => unit,
+  role     : string,
+  tabIndex : int,
+  onKeyDown: ReactEvent.Keyboard.t => unit,
+  onFocus  : ReactEvent.Focus.t => unit,
 }
 
 type dropdownProps = {
-  role: string,
-  tabIndex: int,
-  onClick: ReactEvent.Mouse.t => unit,
+  role     : string,
+  tabIndex : int,
+  onBlur   : ReactEvent.Focus.t => unit,
+  onClick  : ReactEvent.Mouse.t => unit,
   onKeyDown: ReactEvent.Keyboard.t => unit,
 }
 
 type dropdownOptionProps = {
-  @bs.as("aria-selected")
+  @as("aria-selected")
   ariaSelected: bool,
   role        : string,
   onClick     : ReactEvent.Mouse.t => unit,
@@ -62,7 +62,6 @@ let useDropdownListbox = (options, ~multiSelect=false, ()) => {
   let getContainerProps = () => {
     role: "listbox",
     tabIndex: 0,
-    onBlur: EventHandlers.onBlur(~resetHighlighted, ~menuVisible, ~hideMenu),
     onFocus: EventHandlers.onFocus(~highlightIndex, ~selectedIndexes),
     onKeyDown: _ => (),
   }
@@ -71,6 +70,7 @@ let useDropdownListbox = (options, ~multiSelect=false, ()) => {
     role: "button",
     tabIndex: 0,
     onClick: EventHandlers.onDropdownClick(~menuVisible, ~hideMenu, ~showMenu),
+    onBlur: EventHandlers.onBlur(~resetHighlighted, ~menuVisible, ~hideMenu),
     onKeyDown: EventHandlers.onKeyDown(
       ~menuVisible,
       ~hideMenu,
@@ -87,13 +87,13 @@ let useDropdownListbox = (options, ~multiSelect=false, ()) => {
 
   {
     getContainerProps: getContainerProps,
-    getDropdownProps: getDropdownProps,
-    getOptionProps: getOptionProps,
-    hideMenu: hideMenu,
-    highlightedIndex: highlightedIndex,
-    menuVisible: menuVisible,
-    selectedIndex: selectedIndex,
-    selectedIndexes: selectedIndexes,
-    showMenu: showMenu,
+    getDropdownProps : getDropdownProps,
+    getOptionProps   : getOptionProps,
+    hideMenu         : hideMenu,
+    highlightedIndex : highlightedIndex,
+    menuVisible      : menuVisible,
+    selectedIndex    : selectedIndex,
+    selectedIndexes  : selectedIndexes,
+    showMenu         : showMenu,
   }
 }

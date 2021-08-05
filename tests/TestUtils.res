@@ -38,6 +38,8 @@ module FireEvent = {
 
 let assertAndContinue = _ => ()
 
+let toEqual = (a, b) => a |> Expect.toEqual(b)
+
 open ReactTestingLibrary
 let getListbox = getByRole(~matcher=#Str("listbox"))
 let getButton = getByRole(~matcher=#Str("button"))
