@@ -43,11 +43,19 @@ let onKeyDown = (
   }
 }
 
-let onBlur = (~resetHighlighted, ~hideMenu=?, ~menuVisible=?, _event) =>
-  switch (menuVisible, hideMenu) {
-  | (Some(true), Some(hideMenu)) => hideMenu()
+module Dom = {
+  let isEventFromInside = %raw(`function (event) {
+    return event.relatedTarget && event.target.contains(event.relatedTarget)
+  }`)
+}
+
+let onBlur = (~resetHighlighted, ~hideMenu=?, ~menuVisible=?, event) => {
+  let isFromInside = event->Dom.isEventFromInside
+  switch (menuVisible, hideMenu, isFromInside) {
+  | (Some(true), Some(hideMenu), false) => hideMenu()
   | _ => resetHighlighted()
   }
+}
 
 let onFocus = (~selectedIndexes, ~highlightIndex, _event) => {
   selectedIndexes

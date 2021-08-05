@@ -74,7 +74,7 @@ Jest.test("select option when clicked", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
-                  VAL: "button"
+                  VAL: "combobox"
                 }, component$1));
         TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
                           NAME: "Str",
@@ -84,24 +84,20 @@ Jest.test("select option when clicked", (function (param) {
                   NAME: "Str",
                   VAL: "option"
                 }, component$1));
-        var partial_arg = {
-          NAME: "Str",
-          VAL: "Blue"
-        };
-        var arg = function (param) {
-          return TestUtils.toHaveTextContent(partial_arg, param);
-        };
-        return Curry._2(arg, undefined, expect(ReactTestingLibrary.getByRole(undefined, {
+        return TestUtils.toHaveTextContent(expect(ReactTestingLibrary.getByRole(undefined, {
                             NAME: "Str",
-                            VAL: "button"
-                          }, component$1)));
+                            VAL: "combobox"
+                          }, component$1)), {
+                    NAME: "Str",
+                    VAL: "Blue"
+                  });
       }));
 
 Jest.test("show listbox when pressing arrow down", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
-                  VAL: "button"
+                  VAL: "combobox"
                 }, component$1));
         return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
                             NAME: "Str",
@@ -113,7 +109,7 @@ Jest.test("show listbox when pressing arrow up", (function (param) {
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         TestUtils.FireEvent.pressUp(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
-                  VAL: "button"
+                  VAL: "combobox"
                 }, component$1));
         return TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
                             NAME: "Str",
@@ -125,23 +121,26 @@ Jest.test("allow multiple selection when multiSelect is true", (function (param)
         var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
         var button = ReactTestingLibrary.getByRole(undefined, {
               NAME: "Str",
-              VAL: "button"
+              VAL: "combobox"
             }, component$1);
         TestUtils.FireEvent.click(button);
         TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Red"));
         TestUtils.FireEvent.click(button);
         TestUtils.FireEvent.click(TestUtils.getOption(component$1, "Green"));
-        return TestUtils.toBeInTheDocument(expect(ReactTestingLibrary.getByRole(ReactTestingLibrary.makeByRoleOptions(undefined, undefined, "Red, Green", undefined), {
+        return TestUtils.toHaveTextContent(expect(ReactTestingLibrary.getByRole(undefined, {
                             NAME: "Str",
-                            VAL: "button"
-                          }, component$1)));
+                            VAL: "combobox"
+                          }, component$1)), {
+                    NAME: "Str",
+                    VAL: "Red, Green"
+                  });
       }));
 
 Jest.test("hide listbox when focusing out from listbox", (function (param) {
         var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
         TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
-                  VAL: "button"
+                  VAL: "combobox"
                 }, screen));
         TestUtils.assertAndContinue(TestUtils.toBeVisible(expect(ReactTestingLibrary.getByRole(undefined, {
                           NAME: "Str",
@@ -158,10 +157,6 @@ Jest.test("hide listbox when focusing out from listbox", (function (param) {
       }));
 
 var FireEvent = TestUtils.FireEvent;
-
-var assertAndContinue = TestUtils.assertAndContinue;
-
-var toEqual = TestUtils.toEqual;
 
 var getListbox = TestUtils.getListbox;
 
@@ -205,8 +200,6 @@ var toHaveFormValues = TestUtils.toHaveFormValues;
 
 var toHaveStyle = TestUtils.toHaveStyle;
 
-var toHaveTextContent = TestUtils.toHaveTextContent;
-
 var toHaveValue = TestUtils.toHaveValue;
 
 var toHaveDisplayValue = TestUtils.toHaveDisplayValue;
@@ -217,9 +210,13 @@ var toBePartiallyChecked = TestUtils.toBePartiallyChecked;
 
 var toHaveDescription = TestUtils.toHaveDescription;
 
+var assertAndContinue = TestUtils.assertAndContinue;
+
+var toEqual = TestUtils.toEqual;
+
+var toHaveTextContent = TestUtils.toHaveTextContent;
+
 exports.FireEvent = FireEvent;
-exports.assertAndContinue = assertAndContinue;
-exports.toEqual = toEqual;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
 exports.getOption = getOption;
@@ -241,12 +238,14 @@ exports.toHaveClass = toHaveClass;
 exports.toHaveFocus = toHaveFocus;
 exports.toHaveFormValues = toHaveFormValues;
 exports.toHaveStyle = toHaveStyle;
-exports.toHaveTextContent = toHaveTextContent;
 exports.toHaveValue = toHaveValue;
 exports.toHaveDisplayValue = toHaveDisplayValue;
 exports.toBeChecked = toBeChecked;
 exports.toBePartiallyChecked = toBePartiallyChecked;
 exports.toHaveDescription = toHaveDescription;
+exports.assertAndContinue = assertAndContinue;
+exports.toEqual = toEqual;
+exports.toHaveTextContent = toHaveTextContent;
 exports.DropdownListboxComponent = DropdownListboxComponent;
 exports.component = component;
 /*  Not a pure module */

@@ -185,10 +185,6 @@ Jest.test("selects previous when pressing arrow up and shift", (function (param)
 
 var FireEvent = TestUtils.FireEvent;
 
-var assertAndContinue = TestUtils.assertAndContinue;
-
-var toEqual = TestUtils.toEqual;
-
 var getListbox = TestUtils.getListbox;
 
 var getButton = TestUtils.getButton;
@@ -231,8 +227,6 @@ var toHaveFormValues = TestUtils.toHaveFormValues;
 
 var toHaveStyle = TestUtils.toHaveStyle;
 
-var toHaveTextContent = TestUtils.toHaveTextContent;
-
 var toHaveValue = TestUtils.toHaveValue;
 
 var toHaveDisplayValue = TestUtils.toHaveDisplayValue;
@@ -243,9 +237,13 @@ var toBePartiallyChecked = TestUtils.toBePartiallyChecked;
 
 var toHaveDescription = TestUtils.toHaveDescription;
 
+var assertAndContinue = TestUtils.assertAndContinue;
+
+var toEqual = TestUtils.toEqual;
+
+var toHaveTextContent = TestUtils.toHaveTextContent;
+
 exports.FireEvent = FireEvent;
-exports.assertAndContinue = assertAndContinue;
-exports.toEqual = toEqual;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
 exports.getOption = getOption;
@@ -267,12 +265,14 @@ exports.toHaveClass = toHaveClass;
 exports.toHaveFocus = toHaveFocus;
 exports.toHaveFormValues = toHaveFormValues;
 exports.toHaveStyle = toHaveStyle;
-exports.toHaveTextContent = toHaveTextContent;
 exports.toHaveValue = toHaveValue;
 exports.toHaveDisplayValue = toHaveDisplayValue;
 exports.toBeChecked = toBeChecked;
 exports.toBePartiallyChecked = toBePartiallyChecked;
 exports.toHaveDescription = toHaveDescription;
+exports.assertAndContinue = assertAndContinue;
+exports.toEqual = toEqual;
+exports.toHaveTextContent = toHaveTextContent;
 exports.ListboxComponent = ListboxComponent;
 exports.component = component;
 /*  Not a pure module */

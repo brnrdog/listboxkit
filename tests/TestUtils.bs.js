@@ -111,14 +111,6 @@ var FireEvent = {
   tab: UserEvent.tab
 };
 
-function assertAndContinue(param) {
-  
-}
-
-function toEqual(a, b) {
-  return Jest.Expect.toEqual(b, a);
-}
-
 function getListbox(param) {
   return Curry._2(ReactTestingLibrary.getByRole, param, {
               NAME: "Str",
@@ -138,6 +130,21 @@ function getOption(e, name) {
               NAME: "Str",
               VAL: "option"
             }, e);
+}
+
+function assertAndContinue(param) {
+  
+}
+
+function toEqual(a, b) {
+  return Jest.Expect.toEqual(b, a);
+}
+
+function toHaveTextContent(a, b) {
+  var arg = function (param) {
+    return JestDom.toHaveTextContent(b, param);
+  };
+  return Curry._1(arg(undefined), a);
 }
 
 var HaveClass = JestDom.HaveClass;
@@ -176,8 +183,6 @@ var toHaveFormValues = JestDom.toHaveFormValues;
 
 var toHaveStyle = JestDom.toHaveStyle;
 
-var toHaveTextContent = JestDom.toHaveTextContent;
-
 var toHaveValue = JestDom.toHaveValue;
 
 var toHaveDisplayValue = JestDom.toHaveDisplayValue;
@@ -189,8 +194,6 @@ var toBePartiallyChecked = JestDom.toBePartiallyChecked;
 var toHaveDescription = JestDom.toHaveDescription;
 
 exports.FireEvent = FireEvent;
-exports.assertAndContinue = assertAndContinue;
-exports.toEqual = toEqual;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
 exports.getOption = getOption;
@@ -212,10 +215,12 @@ exports.toHaveClass = toHaveClass;
 exports.toHaveFocus = toHaveFocus;
 exports.toHaveFormValues = toHaveFormValues;
 exports.toHaveStyle = toHaveStyle;
-exports.toHaveTextContent = toHaveTextContent;
 exports.toHaveValue = toHaveValue;
 exports.toHaveDisplayValue = toHaveDisplayValue;
 exports.toBeChecked = toBeChecked;
 exports.toBePartiallyChecked = toBePartiallyChecked;
 exports.toHaveDescription = toHaveDescription;
+exports.assertAndContinue = assertAndContinue;
+exports.toEqual = toEqual;
+exports.toHaveTextContent = toHaveTextContent;
 /* Jest Not a pure module */
