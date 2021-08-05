@@ -50,7 +50,7 @@ function useDropdownListbox(options, multiSelectOpt, param) {
     var partial_arg = menuVisible;
     var partial_arg$1 = hideMenu;
     return {
-            role: "button",
+            role: "combobox",
             tabIndex: 0,
             onBlur: (function (param) {
                 return EventHandlers.onBlur(resetHighlighted, partial_arg$1, partial_arg, param);

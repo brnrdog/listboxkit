@@ -63,8 +63,17 @@ function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highl
   }
 }
 
-function onBlur(resetHighlighted, hideMenu, menuVisible, _event) {
-  if (menuVisible !== undefined && menuVisible && hideMenu !== undefined) {
+var isEventFromInside = (function (event) {
+    return event.relatedTarget && event.target.contains(event.relatedTarget)
+  });
+
+var Dom = {
+  isEventFromInside: isEventFromInside
+};
+
+function onBlur(resetHighlighted, hideMenu, menuVisible, $$event) {
+  var isFromInside = isEventFromInside($$event);
+  if (menuVisible !== undefined && menuVisible && hideMenu !== undefined && !isFromInside) {
     return Curry._1(hideMenu, undefined);
   } else {
     return Curry._1(resetHighlighted, undefined);
@@ -88,6 +97,7 @@ function onDropdownClick(menuVisible, hideMenu, showMenu, _event) {
 }
 
 exports.onKeyDown = onKeyDown;
+exports.Dom = Dom;
 exports.onBlur = onBlur;
 exports.onFocus = onFocus;
 exports.onClick = onClick;

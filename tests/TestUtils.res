@@ -36,10 +36,6 @@ module FireEvent = {
   let tab = UserEvent.tab
 }
 
-let assertAndContinue = _ => ()
-
-let toEqual = (a, b) => a |> Expect.toEqual(b)
-
 open ReactTestingLibrary
 let getListbox = getByRole(~matcher=#Str("listbox"))
 let getButton = getByRole(~matcher=#Str("button"))
@@ -48,3 +44,7 @@ let getOption = (e, name) =>
 
 include Jest
 include JestDom
+
+let assertAndContinue = _ => ()
+let toEqual = (a, b) => a |> Expect.toEqual(b)
+let toHaveTextContent = (a, b) => a |> JestDom.toHaveTextContent(b)

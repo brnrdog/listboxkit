@@ -57,47 +57,44 @@ let component = (~multiSelect=false, ()) => <DropdownListboxComponent multiSelec
 test("select option when clicked", () => {
   let component = component() |> render
 
-  component->getByRole(~matcher=#Str("button"))->FireEvent.click
+  component->getByRole(~matcher=#Str("combobox"))->FireEvent.click
 
   component->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible->assertAndContinue
   component
   ->getByRole(~matcher=#Str("option"), ~options=makeByRoleOptions(~name="Blue", ()))
   ->FireEvent.click
 
-  component->getByRole(~matcher=#Str("button"))->expect |> toHaveTextContent(#Str("Blue"))
+  component->getByRole(~matcher=#Str("combobox"))->expect->toHaveTextContent(#Str("Blue"))
 })
 
 test("show listbox when pressing arrow down", () => {
   let component = component() |> render
-  component->getByRole(~matcher=#Str("button"))->FireEvent.pressDown
+  component->getByRole(~matcher=#Str("combobox"))->FireEvent.pressDown
   component->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible
 })
 
 test("show listbox when pressing arrow up", () => {
   let component = component() |> render
-  component->getByRole(~matcher=#Str("button"))->FireEvent.pressUp
+  component->getByRole(~matcher=#Str("combobox"))->FireEvent.pressUp
   component->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible
 })
 
 test("allow multiple selection when multiSelect is true", () => {
   let component = component(~multiSelect=true, ()) |> render
-  let button = component->getByRole(~matcher=#Str("button"))
+  let button = component->getByRole(~matcher=#Str("combobox"))
 
   button->FireEvent.click
   component->getOption("Red")->FireEvent.click
   button->FireEvent.click
   component->getOption("Green")->FireEvent.click
 
-  component
-  ->getByRole(~matcher=#Str("button"), ~options=makeByRoleOptions(~name="Red, Green", ()))
-  ->expect
-  ->toBeInTheDocument
+  component->getByRole(~matcher=#Str("combobox"))->expect->toHaveTextContent(#Str("Red, Green"))
 })
 
 test("hide listbox when focusing out from listbox", () => {
   let screen = component()->render
 
-  screen->getByRole(~matcher=#Str("button"))->FireEvent.pressDown
+  screen->getByRole(~matcher=#Str("combobox"))->FireEvent.pressDown
   screen->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible->assertAndContinue
   screen->getByText(~matcher=#Str("Focus out"))->FireEvent.click
   screen->queryAllByRole(~matcher=#Str("listbox"))->Array.length->Expect.expect->toEqual(0)
