@@ -4,7 +4,7 @@
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
 var Caml_array = require("rescript/lib/js/caml_array.js");
-var Listboxkit = require("../../../src/Listboxkit.bs.js");
+var Listboxkit = require("listboxkit/src/Listboxkit.bs.js");
 
 var options = [
   "Red",
