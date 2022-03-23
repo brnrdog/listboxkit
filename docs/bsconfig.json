@@ -1,0 +1,23 @@
+{
+  "name": "listboxkit-docs",
+  "version": "0.0.0",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "reason": {
+    "react-jsx": 3
+  },
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "bs-dependencies": ["@rescript/react", "listboxkit"],
+  "warnings": {
+    "error": "+101",
+    "number": "-48"
+  }
+}
