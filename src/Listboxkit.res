@@ -1,2 +1,3 @@
 include Listboxkit__Dropdown
 include Listboxkit__Listbox
+module ListboxComponent = Listboxkit__ListboxComponent
