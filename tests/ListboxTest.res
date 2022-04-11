@@ -3,38 +3,12 @@ open ReactTestingLibrary
 
 include TestUtils
 
-module ListboxComponent = {
-  let options = ["Red", "Green", "Blue"]
-
-  @react.component
-  let make = (~multiSelect=false) => {
-    let {highlightedIndex, getOptionProps, getContainerProps} = Listboxkit.useListbox(
-      options,
-      ~multiSelect,
-      (),
-    )
-
-    let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
-
-    <div>
-      <ul role tabIndex onKeyDown onFocus onBlur>
-        {options
-        |> Array.mapi((index, option) => {
-          let {ariaSelected, onClick, role} = getOptionProps(index)
-          let highlighted = highlightedIndex == index
-
-          <li key=option onClick onKeyDown role ariaSelected>
-            {(highlighted ? `* ${option}` : option) |> React.string}
-          </li>
-        })
-        |> React.array}
-      </ul>
-      <div tabIndex={0}> {"Focus out"->React.string} </div>
-    </div>
-  }
-}
-
-let component = (~multiSelect=true, ()) => <ListboxComponent multiSelect />
+let component = (~multiSelect=true, ()) => 
+  <Listboxkit.ListboxComponent 
+    multiSelect 
+    activeClassName="active" 
+    options=["Red", "Blue", "Green"] 
+  />
 
 test("render listbox container", () => {
   component()->render->getListbox->expect->toBeInTheDocument
@@ -52,14 +26,14 @@ test("highlights last option when pressing END", () => {
   let component = render(component())
 
   component->getOption("Red")->FireEvent.pressEnd
-  component->getOption("* Blue")->expect->toBeInTheDocument
+  component->getOption("Blue")->expect|>toHaveClass(#Str("active"))
 })
 
 test("highlights first option when pressing HOME", () => {
   let component = render(component())
 
   component->getOption("Blue")->FireEvent.pressHome
-  component->getOption("* Red")->expect->toBeInTheDocument
+  component->getOption("Red")->expect|>toHaveClass(#Str("active"))
 })
 
 test("sets option aria-selected to true when clicked", () => {
@@ -68,7 +42,7 @@ test("sets option aria-selected to true when clicked", () => {
   // Nothing should happen when pressing esc.
   component->FireEvent.click
   component->getOption("Red")->FireEvent.click
-  component->getOption("* Red")->expect |> toHaveAttribute("aria-selected", ~value="true")
+  component->getOption("Red")->expect |> toHaveAttribute("aria-selected", ~value="true")
 })
 
 test("highlights next option when pressing DOWN ", () => {
@@ -77,13 +51,13 @@ test("highlights next option when pressing DOWN ", () => {
   let listbox = component->getListbox
 
   listbox->FireEvent.pressDown
-  component->getOption("* Green")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("Green")->expect|>toHaveClass(#Str("active"))|>assertAndContinue
 
   listbox->FireEvent.pressDown
-  component->getOption("* Blue")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("Blue")->expect|>toHaveClass(#Str("active"))|>assertAndContinue
 
   listbox->FireEvent.pressDown
-  component->getOption("* Red")->expect->toBeInTheDocument
+  component->getOption("Red")->expect|>toHaveClass(#Str("active"))
 })
 
 test("highlights previous option when pressing UP ", () => {
@@ -91,16 +65,27 @@ test("highlights previous option when pressing UP ", () => {
   let listbox = component->getListbox
 
   listbox->FireEvent.pressUp
-  component->getOption("* Blue")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("Blue")->expect|>toHaveClass(#Str("active"))|>assertAndContinue
 
   listbox->FireEvent.pressUp
-  component->getOption("* Green")->expect->toBeInTheDocument->assertAndContinue
+  component
+  ->getOption("Green")
+  ->expect
+  |>toHaveClass(#Str("active"))
+  |>assertAndContinue
 
   listbox->FireEvent.pressUp
-  component->getOption("* Red")->expect->toBeInTheDocument->assertAndContinue
+  component
+  ->getOption("Red")
+  ->expect
+  |>toHaveClass(#Str("active"))
+  |>assertAndContinue
 
   listbox->FireEvent.pressUp
-  component->getOption("* Blue")->expect->toBeInTheDocument
+  component
+  ->getOption("Blue")
+  ->expect
+  |>toHaveClass(#Str("active"))
 })
 
 test("selects and deselects option when pressing SPACE/ENTER", () => {
@@ -108,19 +93,19 @@ test("selects and deselects option when pressing SPACE/ENTER", () => {
 
   component->getOption("Red")->FireEvent.click
 
-  component->getOption("* Red")->expect
+  component->getOption("Red")->expect
   |> toHaveAttribute("aria-selected", ~value="true")
   |> assertAndContinue
 
   component->getListbox->FireEvent.pressEnter
 
-  component->getOption("* Red")->expect
+  component->getOption("Red")->expect
   |> toHaveAttribute("aria-selected", ~value="false")
   |> assertAndContinue
 
   component->getListbox->FireEvent.pressSpace
 
-  component->getOption("* Red")->expect |> toHaveAttribute("aria-selected", ~value="true")
+  component->getOption("Red")->expect |> toHaveAttribute("aria-selected", ~value="true")
 })
 
 test("highlights first when focused and no option selected", () => {
@@ -129,7 +114,7 @@ test("highlights first when focused and no option selected", () => {
 
   listbox->FireEvent.click
 
-  component->getOption("* Red")->expect->toBeInTheDocument
+  component->getOption("Red")->expect->toBeInTheDocument
 })
 
 test("highlights selected index when focus and option is selected", () => {
@@ -137,17 +122,17 @@ test("highlights selected index when focus and option is selected", () => {
 
   component->getOption("Green")->FireEvent.click
 
-  component->getOption("* Green")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("Green")->expect->toBeInTheDocument->assertAndContinue
 
   component->getListbox->FireEvent.pressDown
 
-  component->getOption("* Blue")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("Blue")->expect->toBeInTheDocument->assertAndContinue
 
   FireEvent.tab()
 
   component->getListbox->FireEvent.click
 
-  component->getOption("* Green")->expect->toBeInTheDocument
+  component->getOption("Green")->expect->toBeInTheDocument
 })
 
 test("resets highlighted option when focus out", () => {
@@ -166,7 +151,7 @@ test("focus out when pressing Tab", () => {
 
   FireEvent.tab()
   // Highlights first
-  component->getOption("* Red")->expect->toBeInTheDocument->assertAndContinue
+  component->getOption("Red")->expect|>toHaveClass(#Str("active"))|>assertAndContinue
 
   FireEvent.tab()
 

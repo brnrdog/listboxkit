@@ -1,0 +1,31 @@
+---
+id: listbox_component
+title: ListboxComponent
+sidebar_label: ListboxComponent
+slug: /listbox_component
+---
+
+import { make as ListboxComponent } from "../src/components/ListboxComponent.bs.js";
+
+The ListboxComponent is a react component that renders a basic listbox, given an array of options.
+
+| Properties      | Type             | Default | Description                                                                     |
+| --------------- | ---------------- | ------- | ------------------------------------------------------------------------------- |
+| options         | array<string\>   | []      | Returns a record containing the properties to be used in the container element. |
+| multiselect     | option<boolean\> | false   | Indicates whether the listbox allows multiple selection.                        |
+| className       | option<string\>  | None    | The class name to be applied to the container element.                          |
+| optionClassName | option<string\>  | None    | The class name to be applied to the option elements.                            |
+| activeClassName | option<string\>  | None    | The class name to be applied to the active option elements.                     |
+
+### Example
+
+```rescript
+<Listboxkit.ListboxComponent
+  className="listbox"
+  multiSelect=true
+  optionClassName="listbox-option"
+  options=["Red", "Green", "Blue"]
+/>
+```
+
+<ListboxComponent />

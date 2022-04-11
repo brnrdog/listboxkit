@@ -47,7 +47,7 @@ let make = () => {
     getOptionProps,
     getDropdownProps,
     getContainerProps,
-  } = Listboxkit.useDropdownListbox(options, ~multiSelect=false, ())
+  } = .useDropdownListbox(options, ~multiSelect=false, ())
 
   let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
 

@@ -10,7 +10,10 @@ var noop = Listboxkit__Listbox.noop;
 
 var useListbox = Listboxkit__Listbox.useListbox;
 
+var ListboxComponent;
+
 exports.useDropdownListbox = useDropdownListbox;
 exports.noop = noop;
 exports.useListbox = useListbox;
+exports.ListboxComponent = ListboxComponent;
 /* Listboxkit__Listbox Not a pure module */

@@ -3,18 +3,16 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
-var Listboxkit = require("../../../src/Listboxkit.bs.js");
+var Listboxkit__Listbox = require("./Listboxkit__Listbox.bs.js");
 
-var options = [
-  "Red",
-  "Green",
-  "Blue"
-];
-
-function Listbox(Props) {
+function Listboxkit__ListboxComponent(Props) {
+  var className = Props.className;
+  var optionClassName = Props.optionClassName;
+  var activeClassName = Props.activeClassName;
   var multiSelectOpt = Props.multiSelect;
+  var options = Props.options;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listboxkit.useListbox(options, multiSelect, undefined);
+  var match = Listboxkit__Listbox.useListbox(options, multiSelect, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);
@@ -23,8 +21,8 @@ function Listbox(Props) {
     var match = Curry._1(getOptionProps, index);
     var highlighted = highlightedIndex === index;
     var className = [
-        "listbox-option",
-        highlighted ? "highlighted" : ""
+        optionClassName,
+        highlighted ? activeClassName : undefined
       ].join(" ");
     return React.createElement("li", {
                 key: option,
@@ -36,7 +34,7 @@ function Listbox(Props) {
               }, option);
   };
   return React.createElement("ul", {
-              className: "listbox",
+              className: className,
               role: match$1.role,
               tabIndex: match$1.tabIndex,
               onKeyDown: onKeyDown,
@@ -45,8 +43,7 @@ function Listbox(Props) {
             }, options.map(listOption));
 }
 
-var make = Listbox;
+var make = Listboxkit__ListboxComponent;
 
-exports.options = options;
 exports.make = make;
 /* react Not a pure module */

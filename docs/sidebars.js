@@ -10,6 +10,10 @@ module.exports = {
     },
     {
       type: "doc",
+      id: "listbox_component",
+    },
+    {
+      type: "doc",
       id: "use_dropdown_listbox",
     },
   ],
