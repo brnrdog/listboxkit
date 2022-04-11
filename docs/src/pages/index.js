@@ -28,7 +28,7 @@ function Home() {
   const { siteConfig = {} } = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
+      title={`listboxkit`}
       description="React hooks for building listbox pattern components"
     >
       <header className={clsx("hero hero--primary", styles.heroBanner)}>
