@@ -21,9 +21,9 @@ function Listboxkit__ListboxComponent(Props) {
     var match = Curry._1(getOptionProps, index);
     var highlighted = highlightedIndex === index;
     var className = [
-        optionClassName,
-        highlighted ? activeClassName : undefined
-      ].join(" ");
+          optionClassName,
+          highlighted ? activeClassName : undefined
+        ].join(" ").trim();
     return React.createElement("li", {
                 key: option,
                 "aria-selected": match["aria-selected"],
