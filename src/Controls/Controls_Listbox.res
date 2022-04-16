@@ -17,11 +17,9 @@ type controls = {
 module Navigation = {
   let firstIndex = _index => 0
   let lastIndex  = (~size, _index)=> size - 1
-  let nextIndex  = (~size, index) => {
-    size - index == 1 ? 0 : index + 1
-  }
+  let nextIndex  = (~size, index) => size - index == 1 ? 0 : index + 1
   let prevIndex  = (~size, index) => index <= 0 ? size - 1 : index - 1
-  let reset      = (_index) => -1;
+  let reset      = (_index) => -1
 }
 
 let firstIndex = i => i->Belt.Array.get(0)->Belt.Option.getWithDefault(-1)
@@ -70,9 +68,7 @@ let useControls = (~multiSelect, ~size) => {
     ~setHighlightedIndex,
   )
   let selectHighlighted = () => selectIndex(highlightedIndex)
-  let selectNext = () => {
-    selectIndex(Navigation.nextIndex(~size, highlightedIndex), ~keep=true)
-  }
+  let selectNext = () => selectIndex(Navigation.nextIndex(~size, highlightedIndex), ~keep=true)
   let selectPrev = () => {
     selectIndex(Navigation.prevIndex(~size, highlightedIndex), ~keep=true)
   }

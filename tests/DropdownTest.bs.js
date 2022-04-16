@@ -216,6 +216,10 @@ var toEqual = TestUtils.toEqual;
 
 var toHaveTextContent = TestUtils.toHaveTextContent;
 
+var toBeHighlighted = TestUtils.toBeHighlighted;
+
+var toBeSelected = TestUtils.toBeSelected;
+
 exports.FireEvent = FireEvent;
 exports.getListbox = getListbox;
 exports.getButton = getButton;
@@ -246,6 +250,8 @@ exports.toHaveDescription = toHaveDescription;
 exports.assertAndContinue = assertAndContinue;
 exports.toEqual = toEqual;
 exports.toHaveTextContent = toHaveTextContent;
+exports.toBeHighlighted = toBeHighlighted;
+exports.toBeSelected = toBeSelected;
 exports.DropdownListboxComponent = DropdownListboxComponent;
 exports.component = component;
 /*  Not a pure module */

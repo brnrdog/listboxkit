@@ -8,7 +8,7 @@ var UserEvent = require("@drewschrauf/bs-user-event/src/UserEvent.bs.js");
 var ReactTestingLibrary = require("rescript-react-testing-library/src/ReactTestingLibrary.bs.js");
 var DomTestingLibrary__UserEvent = require("rescript-dom-testing-library/src/DomTestingLibrary__UserEvent.bs.js");
 
-var down = "{arrowDown}";
+var down = "{arrowdown}";
 
 var downShift = "{shift}{arrowDown}";
 
@@ -22,7 +22,7 @@ var home = "{home}";
 
 var space = "{space}";
 
-var tab = "{tab}";
+var tab = "{Tab}";
 
 var up = "{arrowUp}";
 
@@ -147,6 +147,14 @@ function toHaveTextContent(a, b) {
   return Curry._1(arg(undefined), a);
 }
 
+function toBeHighlighted(expect) {
+  return JestDom.toHaveAttribute("class", "highlighted")(expect);
+}
+
+function toBeSelected(expect) {
+  return JestDom.toHaveAttribute("aria-selected", "true")(expect);
+}
+
 var HaveClass = JestDom.HaveClass;
 
 var TextContent = JestDom.TextContent;
@@ -223,4 +231,6 @@ exports.toHaveDescription = toHaveDescription;
 exports.assertAndContinue = assertAndContinue;
 exports.toEqual = toEqual;
 exports.toHaveTextContent = toHaveTextContent;
+exports.toBeHighlighted = toBeHighlighted;
+exports.toBeSelected = toBeSelected;
 /* Jest Not a pure module */
