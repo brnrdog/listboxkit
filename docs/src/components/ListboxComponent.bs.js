@@ -8,6 +8,7 @@ function ListboxComponent(Props) {
   return React.createElement(Listboxkit__ListboxComponent.make, {
               className: "listbox",
               optionClassName: "listbox-option",
+              activeClassName: "highlighted",
               multiSelect: true,
               options: [
                 "Red",

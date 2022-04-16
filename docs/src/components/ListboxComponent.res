@@ -1,4 +1,4 @@
 @react.component
 let make = () => {
- <Listboxkit.ListboxComponent optionClassName="listbox-option" className="listbox" options=["Red", "Green", "Blue"] multiSelect=true />
+ <Listboxkit.ListboxComponent optionClassName="listbox-option" className="listbox" options=["Red", "Green", "Blue"] multiSelect=true activeClassName="highlighted" />
 }
