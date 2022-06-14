@@ -30,9 +30,10 @@ type dropdownListbox = {
   getOptionProps: int => dropdownOptionProps,
   hideMenu: unit => unit,
   showMenu: unit => unit,
+  resetHighlighted: unit => unit,
 }
 
-let useDropdownListbox = (options, ~multiSelect=false, ()) => {
+let useDropdownListbox = (options, ~multiSelect=false, ~highlightFirstOnOpen=false, ()) => {
   let size = options->Belt.Array.length
   let {
     hideMenu,
@@ -82,6 +83,7 @@ let useDropdownListbox = (options, ~multiSelect=false, ()) => {
       ~highlightPrev,
       ~selectHighlighted,
       ~showMenu,
+      ~highlightFirstOnOpen,
     ),
   }
 
@@ -95,5 +97,6 @@ let useDropdownListbox = (options, ~multiSelect=false, ()) => {
     selectedIndex: selectedIndex,
     selectedIndexes: selectedIndexes,
     showMenu: showMenu,
+    resetHighlighted: resetHighlighted,
   }
 }

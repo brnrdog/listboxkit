@@ -13,7 +13,7 @@ var options = [
 ];
 
 function DropdownSelect(Props) {
-  var match = Listboxkit.useDropdownListbox(options, false, undefined);
+  var match = Listboxkit.useDropdownListbox(options, false, undefined, undefined);
   var getOptionProps = match.getOptionProps;
   var selectedIndex = match.selectedIndex;
   var highlightedIndex = match.highlightedIndex;

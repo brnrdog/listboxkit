@@ -5,7 +5,8 @@ var Curry = require("rescript/lib/js/curry.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 
-function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, $$event) {
+function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, highlightFirstOnOpenOpt, $$event) {
+  var highlightFirstOnOpen = highlightFirstOnOpenOpt !== undefined ? highlightFirstOnOpenOpt : false;
   var key = $$event.key;
   var shiftKey = $$event.shiftKey;
   if (key !== "Tab") {
@@ -19,6 +20,9 @@ function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highl
           } else {
             return Curry._1(highlightNext, undefined);
           }
+        } else if (highlightFirstOnOpen) {
+          Curry._1(showMenu, undefined);
+          return Curry._1(highlightFirst, undefined);
         } else {
           return Curry._1(showMenu, undefined);
         }
@@ -29,6 +33,9 @@ function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highl
           } else {
             return Curry._1(highlightPrev, undefined);
           }
+        } else if (highlightFirstOnOpen) {
+          Curry._1(showMenu, undefined);
+          return Curry._1(highlightFirst, undefined);
         } else {
           return Curry._1(showMenu, undefined);
         }
@@ -40,12 +47,7 @@ function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highl
         }
     case " " :
     case "Enter" :
-        if (menuVisible) {
-          Curry._1(selectHighlighted, undefined);
-          return Curry._1(hideMenu, undefined);
-        } else {
-          return Curry._1(showMenu, undefined);
-        }
+        break;
     case "Escape" :
         if (menuVisible) {
           return Curry._1(hideMenu, undefined);
@@ -60,6 +62,15 @@ function onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highl
         }
     default:
       return ;
+  }
+  if (menuVisible) {
+    Curry._1(selectHighlighted, undefined);
+    return Curry._1(hideMenu, undefined);
+  } else if (highlightFirstOnOpen) {
+    Curry._1(showMenu, undefined);
+    return Curry._1(highlightFirst, undefined);
+  } else {
+    return Curry._1(showMenu, undefined);
   }
 }
 
