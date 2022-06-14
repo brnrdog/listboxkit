@@ -5,8 +5,9 @@ var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var EventHandlers = require("./EventHandlers.bs.js");
 var Controls_DropdownListbox = require("./Controls/Controls_DropdownListbox.bs.js");
 
-function useDropdownListbox(options, multiSelectOpt, param) {
+function useDropdownListbox(options, multiSelectOpt, highlightFirstOnOpenOpt, param) {
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
+  var highlightFirstOnOpen = highlightFirstOnOpenOpt !== undefined ? highlightFirstOnOpenOpt : false;
   var size = options.length;
   var match = Controls_DropdownListbox.useControls(multiSelect, size);
   var showMenu = match.showMenu;
@@ -49,6 +50,7 @@ function useDropdownListbox(options, multiSelectOpt, param) {
   var getDropdownProps = function (param) {
     var partial_arg = menuVisible;
     var partial_arg$1 = hideMenu;
+    var partial_arg$2 = highlightFirstOnOpen;
     return {
             role: "combobox",
             tabIndex: 0,
@@ -59,7 +61,7 @@ function useDropdownListbox(options, multiSelectOpt, param) {
                 return EventHandlers.onDropdownClick(menuVisible, hideMenu, showMenu, param);
               }),
             onKeyDown: (function (param) {
-                return EventHandlers.onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, param);
+                return EventHandlers.onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, partial_arg$2, param);
               })
           };
   };
@@ -72,7 +74,8 @@ function useDropdownListbox(options, multiSelectOpt, param) {
           getDropdownProps: getDropdownProps,
           getOptionProps: getOptionProps,
           hideMenu: hideMenu,
-          showMenu: showMenu
+          showMenu: showMenu,
+          resetHighlighted: resetHighlighted
         };
 }
 

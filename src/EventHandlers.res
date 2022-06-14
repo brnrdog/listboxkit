@@ -9,6 +9,7 @@ let onKeyDown = (
   ~selectNext,
   ~selectPrev,
   ~showMenu,
+  ~highlightFirstOnOpen=false,
   event,
 ) => {
   let key = ReactEvent.Keyboard.key(event)
@@ -23,22 +24,28 @@ let onKeyDown = (
     hideMenu()
   }
 
-  switch (key, menuVisible, shiftKey) {
-  | ("ArrowDown", false, _)
-  | ("ArrowUp", false, _)
-  | ("Enter", false, _)
-  | (" ", false, _) =>
+  switch (key, menuVisible, shiftKey, highlightFirstOnOpen) {
+  | ("ArrowDown", false, _, false)
+  | ("ArrowUp", false, _, false)
+  | ("Enter", false, _, false)
+  | (" ", false, _, false) =>
     showMenu()
-  | ("ArrowDown", true, false) => highlightNext()
-  | ("ArrowDown", true, true) => selectNext()
-  | ("ArrowUp", true, false) => highlightPrev()
-  | ("ArrowUp", true, true) => selectPrev()
-  | ("Enter", true, _)
-  | (" ", true, _) =>
+  | ("ArrowDown", false, _, true)
+  | ("ArrowUp", false, _, true)
+  | ("Enter", false, _, true)
+  | (" ", false, _, true) =>
+    showMenu()
+    highlightFirst()
+  | ("ArrowDown", true, false, _) => highlightNext()
+  | ("ArrowDown", true, true, _) => selectNext()
+  | ("ArrowUp", true, false, _) => highlightPrev()
+  | ("ArrowUp", true, true, _) => selectPrev()
+  | ("Enter", true, _, _)
+  | (" ", true, _, _) =>
     selectCurrent()
-  | ("Home", true, _) => highlightFirst()
-  | ("End", true, _) => highlightLast()
-  | ("Escape", true, _) => hideMenu()
+  | ("Home", true, _, _) => highlightFirst()
+  | ("End", true, _, _) => highlightLast()
+  | ("Escape", true, _, _) => hideMenu()
   | _ => ()
   }
 }

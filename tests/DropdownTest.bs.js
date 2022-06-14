@@ -20,7 +20,7 @@ var options = [
 function DropdownTest$DropdownListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listboxkit.useDropdownListbox(options, multiSelect, undefined);
+  var match = Listboxkit.useDropdownListbox(options, multiSelect, undefined, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);
