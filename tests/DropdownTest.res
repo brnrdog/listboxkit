@@ -2,11 +2,13 @@ open ReactTestingLibrary
 open Jest
 include TestUtils
 
+@send external focus: Dom.element => unit = "focus"
+
 module DropdownListboxComponent = {
   let options = ["Red", "Green", "Blue"]
 
   @react.component
-  let make = (~multiSelect=false) => {
+  let make = (~multiSelect=false, ~highlightFirstOnOpen=false) => {
     let {
       highlightedIndex,
       menuVisible,
@@ -14,7 +16,7 @@ module DropdownListboxComponent = {
       getOptionProps,
       getDropdownProps,
       getContainerProps,
-    } = Listboxkit.useDropdownListbox(options, ~multiSelect, ())
+    } = Listboxkit.useDropdownListbox(options, ~multiSelect, ~highlightFirstOnOpen, ())
 
     let {role, tabIndex, onKeyDown, onFocus} = getContainerProps()
 
@@ -25,7 +27,6 @@ module DropdownListboxComponent = {
       ->Belt.Array.joinWith(", ", s => Belt.Option.getUnsafe(s))
       ->String.trim
       ->React.string
-
     <div>
       <button
         role=dropdownProps.role
@@ -52,7 +53,8 @@ module DropdownListboxComponent = {
   }
 }
 
-let component = (~multiSelect=false, ()) => <DropdownListboxComponent multiSelect />
+let component = (~multiSelect=false, ~highlightFirstOnOpen=false, ()) =>
+  <DropdownListboxComponent multiSelect highlightFirstOnOpen />
 
 test("select option when clicked", () => {
   let component = component() |> render
@@ -98,4 +100,35 @@ test("hide listbox when focusing out from listbox", () => {
   screen->getByRole(~matcher=#Str("listbox"))->expect->toBeVisible->assertAndContinue
   screen->getByText(~matcher=#Str("Focus out"))->FireEvent.click
   screen->queryAllByRole(~matcher=#Str("listbox"))->Array.length->Expect.expect->toEqual(0)
+})
+
+test("highlight first option on open with keyboard down when highlightFirstOnOpen is true", () => {
+  let component = <DropdownListboxComponent highlightFirstOnOpen=true /> |> render
+  component->getByRole(~matcher=#Str("combobox"))->focus
+  FireEvent.pressKeyboardDown()
+  component->getOption("* Red")->expect->toBeVisible
+})
+test("highlight first option on open with keyboard enter when highlightFirstOnOpen is true", () => {
+  let component = <DropdownListboxComponent highlightFirstOnOpen=true /> |> render
+  component->getByRole(~matcher=#Str("combobox"))->focus
+  FireEvent.pressKeyboardEnter()
+  component->getOption("* Red")->expect->toBeVisible
+})
+test("highlight first option on open with keyboard up when highlightFirstOnOpen is true", () => {
+  let component = <DropdownListboxComponent highlightFirstOnOpen=true /> |> render
+  component->getByRole(~matcher=#Str("combobox"))->focus
+  FireEvent.pressKeyboardUp()
+  component->getOption("* Red")->expect->toBeVisible
+})
+test("highlight first option on open with keyboard space when highlightFirstOnOpen is true", () => {
+  let component = <DropdownListboxComponent highlightFirstOnOpen=true /> |> render
+  component->getByRole(~matcher=#Str("combobox"))->focus
+  FireEvent.pressKeyboardSpace()
+  component->getOption("* Red")->expect->toBeVisible
+})
+
+test("highlight first option on open with click when highlightFirstOnOpen is true", () => {
+  let component = <DropdownListboxComponent highlightFirstOnOpen=true /> |> render
+  component->getByRole(~matcher=#Str("combobox"))->FireEvent.click
+  component->getOption("* Red")->expect->toBeVisible
 })
