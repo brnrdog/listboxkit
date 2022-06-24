@@ -99,7 +99,15 @@ function onClick(index, selectIndex, _event) {
   return Curry._1(selectIndex, index);
 }
 
-function onDropdownClick(menuVisible, hideMenu, showMenu, _event) {
+function onDropdownClick(menuVisible, hideMenu, showMenu, highlightFirstOnOpen, highlightFirst, _event) {
+  if (menuVisible) {
+    Curry._1(hideMenu, undefined);
+  } else if (highlightFirstOnOpen) {
+    Curry._1(showMenu, undefined);
+    Curry._1(highlightFirst, undefined);
+  } else {
+    Curry._1(showMenu, undefined);
+  }
   if (menuVisible) {
     return Curry._1(hideMenu, undefined);
   } else {

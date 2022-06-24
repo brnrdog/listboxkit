@@ -74,6 +74,20 @@ let onFocus = (~selectedIndexes, ~highlightIndex, _event) => {
 
 let onClick = (~index, ~selectIndex, _event) => selectIndex(index)
 
-let onDropdownClick = (~menuVisible, ~hideMenu, ~showMenu, _event) => {
+let onDropdownClick = (
+  ~menuVisible,
+  ~hideMenu,
+  ~showMenu,
+  ~highlightFirstOnOpen,
+  ~highlightFirst,
+  _event,
+) => {
+  switch (menuVisible, highlightFirstOnOpen) {
+  | (true, _) => hideMenu()
+  | (false, false) => showMenu()
+  | (false, true) =>
+    showMenu()
+    highlightFirst()
+  }
   menuVisible ? hideMenu() : showMenu()
 }

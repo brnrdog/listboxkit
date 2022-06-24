@@ -58,7 +58,7 @@ function useDropdownListbox(options, multiSelectOpt, highlightFirstOnOpenOpt, pa
                 return EventHandlers.onBlur(resetHighlighted, partial_arg$1, partial_arg, param);
               }),
             onClick: (function (param) {
-                return EventHandlers.onDropdownClick(menuVisible, hideMenu, showMenu, param);
+                return EventHandlers.onDropdownClick(menuVisible, hideMenu, showMenu, highlightFirstOnOpen, highlightFirst, param);
               }),
             onKeyDown: (function (param) {
                 return EventHandlers.onKeyDown(hideMenu, highlightFirst, highlightLast, highlightNext, highlightPrev, menuVisible, selectHighlighted, selectNext, selectPrev, showMenu, partial_arg$2, param);
