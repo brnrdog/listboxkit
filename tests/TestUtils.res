@@ -16,16 +16,21 @@ module FireEvent = {
     let upShift = "{shift}{arrowUp}"
   }
 
-  let pressDown      = e => e->ReactTestingLibrary.UserEvent.type_(Keyboard.down)
+  let pressKeyboardDown = () => keyboard(Keyboard.down)
+  let pressKeyboardUp = () => keyboard(Keyboard.up)
+  let pressKeyboardEnter = () => keyboard(Keyboard.enter)
+  let pressKeyboardSpace = () => keyboard(Keyboard.space)
+
+  let pressDown = e => e->type_(Keyboard.down)
   let pressDownShift = e => e->type_(Keyboard.downShift)
-  let pressEnd       = e => e->type_(Keyboard.end)
-  let pressEnter     = e => e->type_(Keyboard.enter)
-  let pressEsc       = e => e->type_(Keyboard.esc)
-  let pressHome      = e => e->type_(Keyboard.home)
-  let pressSpace     = e => e->type_(Keyboard.space)
-  let pressTab       = e => e->type_(Keyboard.tab)
-  let pressUp        = e => e->type_(Keyboard.up)
-  let pressUpShift   = e => e->type_(Keyboard.upShift)
+  let pressEnd = e => e->type_(Keyboard.end)
+  let pressEnter = e => e->type_(Keyboard.enter)
+  let pressEsc = e => e->type_(Keyboard.esc)
+  let pressHome = e => e->type_(Keyboard.home)
+  let pressSpace = e => e->type_(Keyboard.space)
+  let pressTab = e => e->type_(Keyboard.tab)
+  let pressUp = e => e->type_(Keyboard.up)
+  let pressUpShift = e => e->type_(Keyboard.upShift)
 
   let click = e => e->click
   // Not implemented

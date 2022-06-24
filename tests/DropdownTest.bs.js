@@ -19,8 +19,10 @@ var options = [
 
 function DropdownTest$DropdownListboxComponent(Props) {
   var multiSelectOpt = Props.multiSelect;
+  var highlightFirstOnOpenOpt = Props.highlightFirstOnOpen;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listboxkit.useDropdownListbox(options, multiSelect, undefined, undefined);
+  var highlightFirstOnOpen = highlightFirstOnOpenOpt !== undefined ? highlightFirstOnOpenOpt : false;
+  var match = Listboxkit.useDropdownListbox(options, multiSelect, highlightFirstOnOpen, undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);
@@ -63,15 +65,17 @@ var DropdownListboxComponent = {
   make: DropdownTest$DropdownListboxComponent
 };
 
-function component(multiSelectOpt, param) {
+function component(multiSelectOpt, highlightFirstOnOpenOpt, param) {
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
+  var highlightFirstOnOpen = highlightFirstOnOpenOpt !== undefined ? highlightFirstOnOpenOpt : false;
   return React.createElement(DropdownTest$DropdownListboxComponent, {
-              multiSelect: multiSelect
+              multiSelect: multiSelect,
+              highlightFirstOnOpen: highlightFirstOnOpen
             });
 }
 
 Jest.test("select option when clicked", (function (param) {
-        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined, undefined));
         TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
                   VAL: "combobox"
@@ -94,7 +98,7 @@ Jest.test("select option when clicked", (function (param) {
       }));
 
 Jest.test("show listbox when pressing arrow down", (function (param) {
-        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined, undefined));
         TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
                   VAL: "combobox"
@@ -106,7 +110,7 @@ Jest.test("show listbox when pressing arrow down", (function (param) {
       }));
 
 Jest.test("show listbox when pressing arrow up", (function (param) {
-        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined, undefined));
         TestUtils.FireEvent.pressUp(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
                   VAL: "combobox"
@@ -118,7 +122,7 @@ Jest.test("show listbox when pressing arrow up", (function (param) {
       }));
 
 Jest.test("allow multiple selection when multiSelect is true", (function (param) {
-        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined));
+        var component$1 = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(true, undefined, undefined));
         var button = ReactTestingLibrary.getByRole(undefined, {
               NAME: "Str",
               VAL: "combobox"
@@ -137,7 +141,7 @@ Jest.test("allow multiple selection when multiSelect is true", (function (param)
       }));
 
 Jest.test("hide listbox when focusing out from listbox", (function (param) {
-        var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined));
+        var screen = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, component(undefined, undefined, undefined));
         TestUtils.FireEvent.pressDown(ReactTestingLibrary.getByRole(undefined, {
                   NAME: "Str",
                   VAL: "combobox"
@@ -154,6 +158,65 @@ Jest.test("hide listbox when focusing out from listbox", (function (param) {
                             NAME: "Str",
                             VAL: "listbox"
                           }, screen).length), 0);
+      }));
+
+Jest.test("highlight first option on open with keyboard down when highlightFirstOnOpen is true", (function (param) {
+        var component = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, React.createElement(DropdownTest$DropdownListboxComponent, {
+                  highlightFirstOnOpen: true
+                }));
+        ReactTestingLibrary.getByRole(undefined, {
+                NAME: "Str",
+                VAL: "combobox"
+              }, component).focus();
+        TestUtils.FireEvent.pressKeyboardDown(undefined);
+        return TestUtils.toBeVisible(expect(TestUtils.getOption(component, "* Red")));
+      }));
+
+Jest.test("highlight first option on open with keyboard enter when highlightFirstOnOpen is true", (function (param) {
+        var component = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, React.createElement(DropdownTest$DropdownListboxComponent, {
+                  highlightFirstOnOpen: true
+                }));
+        ReactTestingLibrary.getByRole(undefined, {
+                NAME: "Str",
+                VAL: "combobox"
+              }, component).focus();
+        TestUtils.FireEvent.pressKeyboardEnter(undefined);
+        return TestUtils.toBeVisible(expect(TestUtils.getOption(component, "* Red")));
+      }));
+
+Jest.test("highlight first option on open with keyboard up when highlightFirstOnOpen is true", (function (param) {
+        var component = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, React.createElement(DropdownTest$DropdownListboxComponent, {
+                  highlightFirstOnOpen: true
+                }));
+        ReactTestingLibrary.getByRole(undefined, {
+                NAME: "Str",
+                VAL: "combobox"
+              }, component).focus();
+        TestUtils.FireEvent.pressKeyboardUp(undefined);
+        return TestUtils.toBeVisible(expect(TestUtils.getOption(component, "* Red")));
+      }));
+
+Jest.test("highlight first option on open with keyboard space when highlightFirstOnOpen is true", (function (param) {
+        var component = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, React.createElement(DropdownTest$DropdownListboxComponent, {
+                  highlightFirstOnOpen: true
+                }));
+        ReactTestingLibrary.getByRole(undefined, {
+                NAME: "Str",
+                VAL: "combobox"
+              }, component).focus();
+        TestUtils.FireEvent.pressKeyboardSpace(undefined);
+        return TestUtils.toBeVisible(expect(TestUtils.getOption(component, "* Red")));
+      }));
+
+Jest.test("highlight first option on open with click when highlightFirstOnOpen is true", (function (param) {
+        var component = ReactTestingLibrary.render(undefined, undefined, undefined, undefined, undefined, React.createElement(DropdownTest$DropdownListboxComponent, {
+                  highlightFirstOnOpen: true
+                }));
+        TestUtils.FireEvent.click(ReactTestingLibrary.getByRole(undefined, {
+                  NAME: "Str",
+                  VAL: "combobox"
+                }, component));
+        return TestUtils.toBeVisible(expect(TestUtils.getOption(component, "* Red")));
       }));
 
 var FireEvent = TestUtils.FireEvent;
