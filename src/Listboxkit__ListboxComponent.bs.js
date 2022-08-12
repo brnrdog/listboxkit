@@ -3,16 +3,18 @@
 
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Listboxkit__Listbox = require("./Listboxkit__Listbox.bs.js");
 
 function Listboxkit__ListboxComponent(Props) {
-  var className = Props.className;
-  var optionClassName = Props.optionClassName;
   var activeClassName = Props.activeClassName;
+  var className = Props.className;
   var multiSelectOpt = Props.multiSelect;
+  var onChange = Props.onChange;
+  var optionClassName = Props.optionClassName;
   var options = Props.options;
   var multiSelect = multiSelectOpt !== undefined ? multiSelectOpt : false;
-  var match = Listboxkit__Listbox.useListbox(options, multiSelect, undefined);
+  var match = Listboxkit__Listbox.useListbox(options, multiSelect, Belt_Option.getExn(onChange), undefined);
   var getOptionProps = match.getOptionProps;
   var highlightedIndex = match.highlightedIndex;
   var match$1 = Curry._1(match.getContainerProps, undefined);

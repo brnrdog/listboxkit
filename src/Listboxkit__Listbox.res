@@ -1,30 +1,50 @@
 type listboxContainerProps = {
-  role        : string,
-  tabIndex    : int,
-  onBlur      : ReactEvent.Focus.t => unit,
-  onKeyDown   : ReactEvent.Keyboard.t => unit,
-  onFocus     : ReactEvent.Focus.t => unit,
+  role: string,
+  tabIndex: int,
+  onBlur: ReactEvent.Focus.t => unit,
+  onKeyDown: ReactEvent.Keyboard.t => unit,
+  onFocus: ReactEvent.Focus.t => unit,
 }
 
 type listboxOptionProps = {
-  @bs.as("aria-selected") 
+  @as("aria-selected")
   ariaSelected: bool,
-  role        : string,
-  onClick     : ReactEvent.Mouse.t => unit,
+  role: string,
+  onClick: ReactEvent.Mouse.t => unit,
 }
 
 type listbox = {
-  highlightedIndex : int,
-  selectedIndex    : int,
-  selectedIndexes  : array<int>,
-  getContainerProps: () => listboxContainerProps,
-  getOptionProps   : int => listboxOptionProps,
+  highlightedIndex: int,
+  selectedIndex: int,
+  selectedIndexes: array<int>,
+  getContainerProps: unit => listboxContainerProps,
+  getOptionProps: int => listboxOptionProps,
 }
 
 let noop = () => ()
 
-let useListbox = (options, ~multiSelect = false, ()) => {
-  let size = options -> Belt.Array.length
+let useFirstRender = () => {
+  let isFirst = React.useRef(true)
+
+  if isFirst.current {
+    isFirst.current = false
+    true
+  } else {
+    isFirst.current
+  }
+}
+
+let useUpdateEffect1 = (effect, deps) => {
+  let isFirstRender = useFirstRender()
+
+  React.useEffect1(() => {
+    isFirstRender ? () : effect()
+    None
+  }, deps)
+}
+
+let useListbox = (options, ~multiSelect=false, ~onChange=?, ()) => {
+  let size = options->Belt.Array.length
   let {
     highlightedIndex,
     highlightFirst,
@@ -41,6 +61,13 @@ let useListbox = (options, ~multiSelect = false, ()) => {
     selectPrev,
   } = Controls.Listbox.useControls(~multiSelect, ~size)
 
+  useUpdateEffect1(() => {
+    switch onChange {
+    | None => ()
+    | Some(onChange) => onChange(selectedIndexes)
+    }
+  }, [selectedIndexes])
+
   let getOptionProps = index => {
     ariaSelected: Belt.Array.some(selectedIndexes, i => i == index),
     role: "option",
@@ -53,24 +80,24 @@ let useListbox = (options, ~multiSelect = false, ()) => {
     onBlur: EventHandlers.onBlur(~resetHighlighted),
     onFocus: EventHandlers.onFocus(~highlightIndex, ~selectedIndexes),
     onKeyDown: EventHandlers.onKeyDown(
-      ~hideMenu = noop,
-      ~highlightFirst, 
-      ~highlightLast, 
+      ~hideMenu=noop,
+      ~highlightFirst,
+      ~highlightLast,
       ~highlightNext,
       ~highlightPrev,
-      ~menuVisible = true,
+      ~menuVisible=true,
       ~selectHighlighted,
-      ~selectNext, 
+      ~selectNext,
       ~selectPrev,
-      ~showMenu = noop,
-    )
+      ~showMenu=noop,
+    ),
   }
 
   {
-    getContainerProps,
-    getOptionProps,
-    highlightedIndex,
-    selectedIndex,
-    selectedIndexes,
+    getContainerProps: getContainerProps,
+    getOptionProps: getOptionProps,
+    highlightedIndex: highlightedIndex,
+    selectedIndex: selectedIndex,
+    selectedIndexes: selectedIndexes,
   }
 }

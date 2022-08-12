@@ -1,8 +1,16 @@
 @react.component
-let make = (~className=?, ~optionClassName=?, ~activeClassName=?, ~multiSelect=false, ~options) => {
+let make = (
+  ~activeClassName=?,
+  ~className=?,
+  ~multiSelect=false,
+  ~onChange=?,
+  ~optionClassName=?,
+  ~options,
+) => {
   let {highlightedIndex, getOptionProps, getContainerProps} = Listboxkit__Listbox.useListbox(
     options,
     ~multiSelect,
+    ~onChange=Belt.Option.getExn(onChange),
     (),
   )
   let {role, tabIndex, onKeyDown, onFocus, onBlur} = getContainerProps()
@@ -15,9 +23,7 @@ let make = (~className=?, ~optionClassName=?, ~activeClassName=?, ~multiSelect=f
       ->Js.Array2.joinWith(" ")
       ->Js.String.trim
 
-    <li className key=option onClick onKeyDown role ariaSelected> 
-      {option->React.string} 
-    </li>
+    <li className key=option onClick onKeyDown role ariaSelected> {option->React.string} </li>
   }
 
   let className = className->Belt.Option.getUnsafe
